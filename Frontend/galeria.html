@@ -61,8 +61,80 @@
 
     <!-- Contenido Principal -->
     <div class="main-content">
-      <h1>Galeria</h1>
-      <p>Bienvenido a la galeria</p>
+      <h1>Galería</h1>
+      <p>Bienvenido a la galería</p>
+      <div id="galeria-fotos" class="galeria-fotos"></div>
+      <div id="ranking" class="ranking"></div>
+      <canvas id="grafico-votos" width="400" height="200"></canvas>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        const galeria = document.getElementById('galeria-fotos');
+        const rankingDiv = document.getElementById('ranking');
+        const grafico = document.getElementById('grafico-votos').getContext('2d');
+
+        // 1. Obtener fotos del backend
+        const res = await fetch('http://localhost/Rally_Fotografico/Backend/galeria_fotos.php');
+        const data = await res.json();
+        if (!data.success) {
+          galeria.textContent = "No se pudieron cargar las fotos.";
+          return;
+        }
+
+        // 2. Mostrar fotos con botón de votar
+        galeria.innerHTML = '';
+        data.fotos.forEach(foto => {
+          const div = document.createElement('div');
+          div.className = 'foto-galeria';
+          div.innerHTML = `
+            <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" />
+            <h3>${foto.titulo}</h3>
+            <p>${foto.descripcion || ''}</p>
+            <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
+            <span class="votos">Votos: ${foto.votos}</span>
+          `;
+          galeria.appendChild(div);
+        });
+
+        // 3. Votación con límite por IP
+        galeria.addEventListener('click', async function(e) {
+          if (e.target.classList.contains('votar-btn')) {
+            const id = e.target.getAttribute('data-id');
+            const res = await fetch('http://localhost/Rally_Fotografico/Backend/votar_foto.php', {
+              method: 'POST',
+              headers: {'Content-Type': 'application/json'},
+              body: JSON.stringify({ id_fotografia: id })
+            });
+            const result = await res.json();
+            if (result.success) {
+              alert('¡Voto registrado!');
+              location.reload();
+            } else {
+              alert(result.message || 'No se pudo votar.');
+            }
+          }
+        });
+
+        // 4. Ranking de fotos
+        const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
+        rankingDiv.innerHTML = '<h2>Top 5 Fotos</h2><ol>' +
+          ranking.map(f => `<li>${f.titulo} - ${f.votos} votos</li>`).join('') +
+          '</ol>';
+
+        // 5. Gráfico de votos
+        new Chart(grafico, {
+          type: 'bar',
+          data: {
+            labels: data.fotos.map(f => f.titulo),
+            datasets: [{
+              label: 'Votos',
+              data: data.fotos.map(f => f.votos),
+              backgroundColor: 'rgba(54, 162, 235, 0.5)'
+            }]
+          }
+        });
+      });
+    </script>
   </body>
 </html>
