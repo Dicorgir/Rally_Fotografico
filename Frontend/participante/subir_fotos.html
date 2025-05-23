@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Subir Fotos</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/subir_fotos_style.css" /> <!-- Nuevo CSS solo para esta vista -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  </head>
+  <body>
+    <!-- Sidebar igual que index.html -->
+    <div class="sidebar">
+      <div class="logo" title="Rally Fotográfico">
+        <img src="../../img/logo_rallyFotografico.png" alt="Logo" style="width: 104px; height: 104px;" />
+      </div>
+      <a href="../index.html">
+        <div class="nav-item">
+          <i class="fa-solid fa-house"></i>
+          <span class="nav-text">Inicio</span>
+        </div>
+      </a>
+      <!-- Opciones solo para participante -->
+      <div class="nav-item" id="logout-profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M16 9a4 4 0 1 1-8 0a4 4 0 0 1 8 0m-2 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1M3 12c0 2.09.713 4.014 1.908 5.542A8.99 8.99 0 0 1 12.065 14a8.98 8.98 0 0 1 7.092 3.458A9 9 0 1 0 3 12m9 9a8.96 8.96 0 0 1-5.672-2.012A6.99 6.99 0 0 1 12.065 16a6.99 6.99 0 0 1 5.689 2.92A8.96 8.96 0 0 1 12 21"/></g></svg>
+        <span class="nav-text">Perfil</span>
+      </div>
+      <div class="nav-item active" id="logout-add-photos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"><path d="M38 21v19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2h18.364"/><path fill="currentColor" d="M12 31.03L18 23l3 3l3.5-5.5L32 31.03z"/><path d="M34 10h8m-4.005-4.205v8"/></g></svg>
+        <span class="nav-text">Subir <br> Fotos</span>
+      </div>
+      <div class="nav-item" id="logout-view-photos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 8 8"><path fill="currentColor" d="m3 4l1-2l1 3H1l1-2m5 4V2h1v6H1V7m5-1V1H0v5"/></svg>
+        <span class="nav-text">Ver <br>fotos</span>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-item" id="logout-btn" style="cursor:pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="nav-text">Cerrar<br>sesión</span>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="form-container">
+        <div class="profile-header">
+          <p class="title">Subir Fotografía 📸</p>
+        </div>
+        <form id="foto-form" enctype="multipart/form-data">
+          <div class="input-group">
+            <label for="titulo">Título</label>
+            <input id="titulo" name="titulo" type="text" required maxlength="100" />
+          </div>
+          <div class="input-group">
+            <label for="descripcion">Descripción</label>
+            <textarea id="descripcion" name="descripcion" maxlength="500"></textarea>
+          </div>
+          <div class="input-group">
+            <label for="foto">Selecciona tu foto (JPG/PNG, máx. 5MB)</label>
+            <input id="foto" name="foto" type="file" accept="image/jpeg,image/png" required />
+          </div>
+          <button type="submit" class="sign">Subir Foto</button>
+          <p id="limite-fotos-msg" style="color: #b00; margin-top: 10px;"></p>
+        </form>
+        <div id="estado-subida" style="margin-top: 15px;"></div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('logout-btn').addEventListener('click', function() {
+          localStorage.removeItem('usuarioRol');
+          localStorage.removeItem('usuarioNombre');
+          window.location.href = '../index.html';
+        });
+        document.getElementById('logout-profile').addEventListener('click', function() {
+          window.location.href = 'perfil_participante.html';
+        });
+        document.getElementById('logout-view-photos').addEventListener('click', function() {
+          window.location.href = 'ver_fotos.html';
+        });
+        document.getElementById('logout-add-photos').addEventListener('click', function() {
+          window.location.href = 'subir_fotos.html';
+        });
+      });
+      document.addEventListener('DOMContentLoaded', async function() {
+        // Obtener email y límite de fotos del usuario
+        const email = localStorage.getItem('usuarioEmail');
+        let maxFotos = 5; // Por defecto, pero deberías obtenerlo del backend según el rally activo
+        let fotosSubidas = 0;
+
+        // Consulta al backend cuántas fotos ha subido el usuario
+        if (email) {
+          const res = await fetch('http://localhost/Rally_Fotografico/Backend/contar_fotos_usuario.php?email=' + encodeURIComponent(email));
+          if (res.ok) {
+            const data = await res.json();
+            fotosSubidas = data.fotos_subidas || 0;
+            maxFotos = data.max_fotos || 5;
+            document.getElementById('limite-fotos-msg').textContent =
+              `Has subido ${fotosSubidas} de ${maxFotos} fotos permitidas.`;
+            if (fotosSubidas >= maxFotos) {
+              document.getElementById('foto-form').style.display = 'none';
+              document.getElementById('limite-fotos-msg').textContent += " Ya no puedes subir más fotos.";
+            }
+          }
+        }
+
+        // Validación y subida
+        document.getElementById('foto-form').addEventListener('submit', async function(e) {
+          e.preventDefault();
+          console.log("¡Evento submit capturado!"); // <-- Añade esto
+          const fileInput = document.getElementById('foto');
+          const file = fileInput.files[0];
+          const estadoSubida = document.getElementById('estado-subida');
+          estadoSubida.textContent = "";
+
+          // Validación de formato y tamaño
+          if (!file) {
+            estadoSubida.textContent = "Selecciona una imagen.";
+            return;
+          }
+          if (!['image/jpeg', 'image/png'].includes(file.type)) {
+            estadoSubida.textContent = "Formato no permitido. Solo JPG o PNG.";
+            return;
+          }
+          if (file.size > 5 * 1024 * 1024) {
+            estadoSubida.textContent = "La imagen supera el tamaño máximo de 5MB.";
+            return;
+          }
+
+          // Subida
+          const formData = new FormData(this);
+          formData.append('email', email);
+
+          const res = await fetch('http://localhost/Rally_Fotografico/Backend/subir_foto.php', {
+            method: 'POST',
+            body: formData
+          });
+          const data = await res.json();
+          if (res.ok && data.success) {
+            estadoSubida.style.color = "green";
+            estadoSubida.textContent = "Foto subida correctamente. Queda pendiente de validación.";
+            this.reset();
+          } else {
+            estadoSubida.style.color = "red";
+            estadoSubida.textContent = data.message || "Error al subir la foto.";
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Resultados Admin</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/carrusel_style.css" />
+    <link rel="stylesheet" href="../css/button_style.css" />
+    <link rel="stylesheet" href="../css/login_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  </head>
+  <body>
+    <!-- Sidebar igual que index.html -->
+    <div class="sidebar">
+      <div class="logo" title="Rally Fotográfico">
+        <img src="../../img/logo_rallyFotografico.png" alt="Logo" style="width: 104px; height: 104px;" />
+      </div>
+      <a href="../index.html">
+        <div class="nav-item">
+          <i class="fa-solid fa-house"></i>
+          <span class="nav-text">Inicio</span>
+        </div>
+      </a>
+      <!-- Opciones solo para admin -->
+      <div class="nav-item" id="logout-settings">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M2.256 15.632c.034-.323.268-.583.736-1.104l1.031-1.153c.252-.32.431-.875.431-1.375s-.179-1.056-.43-1.375L2.991 9.472c-.468-.52-.702-.781-.736-1.104s.14-.627.49-1.234l.494-.857c.373-.648.56-.972.878-1.1c.317-.13.676-.028 1.395.176l1.22.343c.459.106.94.046 1.358-.169l.337-.194a2 2 0 0 0 .788-.968l.334-.997c.22-.66.33-.99.591-1.18C10.403 2 10.75 2 11.444 2h1.115c.694 0 1.042 0 1.303.189s.371.519.59 1.179l.335.997a2 2 0 0 0 .788.968l.337.194c.418.215.9.275 1.358.17l1.22-.344c.719-.204 1.078-.306 1.395-.177c.318.13.505.453.878 1.101l.493.857c.35.607.525.91.491 1.234s-.268.583-.736 1.104l-1.031 1.153c-.252.319-.431.875-.431 1.375s.179 1.056.43 1.375l1.032 1.153c.468.52.702.781.736 1.104s-.14.627-.49 1.234l-.494.857c-.373.648-.56.972-.878 1.1c-.317.13-.676.028-1.395-.176l-1.22-.343a2 2 0 0 0-1.359.169l-.336.194c-.36.23-.636.57-.788.968l-.334.997c-.22.66-.33.99-.591 1.18c-.261.188-.609.188-1.303.188h-1.115c-.694 0-1.041 0-1.303-.189c-.261-.189-.371-.518-.59-1.178"/><path d="M2.737 18.78c1.08-1.08 4.752-4.716 5.112-5.136c.381-.444.072-1.044.256-2.904c.089-.9.282-1.574.836-2.076c.66-.624 1.2-.624 3.06-.666c1.62.042 1.812-.138 1.98.282c.12.3-.24.48-.672.96c-.96.96-1.524 1.44-1.578 1.74c-.39 1.32 1.146 2.1 1.986 1.26c.318-.318 1.788-1.8 1.932-1.92c.108-.096.367-.092.492.06c.108.106.12.12.108.6c-.01.444-.006 1.082-.004 1.74c.001.852-.044 1.8-.404 2.28c-.72 1.08-1.92 1.14-3 1.188c-1.02.06-1.86-.048-2.124.144c-.216.108-1.356 1.308-2.736 2.688l-2.46 2.46c-2.04 1.62-4.284-.9-2.784-2.7"/></g></svg>
+        <span class="nav-text">Config</span>
+      </div>
+      <div class="nav-item" id="logout-gestion">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 32 32"><path fill="currentColor" d="M15 20H9a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3m-3-1a4 4 0 1 0-4-4a4 4 0 0 0 4 4m0-6a2 2 0 1 1-2 2a2 2 0 0 1 2-2"/><path fill="currentColor" d="M28 19v9H4V8h12V6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2v-9Z"/><path fill="currentColor" d="M20 19h6v2h-6zm2 4h4v2h-4zm10-13V8h-2.101a5 5 0 0 0-.732-1.753l1.49-1.49l-1.414-1.414l-1.49 1.49A5 5 0 0 0 26 4.101V2h-2v2.101a5 5 0 0 0-1.753.732l-1.49-1.49l-1.414 1.414l1.49 1.49A5 5 0 0 0 20.101 8H18v2h2.101a5 5 0 0 0 .732 1.753l-1.49 1.49l1.414 1.414l1.49-1.49a5 5 0 0 0 1.753.732V16h2v-2.101a5 5 0 0 0 1.753-.732l1.49 1.49l1.414-1.414l-1.49-1.49A5 5 0 0 0 29.899 10zm-7 2a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3"/></svg>
+        <span class="nav-text">Gestión <br> usuarios</span>
+      </div>
+      <div class="nav-item" id="logout-validation">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M9.727 2c-3.26 0-4.892 0-6.024.798a4.1 4.1 0 0 0-.855.805C2 4.669 2 6.203 2 9.273v2.545c0 2.963 0 4.445.469 5.628c.754 1.903 2.348 3.403 4.37 4.113c1.257.441 2.83.441 5.98.441c1.798 0 2.698 0 3.416-.252c1.155-.406 2.066-1.263 2.497-2.35c.268-.676.268-1.523.268-3.216V15.5m-4-8s.5 0 1 1c0 0 1.588-2.5 3-3"/><path d="M22 7a5 5 0 1 1-10 0a5 5 0 0 1 10 0M2 12a3.333 3.333 0 0 0 3.333 3.333c.666 0 1.451-.116 2.098.057a1.67 1.67 0 0 1 1.179 1.18c.173.647.057 1.432.057 2.098A3.333 3.333 0 0 0 12 22"/></g></svg>
+        <span class="nav-text">Validación <br> fotos</span>
+      </div>
+      <div class="nav-item active" id="logout-results">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.5 18c0-1.414 0-2.121.44-2.56C4.378 15 5.085 15 6.5 15H7c.943 0 1.414 0 1.707.293S9 16.057 9 17v5H3.5zM15 19c0-.943 0-1.414.293-1.707S16.057 17 17 17h.5c1.414 0 2.121 0 2.56.44c.44.439.44 1.146.44 2.56v2H15zM2 22h20M9 16c0-1.414 0-2.121.44-2.56C9.878 13 10.585 13 12 13s2.121 0 2.56.44c.44.439.44 1.146.44 2.56v6H9zm3.691-13.422l.704 1.42a.87.87 0 0 0 .568.423l1.276.213c.816.137 1.008.734.42 1.323l-.992 1a.88.88 0 0 0-.208.73l.284 1.238c.224.98-.292 1.359-1.152.847l-1.196-.714a.86.86 0 0 0-.792 0l-1.196.714c-.856.512-1.376.129-1.152-.847l.284-1.238a.88.88 0 0 0-.208-.73l-.991-1c-.584-.589-.396-1.186.42-1.323l1.275-.213a.87.87 0 0 0 .564-.424l.704-1.42c.384-.77 1.008-.77 1.388 0" color="currentColor"/></svg>  
+        <span class="nav-text">Resultados</span>
+      </div>
+      <div class="nav-divider"></div>
+
+      <div class="nav-item" id="logout-btn" style="cursor:pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="nav-text">Cerrar<br>sesión</span>
+      </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('logout-btn').addEventListener('click', function() {
+                localStorage.removeItem('usuarioRol');
+                localStorage.removeItem('usuarioNombre');
+                window.location.href = '../index.html';
+            });
+            document.getElementById('logout-settings').addEventListener('click', function() {
+                window.location.href = 'configuracion_admin.html';
+            });
+            document.getElementById('logout-gestion').addEventListener('click', function() {
+                window.location.href = 'gestion_usuario_admin.html';
+            });
+            document.getElementById('logout-validation').addEventListener('click', function() {
+                window.location.href = 'validacion_fotos_admin.html';
+            });
+            
+        
+
+        });
+    </script>
+  </body>
+</html>

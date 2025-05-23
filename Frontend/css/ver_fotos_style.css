@@ -1,0 +1,149 @@
+.main-content {
+  margin-left: 220px;
+  padding: 2.5rem 1.5rem;
+  background: #f8f8ff;
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.fotos-container {
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0002;
+  padding: 2.5rem 2rem 2rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.fotos-container h2 {
+  text-align: center;
+  color: #232946;
+  font-size: 2.3rem;
+  margin-bottom: 2.2rem;
+  letter-spacing: 1px;
+  font-weight: bold;
+}
+
+.fotos-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2.2rem;
+  justify-content: center;
+  width: 100%;
+}
+
+.foto-item {
+  background: #f4f6fb;
+  border-radius: 16px;
+  box-shadow: 0 2px 12px #0001;
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  width: 290px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: box-shadow 0.2s, transform 0.2s;
+  position: relative;
+}
+
+.foto-item:hover {
+  box-shadow: 0 6px 24px #0002;
+  transform: translateY(-4px) scale(1.025);
+}
+
+.foto-img {
+  width: 100%;
+  max-width: 220px;
+  height: 180px;
+  border-radius: 12px;
+  margin-bottom: 1.1rem;
+  object-fit: cover;
+  background: #e0e4f6;
+  box-shadow: 0 1px 8px #0001;
+}
+
+.foto-info {
+  width: 100%;
+  text-align: center;
+}
+
+.foto-info h3 {
+  margin: 0.2rem 0 0.5rem 0;
+  font-size: 1.15rem;
+  color: #232946;
+  font-weight: bold;
+  letter-spacing: 0.5px;
+}
+
+.foto-info p {
+  font-size: 1rem;
+  color: #444;
+  margin-bottom: 0.7rem;
+  min-height: 32px;
+}
+
+.estado {
+  display: inline-block;
+  margin: 0.5rem 0;
+  font-weight: bold;
+  text-transform: capitalize;
+  padding: 0.3em 1em;
+  border-radius: 10px;
+  font-size: 1rem;
+  letter-spacing: 0.5px;
+  background: #e6eaff;
+  border: 1.5px solid #bcd;
+}
+
+.estado.pendiente { background: #fffbe6; color: #bfa600; border: 1.5px solid #f3e58d; }
+.estado.admitida  { background: #e8fbe6; color: #1a8a34; border: 1.5px solid #7be18a; }
+.estado.rechazada { background: #fdeaea; color: #b00; border: 1.5px solid #f5b6b6; }
+
+.eliminar-btn {
+  background: #232946;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.7rem 2rem;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+  margin-top: 1rem;
+  display: block;
+}
+
+.eliminar-btn:hover {
+  background: #1a1f2b;
+  transform: scale(1.06);
+}
+
+.mensaje {
+  text-align: center;
+  margin-top: 2.5rem;
+  font-weight: 600;
+  color: #232946;
+  font-size: 1.15rem;
+}
+
+@media (max-width: 900px) {
+  .main-content {
+    margin-left: 60px;
+    padding: 1.2rem 0.5rem;
+  }
+  .fotos-container {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+  }
+  .fotos-list {
+    gap: 1.2rem;
+  }
+  .foto-item {
+    width: 98vw;
+    max-width: 340px;
+  }
+}

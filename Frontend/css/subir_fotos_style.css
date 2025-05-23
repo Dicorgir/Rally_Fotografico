@@ -1,0 +1,81 @@
+/* Personaliza solo la subida de fotos */
+.form-container {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px #0002;
+  padding: 3rem 3.5rem;
+  max-width: 700px;
+  width: 100%;
+  min-height: 80vh;
+  margin: 50px auto;    
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.profile-header .title {
+  color: #232946;
+  font-size: 2.3rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  text-align: center;
+  letter-spacing: 1px;
+}
+
+.input-group label {
+  color: #232946;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+  display: block;
+}
+
+.input-group input[type="text"],
+.input-group textarea,
+.input-group input[type="file"] {
+  width: 100%;
+  border: 1.5px solid #bcd;
+  border-radius: 10px;
+  padding: 0.7rem;
+  margin-top: 0.3rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.08rem;
+  background: #f4f6fb;
+  transition: border 0.2s;
+}
+
+.input-group input[type="text"]:focus,
+.input-group textarea:focus {
+  border-color: #232946;
+  outline: none;
+}
+
+button.sign {
+    background: #232946;
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 0.9rem 2.5rem;
+    font-size: 1.15rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 1rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+button.sign:hover {
+  background: #1a1f2b;
+}
+
+#estado-subida {
+  font-size: 1.08rem;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 1.2rem;
+}
+#limite-fotos-msg {
+  text-align: center;
+  width: 100%;
+  display: block;
+}

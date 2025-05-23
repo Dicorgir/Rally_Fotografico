@@ -1,0 +1,73 @@
+.carousel {
+    width: 100%; /* Cambiar a 100% para ocupar todo el ancho */
+    margin: 0;
+    overflow: hidden;
+    position: relative;
+    left: 0; /* Ajustar para centrar correctamente */
+    transform: none; /* Eliminar la transformación */
+    border-radius: 15px; /* Bordes redondeados */
+    
+}
+.carousel-title {
+    position: absolute;
+    bottom: 500px; /* Ajusta la distancia desde la parte inferior */
+    left: 50%; /* Centra horizontalmente */
+    transform: translateX(-50%); /* Ajusta el centrado */
+    color: white;
+    font-size: 34px;
+    font-weight: bold;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Sombra para mejor visibilidad */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+    padding: 10px 20px;
+    border-radius: 10px;
+    z-index: 1; /* Asegura que el título esté por encima de la imagen */
+}
+.carousel-track {
+    display: flex;
+    transition: transform 0.5s ease-in-out;
+}
+.carousel-slide {
+    min-width: 100%;
+    box-sizing: border-box;
+}
+.carousel-slide img {
+    width: 100%; /* Mantener el ancho al 100% */
+    height: 700px; /* Asegurar que la altura se ajuste proporcionalmente */
+    object-fit: cover; /* Evitar que la imagen se deforme */
+    object-position: center; /* Centrar el recorte */
+    display: block;
+    filter: brightness(50%);
+
+}
+/* Aquí se controlan las flechas */
+.carousel-buttons {
+    position: absolute;
+    top: 40%; /* Cambiar este valor para subir o bajar las flechas */
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    transform: translateY(-50%);
+}
+.carousel-button {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+}
+.carousel-indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+.carousel-indicator {
+    width: 10px;
+    height: 10px;
+    background-color: gray;
+    border-radius: 50%;
+    margin: 0 5px;
+    cursor: pointer;
+}
+.carousel-indicator.active {
+    background-color: black;
+}

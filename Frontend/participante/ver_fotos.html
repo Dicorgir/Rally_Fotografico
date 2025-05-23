@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mis Fotos</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/ver_fotos_style.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  </head>
+  <body>
+    <div class="sidebar">
+      <!-- ...sidebar igual que en otras vistas... -->
+      <div class="logo" title="Rally Fotográfico">
+        <img src="../../img/logo_rallyFotografico.png" alt="Logo" style="width: 104px; height: 104px;" />
+      </div>
+      <a href="../index.html">
+        <div class="nav-item">
+          <i class="fa-solid fa-house"></i>
+          <span class="nav-text">Inicio</span>
+        </div>
+      </a>
+      <div class="nav-item" id="logout-profile">
+        <i class="fa-solid fa-user"></i>
+        <span class="nav-text">Perfil</span>
+      </div>
+      <div class="nav-item" id="logout-add-photos">
+        <i class="fa-solid fa-upload"></i>
+        <span class="nav-text">Subir <br> Fotos</span>
+      </div>
+      <div class="nav-item active" id="logout-view-photos">
+        <i class="fa-solid fa-images"></i>
+        <span class="nav-text">Ver <br>fotos</span>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-item" id="logout-btn" style="cursor:pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="nav-text">Cerrar<br>sesión</span>
+      </div>
+    </div>
+    <div class="main-content">
+      <div class="fotos-container">
+        <h2>Mis Fotografías</h2>
+        <div id="fotos-list" class="fotos-list"></div>
+        <div id="mensaje" class="mensaje"></div>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', async function() {
+        // Navegación sidebar
+        document.getElementById('logout-btn').onclick = function() {
+          localStorage.clear();
+          window.location.href = '../index.html';
+        };
+        document.getElementById('logout-profile').onclick = function() {
+          window.location.href = 'perfil_participante.html';
+        };
+        document.getElementById('logout-add-photos').onclick = function() {
+          window.location.href = 'subir_fotos.html';
+        };
+        document.getElementById('logout-view-photos').onclick = function() {
+          window.location.href = 'ver_fotos.html';
+        };
+
+        // Cargar fotos del usuario
+        const email = localStorage.getItem('usuarioEmail');
+        const fotosList = document.getElementById('fotos-list');
+        const mensaje = document.getElementById('mensaje');
+        fotosList.innerHTML = '';
+        mensaje.textContent = '';
+
+        if (!email) {
+          mensaje.textContent = "No se ha encontrado el usuario.";
+          return;
+        }
+
+        // Obtener fotos del usuario
+        const res = await fetch('http://localhost/Rally_Fotografico/Backend/fotos_usuario.php?email=' + encodeURIComponent(email));
+        const data = await res.json();
+
+        if (!data.success) {
+          mensaje.textContent = data.message || "No se pudieron cargar las fotos.";
+          return;
+        }
+
+        if (data.fotos.length === 0) {
+          mensaje.textContent = "No has subido ninguna foto.";
+          return;
+        }
+
+        data.fotos.forEach(foto => {
+          const fotoDiv = document.createElement('div');
+          fotoDiv.className = 'foto-item';
+          fotoDiv.innerHTML = `
+            <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-img"/>
+            <div class="foto-info">
+              <h3>${foto.titulo}</h3>
+              <p>${foto.descripcion || ''}</p>
+              <span class="estado ${foto.estado}">Estado: ${foto.estado}</span>
+              <button class="eliminar-btn" data-id="${foto.id_fotografia}"><i class="fa-solid fa-trash"></i> Eliminar</button>
+            </div>
+          `;
+          fotosList.appendChild(fotoDiv);
+        });
+
+        // Eliminar foto
+        fotosList.addEventListener('click', async function(e) {
+          if (e.target.closest('.eliminar-btn')) {
+            const btn = e.target.closest('.eliminar-btn');
+            const id = btn.getAttribute('data-id');
+            if (confirm('¿Seguro que quieres eliminar esta foto?')) {
+              const res = await fetch('http://localhost/Rally_Fotografico/Backend/eliminar_foto.php', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ id_fotografia: id, email })
+              });
+              const result = await res.json();
+              if (result.success) {
+                btn.closest('.foto-item').remove();
+                mensaje.textContent = "Foto eliminada correctamente.";
+              } else {
+                mensaje.textContent = result.message || "No se pudo eliminar la foto.";
+              }
+            }
+          }
+        });
+      });
+    </script>
+  </body>
+</html>

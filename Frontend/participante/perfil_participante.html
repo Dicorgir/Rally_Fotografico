@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Perfil Participante</title>
+    <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/perfil_style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  </head>
+  <body>
+    <!-- Sidebar igual que index.html -->
+    <div class="sidebar">
+      <div class="logo" title="Rally Fotográfico">
+        <img src="../../img/logo_rallyFotografico.png" alt="Logo" style="width: 104px; height: 104px;" />
+      </div>
+      <a href="../index.html">
+        <div class="nav-item">
+          <i class="fa-solid fa-house"></i>
+          <span class="nav-text">Inicio</span>
+        </div>
+      </a>
+      <!-- Opciones solo para participante -->
+      <div class="nav-item active" id="logout-profile">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M16 9a4 4 0 1 1-8 0a4 4 0 0 1 8 0m-2 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1M3 12c0 2.09.713 4.014 1.908 5.542A8.99 8.99 0 0 1 12.065 14a8.98 8.98 0 0 1 7.092 3.458A9 9 0 1 0 3 12m9 9a8.96 8.96 0 0 1-5.672-2.012A6.99 6.99 0 0 1 12.065 16a6.99 6.99 0 0 1 5.689 2.92A8.96 8.96 0 0 1 12 21"/></g></svg>
+        <span class="nav-text">Perfil</span>
+      </div>
+      <div class="nav-item" id="logout-add-photos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"><path d="M38 21v19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2h18.364"/><path fill="currentColor" d="M12 31.03L18 23l3 3l3.5-5.5L32 31.03z"/><path d="M34 10h8m-4.005-4.205v8"/></g></svg>
+        <span class="nav-text">Subir <br> Fotos</span>
+      </div>
+      <div class="nav-item" id="logout-view-photos">
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 8 8"><path fill="currentColor" d="m3 4l1-2l1 3H1l1-2m5 4V2h1v6H1V7m5-1V1H0v5"/></svg>
+        <span class="nav-text">Ver <br>fotos</span>
+      </div>
+      <div class="nav-divider"></div>
+      <div class="nav-item" id="logout-btn" style="cursor:pointer;">
+        <i class="fa-solid fa-right-from-bracket"></i>
+        <span class="nav-text">Cerrar<br>sesión</span>
+      </div>
+    </div>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('logout-btn').addEventListener('click', function() {
+          localStorage.removeItem('usuarioRol');
+          localStorage.removeItem('usuarioNombre');
+          window.location.href = '../index.html';
+        });
+        document.getElementById('logout-add-photos').addEventListener('click', function() {
+          window.location.href = 'subir_fotos.html';
+        });
+        document.getElementById('logout-view-photos').addEventListener('click', function() {
+          window.location.href = 'ver_fotos.html';
+        });
+        
+      });
+    </script>
+    <!-- ...sidebar y cabecera... -->
+    <div class="main-content">
+      <div class="form-container">
+        <div class="profile-header">
+          <img id="profile-pic" class="profile-pic" src="../../img/default_profile.png" alt="Foto de perfil" />
+          <p class="title">Mi Perfil 👤</p>
+        </div>
+        <form id="perfil-form" enctype="multipart/form-data">
+          <div class="input-group">
+            <label for="nombre_completo">Nombre completo</label>
+            <input id="nombre_completo" name="nombre_completo" type="text" required />
+          </div>
+          <div class="input-group">
+            <label for="email">Correo electrónico</label>
+            <input id="email" name="email" type="email" required />
+          </div>
+          <div class="input-group">
+            <label for="telefono">Teléfono</label>
+            <input id="telefono" name="telefono" type="tel" />
+          </div>
+          <div class="input-group">
+            <label for="fecha_nacimiento">Fecha de nacimiento</label>
+            <input id="fecha_nacimiento" name="fecha_nacimiento" type="date" />
+          </div>
+          <div class="input-group">
+            <label for="pais">País</label>
+            <input id="pais" name="pais" type="text" />
+          </div>
+          <div class="input-group">
+            <label for="genero">Género</label>
+            <select id="genero" name="genero">
+              <option value="">Selecciona tu género</option>
+              <option value="masculino">Masculino</option>
+              <option value="femenino">Femenino</option>
+              <option value="otro">Otro</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label for="foto_perfil">Foto de perfil</label>
+            <input id="foto_perfil" name="foto_perfil" type="file" accept="image/*" />
+          </div>
+          <button type="submit" class="sign">Guardar Cambios</button>
+        </form>
+      </div>
+    </div>
+    <script>
+    document.addEventListener('DOMContentLoaded', async function() {
+      const nombre = localStorage.getItem('usuarioNombre');
+      const email = localStorage.getItem('usuarioEmail'); // Guarda esto en login.js al autenticar
+
+      console.log(email); // <-- AQUÍ
+
+      // Obtener datos actuales del perfil
+      if (email) {
+        const res = await fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email));
+        if (res.ok) {
+          const data = await res.json();
+          document.getElementById('nombre_completo').value = data.nombre_completo || '';
+          document.getElementById('email').value = data.email || '';
+          document.getElementById('telefono').value = data.telefono || '';
+          document.getElementById('fecha_nacimiento').value = data.fecha_nacimiento || '';
+          document.getElementById('pais').value = data.pais || '';
+          document.getElementById('genero').value = data.genero || '';
+          // Mostrar la foto de perfil si existe
+          const profilePic = document.getElementById('profile-pic');
+          if (data.foto_perfil) {
+            profilePic.src = '../../Backend/' + data.foto_perfil;
+          } else {
+            profilePic.src = '../../img/default_profile.png';
+          }
+        }
+      }
+
+      // Guardar cambios
+      document.getElementById('perfil-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+        const form = document.getElementById('perfil-form');
+        const formData = new FormData(form);
+
+        // Si el email no es editable, añádelo manualmente:
+        formData.set('email', document.getElementById('email').value);
+
+        const res = await fetch('http://localhost/Rally_Fotografico/Backend/update_perfil.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        if (res.ok) {
+          alert('Perfil actualizado correctamente');
+          location.reload(); // Recarga la página para mostrar los datos/foto nuevos
+        } else {
+          alert('Error: ' + (data.message || 'No se pudo actualizar'));
+        }
+      });
+    });
+    </script>
+    <!-- ...resto del HTML... -->
+  </body>
+</html>
