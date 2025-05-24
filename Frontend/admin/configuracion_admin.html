@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Configuración Admin</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/carrusel_style.css" />
-    <link rel="stylesheet" href="../css/button_style.css" />
     <link rel="stylesheet" href="../css/login_style.css" />
+    <link rel="stylesheet" href="../css/configuracion_admin_style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -47,6 +46,29 @@
         <span class="nav-text">Cerrar<br>sesión</span>
       </div>
     </div>
+    <!-- Formulario de configuración del rally -->
+    <div class="main-content">
+      <div class="form-container">
+        <h2>Configuración de Rallies</h2>
+        <table id="tabla-rallies">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Inicio recepción</th>
+              <th>Fin recepción</th>
+              <th>Límite fotos</th>
+              <th>Inicio votación</th>
+              <th>Fin votación</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se llenarán los rallies -->
+          </tbody>
+        </table>
+        <div id="mensaje-config"></div>
+      </div>
+    </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('logout-btn').addEventListener('click', function() {
@@ -65,5 +87,47 @@
             });
         });
     </script>
+    <script>
+document.addEventListener('DOMContentLoaded', async function() {
+  // Cargar todos los rallies
+  const res = await fetch('../../Backend/get_rallies.php');
+  const rallies = await res.json();
+  const tbody = document.querySelector('#tabla-rallies tbody');
+  tbody.innerHTML = '';
+  rallies.forEach(rally => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><input type="text" value="${rally.nombre || ''}" data-campo="nombre"></td>
+      <td><input type="date" value="${rally.fecha_inicio || ''}" data-campo="fecha_inicio"></td>
+      <td><input type="date" value="${rally.fecha_fin || ''}" data-campo="fecha_fin"></td>
+      <td><input type="number" min="1" value="${rally.max_fotos_por_participante || 1}" data-campo="max_fotos_por_participante"></td>
+      <td><input type="date" value="${rally.fecha_inicio_votacion || ''}" data-campo="fecha_inicio_votacion"></td>
+      <td><input type="date" value="${rally.fecha_fin_votacion || ''}" data-campo="fecha_fin_votacion"></td>
+      <td><button class="guardar-btn" data-id="${rally.id_rally}">Guardar</button></td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Guardar cambios de un rally
+  tbody.addEventListener('click', async function(e) {
+    if (e.target.classList.contains('guardar-btn')) {
+      const tr = e.target.closest('tr');
+      const id_rally = e.target.dataset.id;
+      const inputs = tr.querySelectorAll('input');
+      const formData = new FormData();
+      formData.append('id_rally', id_rally);
+      inputs.forEach(input => {
+        formData.append(input.dataset.campo, input.value);
+      });
+      const res = await fetch('../../Backend/update_rally.php', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('mensaje-config').textContent = data.message || 'Configuración guardada';
+    }
+  });
+});
+</script>
   </body>
 </html>

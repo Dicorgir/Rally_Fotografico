@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Gestión Usuarios Admin</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/carrusel_style.css" />
     <link rel="stylesheet" href="../css/button_style.css" />
     <link rel="stylesheet" href="../css/login_style.css" />
+    <link rel="stylesheet" href="../css/gestion_usuario_admin_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -64,5 +64,98 @@
             });
         });
     </script>
+
+    <div class="main-content">
+      <div class="form-container">
+        <h2>Gestión de Usuarios</h2>
+        <table id="tabla-usuarios" class="tabla-admin">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Email</th>
+              <th>Teléfono</th>
+              <th>País</th>
+              <th>Género</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se llenarán los usuarios -->
+          </tbody>
+        </table>
+        <div id="mensaje-usuarios"></div>
+      </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', async function() {
+  // Cargar todos los usuarios
+  const res = await fetch('../../Backend/get_usuarios.php');
+  const usuarios = await res.json();
+  const tbody = document.querySelector('#tabla-usuarios tbody');
+  tbody.innerHTML = '';
+  usuarios.forEach(usuario => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${usuario.id_usuario}</td>
+      <td><input type="text" value="${usuario.nombre_completo || ''}" data-campo="nombre_completo"></td>
+      <td><input type="email" value="${usuario.email || ''}" data-campo="email"></td>
+      <td><input type="text" value="${usuario.telefono || ''}" data-campo="telefono"></td>
+      <td><input type="text" value="${usuario.pais || ''}" data-campo="pais"></td>
+      <td>
+        <select data-campo="genero">
+          <option value="Masculino" ${usuario.genero === 'Masculino' ? 'selected' : ''}>Masculino</option>
+          <option value="Femenino" ${usuario.genero === 'Femenino' ? 'selected' : ''}>Femenino</option>
+          <option value="Otro" ${usuario.genero === 'Otro' ? 'selected' : ''}>Otro</option>
+          <option value="Prefiero no decirlo" ${usuario.genero === 'Prefiero no decirlo' ? 'selected' : ''}>Prefiero no decirlo</option>
+        </select>
+      </td>
+      <td>
+        <button class="guardar-btn" data-id="${usuario.id_usuario}">Guardar</button>
+        <button class="eliminar-btn" data-id="${usuario.id_usuario}">Eliminar</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Guardar cambios de un usuario
+  tbody.addEventListener('click', async function(e) {
+    if (e.target.classList.contains('guardar-btn')) {
+      const tr = e.target.closest('tr');
+      const id_usuario = e.target.dataset.id;
+      const inputs = tr.querySelectorAll('input, select');
+      const formData = new FormData();
+      formData.append('id_usuario', id_usuario);
+      inputs.forEach(input => {
+        formData.append(input.dataset.campo, input.value);
+      });
+      const res = await fetch('../../Backend/update_usuario.php', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('mensaje-usuarios').textContent = data.message || 'Usuario actualizado';
+    }
+
+    // Eliminar usuario
+    if (e.target.classList.contains('eliminar-btn')) {
+      if (confirm('¿Seguro que quieres eliminar este usuario?')) {
+        const id_usuario = e.target.dataset.id;
+        const formData = new FormData();
+        formData.append('id_usuario', id_usuario);
+        const res = await fetch('../../Backend/delete_usuario.php', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await res.json();
+        document.getElementById('mensaje-usuarios').textContent = data.message || 'Usuario eliminado';
+        if (data.success) {
+          e.target.closest('tr').remove();
+        }
+      }
+    }
+  });
+});
+</script>
   </body>
 </html>

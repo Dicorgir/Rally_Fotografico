@@ -1,0 +1,130 @@
+.main-content {
+  margin-left: 220px;
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d3a4a;
+  margin: 42px 0 32px 32px;
+}
+
+#tabla-usuarios {
+  width: 95%;
+  margin: 0 32px 32px 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+#tabla-usuarios th, #tabla-usuarios td {
+  padding: 18px 12px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#tabla-usuarios th {
+  background: #f0f4fa;
+  color: #3a4a5a;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6ef;
+}
+
+#tabla-usuarios tr {
+  transition: background 0.2s;
+}
+
+#tabla-usuarios tr:hover {
+  background: #f9fafb;
+}
+
+#tabla-usuarios td {
+  border-bottom: 1px solid #e0e6ef;
+}
+
+#tabla-usuarios input[type="text"],
+#tabla-usuarios input[type="email"] {
+  width: 100%;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 1rem;
+  background: #f9fafb;
+  transition: border 0.2s;
+}
+
+#tabla-usuarios input:focus {
+  border-color: #4f8cff;
+  outline: none;
+}
+
+.guardar-btn,
+.eliminar-btn {
+  padding: 8px 18px;
+  margin: 2px 2px;
+  background: linear-gradient(90deg, #4f8cff 0%, #6f6fff 100%);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+  transition: background 0.2s;
+}
+
+.eliminar-btn {
+  background: linear-gradient(90deg, #e53935 0%, #ff7675 100%);
+}
+
+.guardar-btn:hover {
+  background: linear-gradient(90deg, #6f6fff 0%, #4f8cff 100%);
+}
+
+.eliminar-btn:hover {
+  background: linear-gradient(90deg, #ff7675 0%, #e53935 100%);
+}
+
+#mensaje-usuarios {
+  margin: 18px 32px 0 32px;
+  color: #1a8a34;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 900px) {
+  #tabla-usuarios {
+    margin: 0 8px 8px 8px;
+    font-size: 0.95rem;
+  }
+  h2 {
+    margin-left: 8px;
+    font-size: 1.3rem;
+  }
+  #mensaje-usuarios {
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 0.95rem;
+  }
+}
