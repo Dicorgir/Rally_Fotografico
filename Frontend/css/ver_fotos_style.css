@@ -23,7 +23,7 @@
 
 .fotos-container h2 {
   text-align: center;
-  color: #232946;
+  color: #e53935; /* Rojo */
   font-size: 2.3rem;
   margin-bottom: 2.2rem;
   letter-spacing: 1px;
@@ -87,6 +87,16 @@
   min-height: 32px;
 }
 
+.eliminar-btn {
+  background: #232946;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  padding: 0.6rem 1.2rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
 .estado {
   display: inline-block;
   margin: 0.5rem 0;
@@ -104,19 +114,7 @@
 .estado.admitida  { background: #e8fbe6; color: #1a8a34; border: 1.5px solid #7be18a; }
 .estado.rechazada { background: #fdeaea; color: #b00; border: 1.5px solid #f5b6b6; }
 
-.eliminar-btn {
-  background: #232946;
-  color: #fff;
-  border: none;
-  border-radius: 10px;
-  padding: 0.7rem 2rem;
-  font-size: 1.08rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
-  margin-top: 1rem;
-  display: block;
-}
+
 
 .eliminar-btn:hover {
   background: #1a1f2b;

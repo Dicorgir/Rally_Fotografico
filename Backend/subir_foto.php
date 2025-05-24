@@ -24,13 +24,11 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Obtener rally activo
-$rally = $mysqli->query("SELECT id_rally FROM rallies WHERE CURDATE() BETWEEN fecha_inicio AND fecha_fin LIMIT 1");
-if ($rally->num_rows == 0) {
-    echo json_encode(['success' => false, 'message' => 'No hay rally activo']);
+$id_rally = $_POST['rally'] ?? null;
+if (!$id_rally) {
+    echo json_encode(['success' => false, 'message' => 'No se seleccionó rally']);
     exit;
 }
-$id_rally = $rally->fetch_assoc()['id_rally'];
 
 // Validar y convertir la imagen a base64
 $foto = $_FILES['foto'];

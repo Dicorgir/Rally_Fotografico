@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Mis Fotos</title>
-    <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/ver_fotos_style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -96,6 +96,7 @@
             <div class="foto-info">
               <h3>${foto.titulo}</h3>
               <p>${foto.descripcion || ''}</p>
+              <p class="rally-nombre"><strong>Rally:</strong> ${foto.nombre_rally || 'Desconocido'}</p>
               <span class="estado ${foto.estado}">Estado: ${foto.estado}</span>
               <button class="eliminar-btn" data-id="${foto.id_fotografia}"><i class="fa-solid fa-trash"></i> Eliminar</button>
             </div>

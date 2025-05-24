@@ -74,9 +74,25 @@ INSERT INTO usuarios (nombre_completo, email, contrasena, rol) VALUES
 INSERT INTO rallies (nombre, fecha_inicio, fecha_fin, max_fotos_por_participante, fecha_inicio_votacion, fecha_fin_votacion) VALUES 
 (
     'Rally Primavera 2025',
-    '2025-05-01',   -- fecha_inicio (ajusta según tu necesidad)
-    '2025-06-30',   -- fecha_fin (ajusta según tu necesidad)
-    5,              -- max_fotos_por_participante
-    '2025-06-01',   -- fecha_inicio_votacion
-    '2025-06-30'    -- fecha_fin_votacion
+    '2025-05-01',
+    '2025-06-30',
+    5,
+    '2025-06-01',
+    '2025-06-30'
+),
+(
+    'Rally Verano 2025',
+    '2025-07-01',
+    '2025-08-31',
+    5,
+    '2025-08-01',
+    '2025-08-31'
+),
+(
+    'Rally Otoño 2025',
+    '2025-09-15',
+    '2025-11-15',
+    5,
+    '2025-11-01',
+    '2025-11-15'
 );

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Subir Fotos</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/subir_fotos_style.css" /> <!-- Nuevo CSS solo para esta vista -->
+    <link rel="stylesheet" href="../css/subir_fotos_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -40,10 +40,10 @@
       </div>
     </div>
     <div class="main-content">
-      <div class="form-container">
-        <div class="profile-header">
+      <div class="profile-header">
           <p class="title">Subir Fotografía 📸</p>
         </div>
+      <div class="form-container">
         <form id="foto-form" enctype="multipart/form-data">
           <div class="input-group">
             <label for="titulo">Título</label>
@@ -57,8 +57,13 @@
             <label for="foto">Selecciona tu foto (JPG/PNG, máx. 5MB)</label>
             <input id="foto" name="foto" type="file" accept="image/jpeg,image/png" required />
           </div>
+          <div class="input-group">
+            <label>Selecciona el rally</label>
+            <div id="rallies-cards" class="rallies-cards"></div>
+            <input type="hidden" id="rally" name="rally" required>
+          </div>
           <button type="submit" class="sign">Subir Foto</button>
-          <p id="limite-fotos-msg" style="color: #b00; margin-top: 10px;"></p>
+          <p id="limite-fotos-msg" style="color: rgb(189, 5, 5); margin-top: 10px;"></p>
         </form>
         <div id="estado-subida" style="margin-top: 15px;"></div>
       </div>
@@ -102,6 +107,61 @@
           }
         }
 
+        // Obtener rallies activos
+        const ralliesCards = document.getElementById('rallies-cards');
+        const rallyInput = document.getElementById('rally');
+        const resRallies = await fetch('http://localhost/Rally_Fotografico/Backend/rallies_todos.php');
+        const ralliesData = await resRallies.json();
+
+        if (ralliesData.success && ralliesData.rallies.length > 0) {
+          ralliesCards.innerHTML = '';
+          let activoSeleccionado = false;
+          ralliesData.rallies.forEach(rally => {
+            const card = document.createElement('div');
+            card.className = 'rally-card';
+            const hoy = new Date().toISOString().slice(0, 10);
+            let estado = '';
+            let esActivo = false;
+            if (hoy >= rally.fecha_inicio && hoy <= rally.fecha_fin) {
+              estado = '<span class="estado activo">Activo</span>';
+              card.classList.add('activo');
+              esActivo = true;
+              if (!activoSeleccionado) {
+                card.classList.add('seleccionado');
+                rallyInput.value = rally.id_rally;
+                activoSeleccionado = true;
+              }
+            } else if (hoy < rally.fecha_inicio) {
+              estado = '<span class="estado">Próximamente</span>';
+              card.classList.add('inactivo');
+            } else {
+              estado = '<span class="estado">Finalizado</span>';
+              card.classList.add('inactivo');
+            }
+            card.innerHTML = `
+              <strong>${rally.nombre}</strong>
+              <div style="font-size:0.95em;">${rally.fecha_inicio} a ${rally.fecha_fin}</div>
+              ${estado}
+            `;
+            if (esActivo) {
+              card.addEventListener('click', function() {
+                document.querySelectorAll('.rally-card.activo').forEach(c => c.classList.remove('seleccionado'));
+                card.classList.add('seleccionado');
+                rallyInput.value = rally.id_rally;
+              });
+            }
+            ralliesCards.appendChild(card);
+          });
+          // Si no hay rally activo, deshabilita el formulario
+          if (!activoSeleccionado) {
+            document.getElementById('foto-form').style.display = 'none';
+            ralliesCards.innerHTML += '<div style="color:#b00;">No hay rallies activos para subir fotos.</div>';
+          }
+        } else {
+          ralliesCards.innerHTML = '<div style="color:#b00;">No hay rallies disponibles.</div>';
+          document.getElementById('foto-form').style.display = 'none';
+        }
+
         // Validación y subida
         document.getElementById('foto-form').addEventListener('submit', async function(e) {
           e.preventDefault();
@@ -138,6 +198,7 @@
             estadoSubida.style.color = "green";
             estadoSubida.textContent = "Foto subida correctamente. Queda pendiente de validación.";
             this.reset();
+            document.querySelectorAll('.rally-card').forEach(c => c.classList.remove('selected'));
           } else {
             estadoSubida.style.color = "red";
             estadoSubida.textContent = data.message || "Error al subir la foto.";

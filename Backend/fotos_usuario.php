@@ -28,11 +28,16 @@ if ($rally->num_rows == 0) {
 }
 $id_rally = $rally->fetch_assoc()['id_rally'];
 
-// Obtener fotos del usuario en el rally activo
-$stmt = $mysqli->prepare("SELECT id_fotografia, titulo, descripcion, imagen_base64, estado FROM fotografias WHERE id_usuario = ? AND id_rally = ?");
+// Obtener fotos del usuario en el rally activo (ahora con nombre del rally)
+$stmt = $mysqli->prepare("
+    SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.estado, r.nombre AS nombre_rally
+    FROM fotografias f
+    JOIN rallies r ON f.id_rally = r.id_rally
+    WHERE f.id_usuario = ? AND f.id_rally = ?
+");
 $stmt->bind_param("ii", $id_usuario, $id_rally);
 $stmt->execute();
-$stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $estado);
+$stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $estado, $nombre_rally);
 
 $fotos = [];
 while ($stmt->fetch()) {
@@ -41,7 +46,8 @@ while ($stmt->fetch()) {
         'titulo' => $titulo,
         'descripcion' => $descripcion,
         'imagen_base64' => $imagen_base64,
-        'estado' => $estado
+        'estado' => $estado,
+        'nombre_rally' => $nombre_rally
     ];
 }
 $stmt->close();
