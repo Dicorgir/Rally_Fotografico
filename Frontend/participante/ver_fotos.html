@@ -33,6 +33,9 @@
         <span class="nav-text">Ver <br>fotos</span>
       </div>
       <div class="nav-divider"></div>
+      <div class="sidebar-profile-pic-container">
+        <img id="sidebar-profile-pic" class="sidebar-profile-pic" src="../../img/default_profile.png" alt="Foto de perfil" />
+      </div>
       <div class="nav-item" id="logout-btn" style="cursor:pointer;">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span class="nav-text">Cerrar<br>sesión</span>
@@ -68,6 +71,21 @@
         const mensaje = document.getElementById('mensaje');
         fotosList.innerHTML = '';
         mensaje.textContent = '';
+
+        // Mostrar foto de perfil y nombre en el sidebar
+        const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
+        if (email) {
+          fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email))
+            .then(res => res.json())
+            .then(data => {
+              if (data.foto_perfil) {
+                sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
+              } else {
+                sidebarProfilePic.src = '../../img/default_profile.png';
+              }
+              sidebarProfilePic.title = data.nombre_completo || 'Usuario';
+            });
+        }
 
         if (!email) {
           mensaje.textContent = "No se ha encontrado el usuario.";

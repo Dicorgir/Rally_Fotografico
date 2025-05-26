@@ -34,6 +34,9 @@
         <span class="nav-text">Ver <br>fotos</span>
       </div>
       <div class="nav-divider"></div>
+      <div class="sidebar-profile-pic-container">
+        <img id="sidebar-profile-pic" class="sidebar-profile-pic" src="../../img/default_profile.png" alt="Foto de perfil" />
+      </div>
       <div class="nav-item" id="logout-btn" style="cursor:pointer;">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span class="nav-text">Cerrar<br>sesión</span>
@@ -86,8 +89,23 @@
         });
       });
       document.addEventListener('DOMContentLoaded', async function() {
-        // Obtener email y límite de fotos del usuario
+        // Mostrar foto de perfil y nombre en el sidebar
         const email = localStorage.getItem('usuarioEmail');
+        const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
+        if (email) {
+          fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email))
+            .then(res => res.json())
+            .then(data => {
+              if (data.foto_perfil) {
+                sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
+              } else {
+                sidebarProfilePic.src = '../../img/default_profile.png';
+              }
+              sidebarProfilePic.title = data.nombre_completo || 'Usuario';
+            });
+        }
+
+        // Obtener email y límite de fotos del usuario
         let maxFotos = 5; // Por defecto, pero deberías obtenerlo del backend según el rally activo
         let fotosSubidas = 0;
 
@@ -143,13 +161,29 @@
               <div style="font-size:0.95em;">${rally.fecha_inicio} a ${rally.fecha_fin}</div>
               ${estado}
             `;
-            if (esActivo) {
-              card.addEventListener('click', function() {
-                document.querySelectorAll('.rally-card.activo').forEach(c => c.classList.remove('seleccionado'));
-                card.classList.add('seleccionado');
-                rallyInput.value = rally.id_rally;
-              });
-            }
+            // Cuando el usuario selecciona un rally activo:
+            card.addEventListener('click', async function() {
+              document.querySelectorAll('.rally-card.activo').forEach(c => c.classList.remove('seleccionado'));
+              card.classList.add('seleccionado');
+              rallyInput.value = rally.id_rally;
+
+              // Consulta al backend cuántas fotos ha subido el usuario a este rally
+              if (email) {
+                const res = await fetch('http://localhost/Rally_Fotografico/Backend/contar_fotos_usuario.php?email='
+                  + encodeURIComponent(email) + '&id_rally=' + rally.id_rally);
+                if (res.ok) {
+                  const data = await res.json();
+                  document.getElementById('limite-fotos-msg').textContent =
+                    `Has subido ${data.fotos_subidas} de ${data.max_fotos} fotos permitidas a este rally (${data.nombre_rally}).`;
+                  if (data.fotos_subidas >= data.max_fotos) {
+                    document.getElementById('foto-form').style.display = 'none';
+                    document.getElementById('limite-fotos-msg').textContent += " Ya no puedes subir más fotos.";
+                  } else {
+                    document.getElementById('foto-form').style.display = '';
+                  }
+                }
+              }
+            });
             ralliesCards.appendChild(card);
           });
           // Si no hay rally activo, deshabilita el formulario
@@ -161,6 +195,9 @@
           ralliesCards.innerHTML = '<div style="color:#b00;">No hay rallies disponibles.</div>';
           document.getElementById('foto-form').style.display = 'none';
         }
+
+        // Al cargar la página, no muestres ningún mensaje
+        document.getElementById('limite-fotos-msg').textContent = '';
 
         // Validación y subida
         document.getElementById('foto-form').addEventListener('submit', async function(e) {

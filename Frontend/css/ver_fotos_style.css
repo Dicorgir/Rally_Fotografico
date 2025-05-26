@@ -165,3 +165,18 @@
   padding: 0.5em 0.7em;
   border: 1.5px solid #f5b6b6;
 }
+
+.sidebar-profile-pic-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 18px 0 12px 0;
+}
+.sidebar-profile-pic {
+  width: 64px;
+  height: 64px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #4f8cff;
+  background: #f0f0f0;
+}

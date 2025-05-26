@@ -34,6 +34,10 @@
         <span class="nav-text">Ver <br>fotos</span>
       </div>
       <div class="nav-divider"></div>
+      <!-- Foto de perfil en el sidebar -->
+      <div class="sidebar-profile-pic-container">
+        <img id="sidebar-profile-pic" class="sidebar-profile-pic" src="../../img/default_profile.png" alt="Foto de perfil" />
+      </div>
       <div class="nav-item" id="logout-btn" style="cursor:pointer;">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span class="nav-text">Cerrar<br>sesión</span>
@@ -120,10 +124,13 @@
           document.getElementById('genero').value = data.genero || '';
           // Mostrar la foto de perfil si existe
           const profilePic = document.getElementById('profile-pic');
+          const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
           if (data.foto_perfil) {
             profilePic.src = '../../Backend/' + data.foto_perfil;
+            sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
           } else {
             profilePic.src = '../../img/default_profile.png';
+            sidebarProfilePic.src = '../../img/default_profile.png';
           }
         }
       }
@@ -151,6 +158,5 @@
       });
     });
     </script>
-    <!-- ...resto del HTML... -->
   </body>
 </html>

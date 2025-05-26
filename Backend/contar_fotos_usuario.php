@@ -3,9 +3,10 @@ header('Content-Type: application/json');
 require_once 'conexion.php';
 
 $email = $_GET['email'] ?? '';
+$id_rally = $_GET['id_rally'] ?? '';
 
-if (!$email) {
-    echo json_encode(['error' => 'Email no proporcionado']);
+if (!$email || !$id_rally) {
+    echo json_encode(['error' => 'Email o ID de rally no proporcionados']);
     exit;
 }
 
@@ -20,17 +21,7 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Obtener el rally activo
-$rally = $mysqli->query("SELECT id_rally, max_fotos_por_participante FROM rallies WHERE CURDATE() BETWEEN fecha_inicio AND fecha_fin LIMIT 1");
-if ($rally->num_rows == 0) {
-    echo json_encode(['error' => 'No hay rally activo']);
-    exit;
-}
-$rallyData = $rally->fetch_assoc();
-$id_rally = $rallyData['id_rally'];
-$max_fotos = (int)$rallyData['max_fotos_por_participante'];
-
-// Contar fotos subidas por el usuario en el rally activo
+// Contar fotos subidas por usuario a ese rally
 $stmt = $mysqli->prepare("SELECT COUNT(*) FROM fotografias WHERE id_usuario = ? AND id_rally = ?");
 $stmt->bind_param("ii", $id_usuario, $id_rally);
 $stmt->execute();
@@ -38,8 +29,18 @@ $stmt->bind_result($fotos_subidas);
 $stmt->fetch();
 $stmt->close();
 
+// Obtener el máximo de fotos permitidas para ese rally
+$stmt = $mysqli->prepare("SELECT max_fotos_por_participante, nombre FROM rallies WHERE id_rally = ?");
+$stmt->bind_param("i", $id_rally);
+$stmt->execute();
+$stmt->bind_result($max_fotos, $nombre_rally);
+$stmt->fetch();
+$stmt->close();
+
 echo json_encode([
-    'fotos_subidas' => (int)$fotos_subidas,
-    'max_fotos' => $max_fotos
+    'fotos_subidas' => $fotos_subidas,
+    'max_fotos' => $max_fotos,
+    'nombre_rally' => $nombre_rally
 ]);
+$mysqli->close();
 ?>

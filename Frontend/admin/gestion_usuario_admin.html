@@ -71,7 +71,7 @@
         <table id="tabla-usuarios" class="tabla-admin">
           <thead>
             <tr>
-              <th>ID</th>
+              <th>Foto</th>
               <th>Nombre</th>
               <th>Email</th>
               <th>Teléfono</th>
@@ -97,7 +97,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   usuarios.forEach(usuario => {
     const tr = document.createElement('tr');
     tr.innerHTML = `
-      <td>${usuario.id_usuario}</td>
+      <td>
+        <img src="../../Backend/${usuario.foto_perfil ? usuario.foto_perfil : '../img/default_profile.png'}"
+             alt="Foto perfil"
+             style="width:48px;height:48px;object-fit:cover;border-radius:50%;border:2px solid #e0e6ef;">
+      </td>
       <td><input type="text" value="${usuario.nombre_completo || ''}" data-campo="nombre_completo"></td>
       <td><input type="email" value="${usuario.email || ''}" data-campo="email"></td>
       <td><input type="text" value="${usuario.telefono || ''}" data-campo="telefono"></td>
