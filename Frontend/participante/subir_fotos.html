@@ -199,6 +199,7 @@
             estadoSubida.textContent = "Foto subida correctamente. Queda pendiente de validación.";
             this.reset();
             document.querySelectorAll('.rally-card').forEach(c => c.classList.remove('selected'));
+            setTimeout(() => location.reload(), 1200); // Recarga la página después de 1.2 segundos
           } else {
             estadoSubida.style.color = "red";
             estadoSubida.textContent = data.message || "Error al subir la foto.";

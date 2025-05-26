@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="../css/style.css" />
     <link rel="stylesheet" href="../css/carrusel_style.css" />
     <link rel="stylesheet" href="../css/button_style.css" />
-    <link rel="stylesheet" href="../css/login_style.css" />
+    <link rel="stylesheet" href="../css/resultados_admin_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -67,5 +67,61 @@
 
         });
     </script>
+    <div class="main-content">
+      <div class="form-container">
+        <h2>Estadísticas y Resultados</h2>
+        <div id="estadisticas">
+          <div class="estadistica-item"><strong>Total de usuarios:</strong> <span id="total-usuarios">-</span></div>
+          <div class="estadistica-item"><strong>Total de rallies:</strong> <span id="total-rallies">-</span></div>
+          <div class="estadistica-item"><strong>Total de fotografías:</strong> <span id="total-fotos">-</span></div>
+          <div class="estadistica-item"><strong>Fotos admitidas:</strong> <span id="fotos-admitidas">-</span></div>
+          <div class="estadistica-item"><strong>Fotos rechazadas:</strong> <span id="fotos-rechazadas">-</span></div>
+          <div class="estadistica-item"><strong>Fotos pendientes:</strong> <span id="fotos-pendientes">-</span></div>
+        </div>
+        <h3 style="margin-top:2em;">Ganadores por rally</h3>
+        <table id="tabla-ganadores">
+          <thead>
+            <tr>
+              <th>Rally</th>
+              <th>Foto ganadora</th>
+              <th>Usuario</th>
+              <th>Votos</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se llenarán los ganadores -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', async function() {
+  // Estadísticas generales
+  const resEst = await fetch('../../Backend/estadisticas_admin.php');
+  const est = await resEst.json();
+  document.getElementById('total-usuarios').textContent = est.total_usuarios;
+  document.getElementById('total-rallies').textContent = est.total_rallies;
+  document.getElementById('total-fotos').textContent = est.total_fotos;
+  document.getElementById('fotos-admitidas').textContent = est.fotos_admitidas;
+  document.getElementById('fotos-rechazadas').textContent = est.fotos_rechazadas;
+  document.getElementById('fotos-pendientes').textContent = est.fotos_pendientes;
+
+  // Ganadores por rally
+  const resGan = await fetch('../../Backend/ganadores_rallies.php');
+  const ganadores = await resGan.json();
+  const tbody = document.querySelector('#tabla-ganadores tbody');
+  tbody.innerHTML = '';
+  ganadores.forEach(g => {
+    tbody.innerHTML += `
+      <tr>
+        <td>${g.nombre_rally}</td>
+        <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;"></td>
+        <td>${g.nombre_usuario}</td>
+        <td>${g.total_votos}</td>
+      </tr>
+    `;
+  });
+});
+</script>
   </body>
 </html>

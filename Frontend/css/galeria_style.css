@@ -1,0 +1,109 @@
+/* Cards de rallies */
+.rallies-cards-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  margin: 2rem 0 2rem 0;
+  justify-content: center; /* Centra horizontalmente las cards */
+}
+.rally-card {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(60,60,120,0.10);
+  padding: 1.5rem 2rem;
+  min-width: 220px;
+  max-width: 320px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+.rally-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  box-shadow: 0 8px 32px rgba(60,60,120,0.16);
+}
+.rally-card h3 {
+  margin: 0 0 0.5em 0;
+  color: #2d3a4a;
+  font-size: 1.3rem;
+}
+.rally-card p {
+  margin: 0.2em 0;
+  color: #3a4a5a;
+  font-size: 1rem;
+}
+.rally-card .ver-fotos-btn {
+  margin-top: 1em;
+  background: linear-gradient(90deg, #4f8cff 0%, #6f6fff 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.rally-card .ver-fotos-btn:hover {
+  background: linear-gradient(90deg, #6f6fff 0%, #4f8cff 100%);
+}
+
+/* Fotos de la galería */
+.foto-galeria {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(60,60,120,0.10);
+  padding: 1.5rem 2rem;
+  margin: 1.2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;      /* Centra el contenido de cada card */
+  min-width: 220px;
+  max-width: 320px;
+  transition: transform 0.15s, box-shadow 0.15s;
+  cursor: pointer;
+}
+
+.foto-galeria-img {
+  width: 210px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-bottom: 0.7em;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.12);
+}
+
+.foto-galeria-titulo {
+  font-size: 1.18rem;
+  font-weight: 700;
+  color: #2d3a4a;
+  margin: 0.3em 0 0.7em 0;
+  text-align: center;
+  word-break: break-word;
+}
+
+.galeria-fotos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  justify-content: center;   /* Centra horizontalmente */
+  align-items: center;       /* Centra verticalmente las cards en la fila */
+  margin-top: 2em;
+}
+
+.dislike-btn {
+  margin-top: 0.5em;
+  background: linear-gradient(90deg, #ff4f4f 0%, #ff6f6f 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 18px;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.2s;
+}
+.dislike-btn:hover {
+  background: linear-gradient(90deg, #ff6f6f 0%, #ff4f4f 100%);
+}

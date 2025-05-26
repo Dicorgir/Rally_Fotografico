@@ -89,8 +89,20 @@
         }
 
         data.fotos.forEach(foto => {
+          let motivo = '';
+          if (!foto.eliminable) {
+            const hoy = new Date();
+            const fechaInicio = new Date(foto.fecha_inicio);
+            const fechaFin = new Date(foto.fecha_fin);
+            if (hoy < fechaInicio) {
+              motivo = 'No se puede eliminar la foto porque el rally aún no ha comenzado.';
+            } else if (hoy > fechaFin) {
+              motivo = 'No se puede eliminar la foto porque el rally ya ha finalizado.';
+            }
+          }
+
           const fotoDiv = document.createElement('div');
-          fotoDiv.className = 'foto-item';
+          fotoDiv.className = 'foto-item' + (foto.eliminable ? '' : ' desactivada');
           fotoDiv.innerHTML = `
             <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-img"/>
             <div class="foto-info">
@@ -98,7 +110,8 @@
               <p>${foto.descripcion || ''}</p>
               <p class="rally-nombre"><strong>Rally:</strong> ${foto.nombre_rally || 'Desconocido'}</p>
               <span class="estado ${foto.estado}">Estado: ${foto.estado}</span>
-              <button class="eliminar-btn" data-id="${foto.id_fotografia}"><i class="fa-solid fa-trash"></i> Eliminar</button>
+              <button class="eliminar-btn" data-id="${foto.id_fotografia}" ${foto.eliminable ? '' : 'disabled'}><i class="fa-solid fa-trash"></i> Eliminar</button>
+              ${!foto.eliminable ? `<div class="motivo-no-eliminar">${motivo}</div>` : ''}
             </div>
           `;
           fotosList.appendChild(fotoDiv);

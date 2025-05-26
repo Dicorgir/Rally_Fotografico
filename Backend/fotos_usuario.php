@@ -20,34 +20,31 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Obtener rally activo
-$rally = $mysqli->query("SELECT id_rally FROM rallies WHERE CURDATE() BETWEEN fecha_inicio AND fecha_fin LIMIT 1");
-if ($rally->num_rows == 0) {
-    echo json_encode(['success' => false, 'message' => 'No hay rally activo', 'fotos' => []]);
-    exit;
-}
-$id_rally = $rally->fetch_assoc()['id_rally'];
-
-// Obtener fotos del usuario en el rally activo (ahora con nombre del rally)
+// Obtener todas las fotos del usuario en todos los rallies
 $stmt = $mysqli->prepare("
-    SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.estado, r.nombre AS nombre_rally
+    SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.estado, r.nombre AS nombre_rally, r.fecha_inicio, r.fecha_fin
     FROM fotografias f
     JOIN rallies r ON f.id_rally = r.id_rally
-    WHERE f.id_usuario = ? AND f.id_rally = ?
+    WHERE f.id_usuario = ?
 ");
-$stmt->bind_param("ii", $id_usuario, $id_rally);
+$stmt->bind_param("i", $id_usuario);
 $stmt->execute();
-$stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $estado, $nombre_rally);
+$stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $estado, $nombre_rally, $fecha_inicio, $fecha_fin);
 
+$hoy = date('Y-m-d');
 $fotos = [];
 while ($stmt->fetch()) {
+    $eliminable = ($hoy >= $fecha_inicio && $hoy <= $fecha_fin);
     $fotos[] = [
         'id_fotografia' => $id_fotografia,
         'titulo' => $titulo,
         'descripcion' => $descripcion,
         'imagen_base64' => $imagen_base64,
         'estado' => $estado,
-        'nombre_rally' => $nombre_rally
+        'nombre_rally' => $nombre_rally,
+        'eliminable' => $eliminable,
+        'fecha_inicio' => $fecha_inicio,
+        'fecha_fin' => $fecha_fin
     ];
 }
 $stmt->close();

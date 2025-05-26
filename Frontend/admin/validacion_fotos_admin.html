@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Validación Fotos Admin</title>
     <link rel="stylesheet" href="../css/style.css" />
-    <link rel="stylesheet" href="../css/carrusel_style.css" />
     <link rel="stylesheet" href="../css/button_style.css" />
-    <link rel="stylesheet" href="../css/login_style.css" />
+    <link rel="stylesheet" href="../css/validacion_fotos_admin_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -67,5 +66,71 @@
             
         });
     </script>
+    <div class="main-content">
+      <div class="form-container">
+        <h2>Validación de Fotografías</h2>
+        <table id="tabla-fotos">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Usuario</th>
+              <th>Rally</th>
+              <th>Estado</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Aquí se llenarán las fotos -->
+          </tbody>
+        </table>
+        <div id="mensaje-fotos"></div>
+      </div>
+    </div>
+    <script>
+document.addEventListener('DOMContentLoaded', async function() {
+  // Cargar todas las fotos pendientes
+  const res = await fetch('../../Backend/get_fotos_pendientes.php');
+  const fotos = await res.json();
+  const tbody = document.querySelector('#tabla-fotos tbody');
+  tbody.innerHTML = '';
+  fotos.forEach(foto => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td><img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="Foto" style="max-width:120px;max-height:90px;border-radius:8px;"></td>
+      <td>${foto.nombre_usuario}</td>
+      <td>${foto.nombre_rally}</td>
+      <td>
+        <span class="estado-${foto.estado}">${foto.estado.charAt(0).toUpperCase() + foto.estado.slice(1)}</span>
+      </td>
+      <td>
+        ${foto.estado === 'pendiente' ? `
+          <button class="admitir-btn" data-id="${foto.id_fotografia}">Admitir</button>
+          <button class="rechazar-btn" data-id="${foto.id_fotografia}">Rechazar</button>
+        ` : ''}
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Acciones de admitir/rechazar
+  tbody.addEventListener('click', async function(e) {
+    if (e.target.classList.contains('admitir-btn') || e.target.classList.contains('rechazar-btn')) {
+      const id_foto = e.target.dataset.id;
+      const nuevoEstado = e.target.classList.contains('admitir-btn') ? 'admitida' : 'rechazada';
+      const formData = new FormData();
+      formData.append('id_fotografia', id_foto);
+      formData.append('estado', nuevoEstado);
+      const res = await fetch('../../Backend/actualizar_estado_foto.php', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('mensaje-fotos').textContent = data.message || 'Estado actualizado';
+      // Recargar la tabla (opcional: puedes actualizar solo la fila)
+      setTimeout(() => location.reload(), 1000);
+    }
+  });
+});
+</script>
   </body>
 </html>

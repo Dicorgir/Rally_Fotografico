@@ -2,15 +2,13 @@
 header('Content-Type: application/json');
 require_once 'conexion.php';
 
-// Obtener rally activo (puedes ajustar la lógica según tus reglas)
-$rally = $mysqli->query("SELECT id_rally FROM rallies WHERE CURDATE() BETWEEN fecha_inicio AND fecha_fin LIMIT 1");
-if ($rally->num_rows == 0) {
-    echo json_encode(['success' => false, 'message' => 'No hay rally activo', 'fotos' => []]);
+$id_rally = $_GET['id_rally'] ?? null;
+if (!$id_rally) {
+    echo json_encode(['success' => false, 'message' => 'Rally no especificado', 'fotos' => []]);
     exit;
 }
-$id_rally = $rally->fetch_assoc()['id_rally'];
 
-// Obtener fotos admitidas y sus votos
+// Obtener fotos admitidas y sus votos del rally seleccionado
 $stmt = $mysqli->prepare("
     SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.total_votos
     FROM fotografias f

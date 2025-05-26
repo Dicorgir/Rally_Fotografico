@@ -1,0 +1,100 @@
+.main-content {
+  margin-left: 220px;
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+}
+
+h2, h3 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d3a4a;
+  margin: 42px 0 32px 32px;
+}
+h3 {
+  font-size: 1.3rem;
+  margin-top: 2em;
+}
+
+#estadisticas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2em;
+  margin: 32px 32px 0 32px;
+}
+.estadistica-item {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 4px 16px rgba(60,60,120,0.08);
+  padding: 1.2em 2em;
+  font-size: 1.1rem;
+  min-width: 220px;
+}
+
+#tabla-ganadores {
+  width: 95%;
+  margin: 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+#tabla-ganadores th, #tabla-ganadores td {
+  padding: 18px 12px;
+  text-align: center;
+  font-size: 1rem;
+}
+#tabla-ganadores th {
+  background: #f0f4fa;
+  color: #3a4a5a;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6ef;
+}
+#tabla-ganadores tr {
+  transition: background 0.2s;
+}
+#tabla-ganadores tr:hover {
+  background: #f9fafb;
+}
+#tabla-ganadores td {
+  border-bottom: 1px solid #e0e6ef;
+}
+#tabla-ganadores img {
+  max-width: 90px;
+  max-height: 70px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+}
+
+@media (max-width: 900px) {
+  #tabla-ganadores {
+    margin: 0 8px 8px 8px;
+    font-size: 0.95rem;
+  }
+  #estadisticas {
+    margin-left: 8px;
+    margin-right: 8px;
+    gap: 1em;
+  }
+  h2, h3 {
+    margin-left: 8px;
+    font-size: 1.3rem;
+  }
+}

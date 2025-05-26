@@ -1,0 +1,126 @@
+.main-content {
+  margin-left: 220px;
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-x: auto;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2d3a4a;
+  margin: 42px 0 32px 32px;
+}
+
+#tabla-fotos {
+  width: 95%;
+  margin: 0 32px 32px 32px;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  border-collapse: separate;
+  border-spacing: 0;
+  overflow: hidden;
+}
+
+#tabla-fotos th, #tabla-fotos td {
+  padding: 18px 12px;
+  text-align: center;
+  font-size: 1rem;
+}
+
+#tabla-fotos th {
+  background: #f0f4fa;
+  color: #3a4a5a;
+  font-weight: 600;
+  border-bottom: 2px solid #e0e6ef;
+}
+
+#tabla-fotos tr {
+  transition: background 0.2s;
+}
+
+#tabla-fotos tr:hover {
+  background: #f9fafb;
+}
+
+#tabla-fotos td {
+  border-bottom: 1px solid #e0e6ef;
+}
+
+#tabla-fotos img {
+  max-width: 120px;
+  max-height: 90px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+}
+
+.estado-pendiente { color: #e67e22; font-weight: bold; }
+.estado-admitida { color: #27ae60; font-weight: bold; }
+.estado-rechazada { color: #c0392b; font-weight: bold; }
+
+.admitir-btn,
+.rechazar-btn {
+  padding: 8px 18px;
+  margin: 2px 2px;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(79, 140, 255, 0.08);
+  transition: background 0.2s;
+}
+
+.admitir-btn {
+  background: linear-gradient(90deg, #4f8cff 0%, #6f6fff 100%);
+}
+.admitir-btn:hover {
+  background: linear-gradient(90deg, #6f6fff 0%, #4f8cff 100%);
+}
+
+.rechazar-btn {
+  background: linear-gradient(90deg, #e53935 0%, #ff7675 100%);
+}
+.rechazar-btn:hover {
+  background: linear-gradient(90deg, #ff7675 0%, #e53935 100%);
+}
+
+#mensaje-fotos {
+  margin: 18px 32px 0 32px;
+  color: #1a8a34;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+@media (max-width: 900px) {
+  #tabla-fotos {
+    margin: 0 8px 8px 8px;
+    font-size: 0.95rem;
+  }
+  h2 {
+    margin-left: 8px;
+    font-size: 1.3rem;
+  }
+  #mensaje-fotos {
+    margin-left: 8px;
+    margin-right: 8px;
+    font-size: 0.95rem;
+  }
+}

@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Galeria</title>
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/carrusel_style.css" />
+    <link rel="stylesheet" href="css/galeria_style.css" />
     <link rel="stylesheet" href="css/button_style.css" />
     <link
       rel="stylesheet"
@@ -62,79 +62,201 @@
     <!-- Contenido Principal -->
     <div class="main-content">
       <h1>Galería</h1>
-      <p>Bienvenido a la galería</p>
+      <!-- Agrega esto en el HTML principal, antes de la galería -->
+      <div class="selector-rally">
+        <label for="rally-select"><strong>Selecciona un rally:</strong></label>
+      </div>
+      <div class="rallies-cards-container" id="rallies-cards"></div>
       <div id="galeria-fotos" class="galeria-fotos"></div>
       <div id="ranking" class="ranking"></div>
-      <canvas id="grafico-votos" width="400" height="200"></canvas>
+      <canvas id="grafico-votos" width="250" height="210"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
+      let chartInstance = null; // Añade esto fuera del eventListener
+      let idRallySeleccionado = null;
+
       document.addEventListener('DOMContentLoaded', async function() {
+        const ralliesCards = document.getElementById('rallies-cards');
         const galeria = document.getElementById('galeria-fotos');
         const rankingDiv = document.getElementById('ranking');
         const grafico = document.getElementById('grafico-votos').getContext('2d');
 
-        // 1. Obtener fotos del backend
-        const res = await fetch('http://localhost/Rally_Fotografico/Backend/galeria_fotos.php');
+        // 1. Cargar rallies y mostrarlos como cards
+        const resRallies = await fetch('http://localhost/Rally_Fotografico/Backend/listar_rallies.php');
+        const dataRallies = await resRallies.json();
+        if (dataRallies.success) {
+          ralliesCards.innerHTML = '';
+          dataRallies.rallies.forEach(rally => {
+            const card = document.createElement('div');
+            card.className = 'rally-card';
+            card.innerHTML = `
+              <h3>${rally.nombre}</h3>
+              <p><strong>Inicio:</strong> ${rally.fecha_inicio}</p>
+              <p><strong>Fin:</strong> ${rally.fecha_fin}</p>
+              <button class="ver-fotos-btn" data-id="${rally.id_rally}">Ver fotos</button>
+            `;
+            ralliesCards.appendChild(card);
+          });
+        }
+
+        // 2. Al hacer clic en una card, cargar las fotos de ese rally
+        ralliesCards.addEventListener('click', async function(e) {
+          if (e.target.classList.contains('ver-fotos-btn')) {
+            idRallySeleccionado = e.target.getAttribute('data-id');
+            galeria.innerHTML = '';
+            rankingDiv.innerHTML = '';
+            grafico.clearRect(0, 0, 400, 200);
+
+            const res = await fetch(`http://localhost/Rally_Fotografico/Backend/galeria_fotos.php?id_rally=${idRallySeleccionado}`);
+            const data = await res.json();
+            if (!data.success) {
+              galeria.textContent = "No se pudieron cargar las fotos.";
+              return;
+            }
+
+            // Mostrar fotos
+            galeria.innerHTML = '';
+            data.fotos.forEach(foto => {
+              const div = document.createElement('div');
+              div.className = 'foto-galeria';
+              div.innerHTML = `
+                <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
+                <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
+                <p>${foto.descripcion || ''}</p>
+                <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
+                <button class="dislike-btn" data-id="${foto.id_fotografia}">Dislike</button>
+                <span class="votos">Votos: ${foto.votos}</span>
+              `;
+              galeria.appendChild(div);
+            });
+
+            // Votación
+            galeria.addEventListener('click', async function(e) {
+              if (e.target.classList.contains('votar-btn')) {
+                const id = e.target.getAttribute('data-id');
+                const res = await fetch('http://localhost/Rally_Fotografico/Backend/votar_foto.php', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({ id_fotografia: id })
+                });
+                const result = await res.json();
+                alert(result.message || (result.success ? '¡Voto registrado!' : 'No se pudo votar.'));
+                if (result.success) location.reload(); // Solo recarga si el voto fue exitoso
+              }
+              if (e.target.classList.contains('dislike-btn')) {
+                const id = e.target.getAttribute('data-id');
+                const res = await fetch('http://localhost/Rally_Fotografico/Backend/quitar_voto.php', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({ id_fotografia: id })
+                });
+                const result = await res.json();
+                alert(result.message || (result.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
+                if (result.success) location.reload(); // Solo recarga si el dislike fue exitoso
+              }
+            });
+
+            // Ranking de fotos
+            const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
+            rankingDiv.innerHTML = '<h2>Top 5 Fotos</h2><ol>' +
+              ranking.map(f => `<li>${f.titulo} - ${f.votos} votos</li>`).join('') +
+              '</ol>';
+
+            // Gráfico de votos
+            if (chartInstance) {
+              chartInstance.destroy();
+            }
+            chartInstance = new Chart(grafico, {
+              type: 'doughnut', // o 'pie'
+              data: {
+                labels: data.fotos.map(f => f.titulo),
+                datasets: [{
+                  label: 'Votos',
+                  data: data.fotos.map(f => f.votos),
+                  backgroundColor: [
+                    'rgba(54, 162, 235, 0.5)',
+                    'rgba(255, 99, 132, 0.5)',
+                    'rgba(255, 206, 86, 0.5)',
+                    'rgba(75, 192, 192, 0.5)',
+                    'rgba(153, 102, 255, 0.5)',
+                    'rgba(255, 159, 64, 0.5)'
+                  ]
+                }]
+              },
+            });
+          }
+        });
+      });
+
+      async function cargarFotosDelRallySeleccionado() {
+        if (!idRallySeleccionado) return;
+        // Simula el click en el botón de ver fotos del rally seleccionado
+        const res = await fetch(`http://localhost/Rally_Fotografico/Backend/galeria_fotos.php?id_rally=${idRallySeleccionado}`);
         const data = await res.json();
         if (!data.success) {
           galeria.textContent = "No se pudieron cargar las fotos.";
           return;
         }
-
-        // 2. Mostrar fotos con botón de votar
+        // Mostrar fotos
         galeria.innerHTML = '';
         data.fotos.forEach(foto => {
           const div = document.createElement('div');
           div.className = 'foto-galeria';
           div.innerHTML = `
-            <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" />
-            <h3>${foto.titulo}</h3>
+            <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
+            <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
             <p>${foto.descripcion || ''}</p>
             <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
+            <button class="dislike-btn" data-id="${foto.id_fotografia}">Dislike</button>
             <span class="votos">Votos: ${foto.votos}</span>
           `;
           galeria.appendChild(div);
         });
 
-        // 3. Votación con límite por IP
-        galeria.addEventListener('click', async function(e) {
-          if (e.target.classList.contains('votar-btn')) {
-            const id = e.target.getAttribute('data-id');
-            const res = await fetch('http://localhost/Rally_Fotografico/Backend/votar_foto.php', {
-              method: 'POST',
-              headers: {'Content-Type': 'application/json'},
-              body: JSON.stringify({ id_fotografia: id })
-            });
-            const result = await res.json();
-            if (result.success) {
-              alert('¡Voto registrado!');
-              location.reload();
-            } else {
-              alert(result.message || 'No se pudo votar.');
-            }
-          }
-        });
-
-        // 4. Ranking de fotos
+        // Ranking de fotos
         const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
         rankingDiv.innerHTML = '<h2>Top 5 Fotos</h2><ol>' +
           ranking.map(f => `<li>${f.titulo} - ${f.votos} votos</li>`).join('') +
           '</ol>';
 
-        // 5. Gráfico de votos
-        new Chart(grafico, {
-          type: 'bar',
+        // Gráfico de votos
+        if (chartInstance) {
+          chartInstance.destroy();
+        }
+        chartInstance = new Chart(grafico, {
+          type: 'doughnut', // o 'pie'
           data: {
             labels: data.fotos.map(f => f.titulo),
             datasets: [{
               label: 'Votos',
               data: data.fotos.map(f => f.votos),
-              backgroundColor: 'rgba(54, 162, 235, 0.5)'
+              backgroundColor: [
+                'rgba(54, 162, 235, 0.5)',
+                'rgba(255, 99, 132, 0.5)',
+                'rgba(255, 206, 86, 0.5)',
+                'rgba(75, 192, 192, 0.5)',
+                'rgba(153, 102, 255, 0.5)',
+                'rgba(255, 159, 64, 0.5)'
+              ]
             }]
-          }
+          },
         });
-      });
+      }
+
+      function quitarVoto(id_fotografia) {
+        fetch('Backend/quitar_voto.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id_fotografia })
+        })
+        .then(res => res.json())
+        .then(data => {
+          alert(data.message || (data.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
+          // Recarga la galería o actualiza los votos
+          cargarFotosDelRallySeleccionado();
+        });
+      }
     </script>
   </body>
 </html>
