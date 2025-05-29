@@ -15,9 +15,9 @@ $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sssissi", $nombre, $fecha_inicio, $fecha_fin, $max_fotos, $fecha_inicio_votacion, $fecha_fin_votacion, $id_rally);
 
 if ($stmt->execute()) {
-    echo json_encode(['message' => 'Configuración actualizada correctamente']);
+    echo json_encode(['message' => 'CONFIGURACIÓN ACTUALIZADA CORRECTAMENTE']);
 } else {
-    echo json_encode(['message' => 'Error al actualizar la configuración']);
+    echo json_encode(['message' => 'ERROR AL ACTUALIZAR LA CONFIGURACIÓN']);
 }
 $stmt->close();
 $mysqli->close();

@@ -1,10 +1,25 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f9;
+  background: url('../../img/fondo4.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 .main-content {
   margin-left: 220px;
-  min-height: 100vh;
-  background: #f5f7fa;
-  padding: 0;
+  left: unset;
+  min-height: 200px;
+  max-height: 700px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
+  background: rgba(207, 206, 206, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  margin-right: 32px;
+  margin-bottom: 32px;
+  margin-top: 80px; /* Bajado desde arriba */
+  overflow-y: auto;
 }
 
 .form-container {
@@ -35,7 +50,7 @@ h3 {
   display: flex;
   flex-wrap: wrap;
   gap: 2em;
-  margin: 32px 32px 0 32px;
+  margin: 30px 30px 0 30px;
 }
 .estadistica-item {
   background: #fff;
@@ -81,6 +96,35 @@ h3 {
   max-height: 70px;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(60,60,120,0.08);
+}
+
+.modal-foto {
+  display: none;
+  position: fixed;
+  z-index: 9999;
+  left: 0; top: 0; width: 100vw; height: 100vh;
+  background: rgba(0,0,0,0.7);
+  justify-content: center;
+  align-items: center;
+}
+.modal-foto img {
+  max-width: 90vw;
+  max-height: 80vh;
+  border-radius: 12px;
+  box-shadow: 0 4px 32px rgba(0,0,0,0.4);
+  background: #fff;
+  padding: 8px;
+}
+.cerrar-modal {
+  position: absolute;
+  top: 32px;
+  right: 48px;
+  color: #fff;
+  font-size: 2.5rem;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 10000;
+  text-shadow: 0 2px 8px #000;
 }
 
 @media (max-width: 900px) {

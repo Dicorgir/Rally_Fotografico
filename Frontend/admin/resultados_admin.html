@@ -94,6 +94,10 @@
         </table>
       </div>
     </div>
+    <div id="modal-foto" class="modal-foto">
+  <span class="cerrar-modal">&times;</span>
+  <img id="img-modal-foto" src="" alt="Foto ampliada">
+</div>
     <script>
 document.addEventListener('DOMContentLoaded', async function() {
   // Estadísticas generales
@@ -115,12 +119,28 @@ document.addEventListener('DOMContentLoaded', async function() {
     tbody.innerHTML += `
       <tr>
         <td>${g.nombre_rally}</td>
-        <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;"></td>
+        <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;cursor:pointer;"></td>
         <td>${g.nombre_usuario}</td>
         <td>${g.total_votos}</td>
       </tr>
     `;
   });
+
+  // --- Modal para ampliar imagen ---
+  document.querySelector('#tabla-ganadores').addEventListener('click', function(e) {
+    if (e.target.tagName === 'IMG') {
+      document.getElementById('img-modal-foto').src = e.target.src;
+      document.getElementById('modal-foto').style.display = 'flex';
+    }
+  });
+  document.querySelector('.cerrar-modal').onclick = function() {
+    document.getElementById('modal-foto').style.display = 'none';
+  };
+  document.getElementById('modal-foto').onclick = function(e) {
+    if (e.target === this) {
+      this.style.display = 'none';
+    }
+  };
 });
 </script>
   </body>

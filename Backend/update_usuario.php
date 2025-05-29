@@ -14,9 +14,9 @@ $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sssssi", $nombre, $email, $telefono, $pais, $genero, $id_usuario);
 
 if ($stmt->execute()) {
-    echo json_encode(['message' => 'Usuario actualizado correctamente']);
+    echo json_encode(['message' => 'USUARIO ACTUALIZADO CORRECTAMENTE']);
 } else {
-    echo json_encode(['message' => 'Error al actualizar el usuario']);
+    echo json_encode(['message' => 'ERROR AL ACTUALIZAR EL USUARIO']);
 }
 $stmt->close();
 $mysqli->close();

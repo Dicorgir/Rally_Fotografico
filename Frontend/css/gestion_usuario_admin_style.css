@@ -1,11 +1,27 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f9;
+  background: url('../../img/fondo2.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 .main-content {
   margin-left: 220px;
-  min-height: 100vh;
-  background: #f5f7fa;
-  padding: 0;
+  left: unset;
+  min-height: 200px;
+  max-height: 700px;
+  padding: 32px;
   display: flex;
   flex-direction: column;
+  background: rgba(207, 206, 206, 0.85);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  margin-right: 32px;
+  margin-bottom: 32px;
+  margin-top: 80px; /* Bajado desde arriba */
+  overflow-y: auto;
 }
+
 
 .form-container {
   width: 100%;
@@ -108,9 +124,10 @@ h2 {
 
 #mensaje-usuarios {
   margin: 18px 32px 0 32px;
-  color: #1a8a34;
+  color: #8e44ad; 
   font-weight: 500;
   font-size: 1.1rem;
+  text-align: center;
 }
 
 @media (max-width: 900px) {

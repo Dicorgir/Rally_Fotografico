@@ -31,7 +31,7 @@
         <span class="nav-text">Gestión <br> usuarios</span>
       </div>
       <div class="nav-item" id="logout-validation">
-        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M9.727 2c-3.26 0-4.892 0-6.024.798a4.1 4.1 0 0 0-.855.805C2 4.669 2 6.203 2 9.273v2.545c0 2.963 0 4.445.469 5.628c.754 1.903 2.348 3.403 4.37 4.113c1.257.441 2.83.441 5.98.441c1.798 0 2.698 0 3.416-.252c1.155-.406 2.066-1.263 2.497-2.35c.268-.676.268-1.523.268-3.216V15.5m-4-8s.5 0 1 1c0 0 1.588-2.5 3-3"/><path d="M22 7a5 5 0 1 1-10 0a5 5 0 0 1 10 0M2 12a3.333 3.333 0 0 0 3.333 3.333c.666 0 1.451-.116 2.098.057a1.67 1.67 0 0 1 1.179 1.18c.173.647.057 1.432.057 2.098A3.333 3.333 0 0 0 12 22"/></g></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M9.727 2c-3.26 0-4.892 0-6.024.798a4.1 4.1 0 0 0-.855.805C2 4.669 2 6.203 2 9.273v2.545c0 2.963 0 4.445.469 5.628c.754 1.903 2.348 3.403 4.37 4.113c1.257.441 2.83.441 5.98.441c1.798 0 2.698 0 3.416-.252c1.155-.406 2.066-1.263 2.497-2.35c.268-.676.268-1.523.268-3.216V15.5m-4-8s.5 0 1 1c0 0 1.588-2.5 3-3"/><path fill="currentColor" d="M22 7a5 5 0 1 1-10 0a5 5 0 0 1 10 0M2 12a3.333 3.333 0 0 0 3.333 3.333c.666 0 1.451-.116 2.098.057a1.67 1.67 0 0 1 1.179 1.18c.173.647.057 1.432.057 2.098A3.333 3.333 0 0 0 12 22"/></g></svg>
         <span class="nav-text">Validación <br> usuarios</span>
       </div>
       <div class="nav-item" id="logout-results">
@@ -66,6 +66,7 @@
             <!-- Aquí se llenarán los rallies -->
           </tbody>
         </table>
+        <button id="nuevo-rally-btn" class="btn-nuevo-rally" style="margin-top:10px;">CREAR RALLY</button>
         <div id="mensaje-config"></div>
       </div>
     </div>
@@ -103,7 +104,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       <td><input type="number" min="1" value="${rally.max_fotos_por_participante || 1}" data-campo="max_fotos_por_participante"></td>
       <td><input type="date" value="${rally.fecha_inicio_votacion || ''}" data-campo="fecha_inicio_votacion"></td>
       <td><input type="date" value="${rally.fecha_fin_votacion || ''}" data-campo="fecha_fin_votacion"></td>
-      <td><button class="guardar-btn" data-id="${rally.id_rally}">Guardar</button></td>
+      <td>
+        <button class="guardar-btn" data-id="${rally.id_rally}">Guardar</button>
+        <button class="eliminar-btn" data-id="${rally.id_rally}" style="background:#e74c3c;margin-left:6px;">Eliminar</button>
+      </td>
     `;
     tbody.appendChild(tr);
   });
@@ -125,6 +129,75 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
       const data = await res.json();
       document.getElementById('mensaje-config').textContent = data.message || 'Configuración guardada';
+      setTimeout(() => {
+        document.getElementById('mensaje-config').textContent = '';
+      }, 3000); // 3 segundos
+    }
+    if (e.target.classList.contains('eliminar-btn')) {
+  if (confirm('¿Seguro que deseas eliminar este rally?')) {
+    const id_rally = e.target.dataset.id;
+    console.log('Intentando borrar rally', id_rally); // <-- Agrega esto
+    const res = await fetch('../../Backend/eliminar_rally.php', {
+      method: 'POST',
+      body: new URLSearchParams({ id_rally })
+    });
+    const data = await res.json();
+    console.log('Respuesta backend:', data); // <-- Y esto
+    document.getElementById('mensaje-config').textContent = data.message || 'Rally eliminado';
+setTimeout(() => {
+  document.getElementById('mensaje-config').textContent = '';
+}, 3000); // 3 segundos
+    if (data.success) {
+      e.target.closest('tr').remove();
+    }
+  }
+}
+  });
+
+  // Añadir fila de creación de rally
+  document.getElementById('nuevo-rally-btn').addEventListener('click', function() {
+    const tbody = document.querySelector('#tabla-rallies tbody');
+    // Evitar múltiples formularios
+    if (tbody.querySelector('.nuevo-rally-row')) return;
+    const tr = document.createElement('tr');
+    tr.classList.add('nuevo-rally-row');
+    tr.innerHTML = `
+      <td><input type="text" placeholder="Nombre" data-campo="nombre"></td>
+      <td><input type="date" data-campo="fecha_inicio"></td>
+      <td><input type="date" data-campo="fecha_fin"></td>
+      <td><input type="number" min="1" value="1" data-campo="max_fotos_por_participante"></td>
+      <td><input type="date" data-campo="fecha_inicio_votacion"></td>
+      <td><input type="date" data-campo="fecha_fin_votacion"></td>
+      <td>
+        <button class="guardar-btn crear-btn">Crear</button>
+        <button class="guardar-btn cancelar-btn" style="background: #e74c3c;">Cancelar</button>
+      </td>
+    `;
+    tbody.appendChild(tr);
+  });
+
+  // Manejar creación y cancelación
+  document.querySelector('#tabla-rallies tbody').addEventListener('click', async function(e) {
+    if (e.target.classList.contains('crear-btn')) {
+      const tr = e.target.closest('tr');
+      const inputs = tr.querySelectorAll('input');
+      const formData = new FormData();
+      inputs.forEach(input => {
+        formData.append(input.dataset.campo, input.value);
+      });
+      const res = await fetch('../../Backend/crear_rally.php', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      document.getElementById('mensaje-config').textContent = data.message || 'Rally creado';
+      if (data.success) {
+        tr.remove();
+        location.reload(); // Recargar para mostrar el nuevo rally
+      }
+    }
+    if (e.target.classList.contains('cancelar-btn')) {
+      e.target.closest('tr').remove();
     }
   });
 });

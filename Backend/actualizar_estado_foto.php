@@ -12,9 +12,9 @@ $sql = "UPDATE fotografias SET estado=? WHERE id_fotografia=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("si", $estado, $id_fotografia);
 if ($stmt->execute()) {
-    echo json_encode(['message' => 'Estado actualizado correctamente']);
+    echo json_encode(['message' => 'ESTADO ACTUALIZADO CORRECTAMENTE']);
 } else {
-    echo json_encode(['message' => 'Error al actualizar el estado']);
+    echo json_encode(['message' => 'ERROR AL ACTUALIZAR EL ESTADO']);
 }
 $stmt->close();
 $mysqli->close();

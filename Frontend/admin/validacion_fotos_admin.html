@@ -86,6 +86,10 @@
         <div id="mensaje-fotos"></div>
       </div>
     </div>
+    <div id="modal-foto" class="modal-foto">
+  <span class="cerrar-modal">&times;</span>
+  <img id="img-modal-foto" src="" alt="Foto ampliada">
+</div>
     <script>
 document.addEventListener('DOMContentLoaded', async function() {
   // Cargar todas las fotos pendientes
@@ -130,6 +134,25 @@ document.addEventListener('DOMContentLoaded', async function() {
       setTimeout(() => location.reload(), 1000);
     }
   });
+
+  // Evento para ampliar la foto
+  document.querySelector('#tabla-fotos').addEventListener('click', function(e) {
+    if (e.target.tagName === 'IMG') {
+      const src = e.target.src;
+      document.getElementById('img-modal-foto').src = src;
+      document.getElementById('modal-foto').style.display = 'flex';
+    }
+  });
+
+  // Cerrar modal al hacer clic en la X o fuera de la imagen
+  document.querySelector('.cerrar-modal').onclick = function() {
+    document.getElementById('modal-foto').style.display = 'none';
+  };
+  document.getElementById('modal-foto').onclick = function(e) {
+    if (e.target === this) {
+      this.style.display = 'none';
+    }
+  };
 });
 </script>
   </body>
