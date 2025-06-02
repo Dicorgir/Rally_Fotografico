@@ -1,10 +1,25 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f9;
+  background: url('../../img/fondo5.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 .main-content {
+  margin-left: 220px;
+  left: unset;
+  min-height: 200px;
+  padding: 32px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  margin-right: 32px;
+  margin-bottom: 32px;
+  margin-top: 20px; /* Bajado desde arriba */
+  overflow-y: visible; /* O elimina esta línea */
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh; /* Ocupa toda la altura de la pantalla */
-  margin: 0; /* Elimina márgenes */
 }
+
 .form-container {
     width: 420px;           /* Antes: 320px */
     border-radius: 1.2rem;

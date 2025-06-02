@@ -61,15 +61,19 @@
 
     <!-- Contenido Principal -->
     <div class="main-content">
-      <h1>Galería</h1>
-      <!-- Agrega esto en el HTML principal, antes de la galería -->
-      <div class="selector-rally">
-        <label for="rally-select"><strong>Selecciona un rally:</strong></label>
+      <div class="main-card">
+        <h1 class="title">Galería</h1>
+        <div class="selector-rally">
+          <label for="rally-select"><strong>Selecciona un rally:</strong></label>
+          <!-- Aquí tu select o controles -->
+        </div>
+        <div class="rallies-cards-container" id="rallies-cards"></div>
+        <div id="galeria-fotos" class="galeria-fotos"></div>
+        <div class="ranking-grafico-container">
+          <div id="ranking" class="ranking"></div>
+          <canvas id="grafico-votos" width="200" height="140"></canvas>
+        </div>
       </div>
-      <div class="rallies-cards-container" id="rallies-cards"></div>
-      <div id="galeria-fotos" class="galeria-fotos"></div>
-      <div id="ranking" class="ranking"></div>
-      <canvas id="grafico-votos" width="250" height="210"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
@@ -91,12 +95,16 @@
             const card = document.createElement('div');
             card.className = 'rally-card';
             card.innerHTML = `
+              <div class="rally-countdown" id="countdown-${rally.id_rally}"></div>
               <h3>${rally.nombre}</h3>
               <p><strong>Inicio:</strong> ${rally.fecha_inicio}</p>
               <p><strong>Fin:</strong> ${rally.fecha_fin}</p>
               <button class="ver-fotos-btn" data-id="${rally.id_rally}">Ver fotos</button>
             `;
             ralliesCards.appendChild(card);
+
+            // Iniciar contador
+            iniciarCountdown('countdown-' + rally.id_rally, rally.fecha_fin);
           });
         }
 
@@ -159,9 +167,20 @@
 
             // Ranking de fotos
             const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
-            rankingDiv.innerHTML = '<h2>Top 5 Fotos</h2><ol>' +
-              ranking.map(f => `<li>${f.titulo} - ${f.votos} votos</li>`).join('') +
-              '</ol>';
+            rankingDiv.innerHTML = `
+              <div class="top5-card">
+                <h2>Top 5 Fotos</h2>
+                <ol class="top5-list">
+                  ${ranking.map((f, i) => `
+                    <li>
+                      <span class="top5-posicion">${i + 1}.</span>
+                      <span class="top5-titulo">${f.titulo}</span>
+                      <span class="top5-votos">${f.votos} votos</span>
+                    </li>
+                  `).join('')}
+                </ol>
+              </div>
+            `;
 
             // Gráfico de votos
             if (chartInstance) {
@@ -184,6 +203,15 @@
                   ]
                 }]
               },
+              options: {
+                plugins: {
+                  legend: {
+                    labels: {
+                      color: "#fff" // Color blanco para la leyenda
+                    }
+                  }
+                }
+              }
             });
           }
         });
@@ -216,9 +244,20 @@
 
         // Ranking de fotos
         const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
-        rankingDiv.innerHTML = '<h2>Top 5 Fotos</h2><ol>' +
-          ranking.map(f => `<li>${f.titulo} - ${f.votos} votos</li>`).join('') +
-          '</ol>';
+        rankingDiv.innerHTML = `
+          <div class="top5-card">
+            <h2>Top 5 Fotos</h2>
+            <ol class="top5-list">
+              ${ranking.map((f, i) => `
+                <li>
+                  <span class="top5-posicion">${i + 1}.</span>
+                  <span class="top5-titulo">${f.titulo}</span>
+                  <span class="top5-votos">${f.votos} votos</span>
+                </li>
+              `).join('')}
+            </ol>
+          </div>
+        `;
 
         // Gráfico de votos
         if (chartInstance) {
@@ -241,6 +280,15 @@
               ]
             }]
           },
+          options: {
+            plugins: {
+              legend: {
+                labels: {
+                  color: "#fff" // Color blanco para la leyenda
+                }
+              }
+            }
+          }
         });
       }
 
@@ -256,6 +304,34 @@
           // Recarga la galería o actualiza los votos
           cargarFotosDelRallySeleccionado();
         });
+      }
+
+      function iniciarCountdown(elementId, fechaFin) {
+        function actualizar() {
+          const countdownElem = document.getElementById(elementId);
+          if (!countdownElem) return;
+          const fin = new Date(fechaFin.replace(' ', 'T'));
+          const ahora = new Date();
+          const diff = fin - ahora;
+          if (diff <= 0) {
+            countdownElem.textContent = "00:00:00:00";
+            countdownElem.style.color = "#ff4f4f";
+            return;
+          }
+          const dias = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
+          const horas = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, '0');
+          const minutos = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
+          const segundos = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
+          countdownElem.textContent = `${dias}:${horas}:${minutos}:${segundos}`;
+          // Cambia a rojo si quedan menos de 2 días
+          if (parseInt(dias) < 2) {
+            countdownElem.style.color = "#ff4f4f";
+          } else {
+            countdownElem.style.color = "#4f8cff";
+          }
+          setTimeout(actualizar, 1000);
+        }
+        actualizar();
       }
     </script>
   </body>

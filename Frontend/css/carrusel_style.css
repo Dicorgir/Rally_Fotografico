@@ -63,7 +63,7 @@
 .carousel-indicator {
     width: 10px;
     height: 10px;
-    background-color: gray;
+    background-color: rgb(255, 255, 255);
     border-radius: 50%;
     margin: 0 5px;
     cursor: pointer;

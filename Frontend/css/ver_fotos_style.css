@@ -1,11 +1,22 @@
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background-color: #f4f6f9;
+  background: url('../../img/fondo5.jpg') no-repeat center center fixed;
+  background-size: cover;
+}
 .main-content {
   margin-left: 220px;
-  padding: 2.5rem 1.5rem;
-  background: #f8f8ff;
-  min-height: 100vh;
+  left: unset;
+  min-height: 200px;
+  padding: 32px;
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
+  flex-direction: column;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
+  margin-right: 32px;
+  margin-bottom: 32px;
+  margin-top: 60px; /* Bajado desde arriba */
+  overflow-y: visible; /* O elimina esta línea */
 }
 
 .fotos-container {
@@ -39,7 +50,7 @@
 }
 
 .foto-item {
-  background: #f4f6fb;
+  background: rgba(207, 206, 206, 0.85);
   border-radius: 16px;
   box-shadow: 0 2px 12px #0001;
   padding: 2rem 1.5rem 1.5rem 1.5rem;
@@ -96,6 +107,12 @@
   font-size: 1rem;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
+}
+.title {
+  background: rgba(207, 206, 206, 0.85);
+  border-radius: 18px;
+  padding: 10px 25px;
+  box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
 }
 .estado {
   display: inline-block;
