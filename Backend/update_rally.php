@@ -10,6 +10,27 @@ $max_fotos = $_POST['max_fotos_por_participante'] ?? 1;
 $fecha_inicio_votacion = $_POST['fecha_inicio_votacion'] ?? '';
 $fecha_fin_votacion = $_POST['fecha_fin_votacion'] ?? '';
 
+// Validar campos obligatorios
+if (!$nombre || !$fecha_inicio || !$fecha_fin || !$fecha_inicio_votacion || !$fecha_fin_votacion) {
+    echo json_encode(['message' => 'Faltan campos obligatorios']);
+    exit;
+}
+
+// Validar formato de fechas
+foreach ([$fecha_inicio, $fecha_fin, $fecha_inicio_votacion, $fecha_fin_votacion] as $fecha) {
+    $d = DateTime::createFromFormat('Y-m-d', $fecha);
+    if (!$d || $d->format('Y-m-d') !== $fecha) {
+        echo json_encode(['message' => 'Formato de fecha inválido']);
+        exit;
+    }
+}
+
+// Validar max_fotos_por_participante
+if (!is_numeric($max_fotos) || intval($max_fotos) < 1) {
+    echo json_encode(['message' => 'El máximo de fotos debe ser un número positivo']);
+    exit;
+}
+
 $sql = "UPDATE rallies SET nombre=?, fecha_inicio=?, fecha_fin=?, max_fotos_por_participante=?, fecha_inicio_votacion=?, fecha_fin_votacion=? WHERE id_rally=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sssissi", $nombre, $fecha_inicio, $fecha_fin, $max_fotos, $fecha_inicio_votacion, $fecha_fin_votacion, $id_rally);
