@@ -2,7 +2,7 @@
 header('Content-Type: application/json');
 include 'conexion.php';
 
-$sql = "SELECT r.nombre AS nombre_rally, f.imagen_base64, u.nombre_completo AS nombre_usuario, f.total_votos
+$sql = "SELECT r.nombre AS nombre_rally, r.fecha_fin, f.imagen_base64, u.nombre_completo AS nombre_usuario, f.total_votos
         FROM rallies r
         JOIN fotografias f ON f.id_rally = r.id_rally
         JOIN usuarios u ON f.id_usuario = u.id_usuario

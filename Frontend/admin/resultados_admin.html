@@ -90,6 +90,7 @@
           <thead>
             <tr>
               <th>Rally</th>
+              <th>Estado</th>
               <th>Foto ganadora</th>
               <th>Usuario</th>
               <th>Votos</th>
@@ -123,9 +124,14 @@ document.addEventListener('DOMContentLoaded', async function() {
   const tbody = document.querySelector('#tabla-ganadores tbody');
   tbody.innerHTML = '';
   ganadores.forEach(g => {
+    // Calcular estado del rally
+    const hoy = new Date().toISOString().slice(0, 10);
+    const estado = (g.fecha_fin >= hoy) ? 'Activo' : 'Finalizado';
+
     tbody.innerHTML += `
       <tr>
         <td>${g.nombre_rally}</td>
+        <td>${estado}</td>
         <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;cursor:pointer;"></td>
         <td>${g.nombre_usuario}</td>
         <td>${g.total_votos}</td>
