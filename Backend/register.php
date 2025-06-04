@@ -1,5 +1,4 @@
 <?php
-// filepath: c:\xampp\htdocs\Rally_Fotografico\Backend\register.php
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
@@ -32,6 +31,16 @@ if (!$nombre_completo || !$email || !$password || !$password_confirmation) {
 if ($password !== $password_confirmation) {
     http_response_code(400);
     echo json_encode(['message' => 'Las contraseñas no coinciden']);
+    exit;
+}
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['message' => 'El correo no es válido']);
+    exit;
+}
+if ($pais !== null && strlen($pais) > 50) {
+    http_response_code(400);
+    echo json_encode(['message' => 'El país no puede tener más de 50 caracteres']);
     exit;
 }
 
