@@ -33,6 +33,18 @@ if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_
     $stmt->close();
 }
 
+// Validar formato de correo
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['message' => 'El correo no es válido']);
+    exit;
+}
+
+// Validar longitud del país
+if ($pais !== null && strlen($pais) > 50) {
+    echo json_encode(['message' => 'El país no puede tener más de 50 caracteres']);
+    exit;
+}
+
 if (!$email || !$nombre_completo) {
     echo json_encode(['message' => 'Faltan datos obligatorios']);
     exit;

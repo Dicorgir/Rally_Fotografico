@@ -159,11 +159,10 @@
           body: formData
         });
         const data = await res.json();
-        if (res.ok) {
-          alert('Perfil actualizado correctamente');
-          location.reload(); // Recarga la página para mostrar los datos/foto nuevos
-        } else {
-          alert('Error: ' + (data.message || 'No se pudo actualizar'));
+        // Mostrar SIEMPRE el mensaje que devuelve el backend
+        alert(data.message || 'No se pudo actualizar');
+        if (res.ok && data.message === 'Perfil actualizado correctamente') {
+          location.reload(); // Solo recarga si fue exitoso
         }
       });
     });
