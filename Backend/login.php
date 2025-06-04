@@ -19,6 +19,12 @@ if (!$email || !$password) {
     exit;
 }
 
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
+    echo json_encode(['message' => 'El correo no es válido']);
+    exit;
+}
+
 // Conexión a la base de datos centralizada
 include 'conexion.php';
 
