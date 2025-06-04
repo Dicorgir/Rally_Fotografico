@@ -25,3 +25,40 @@ body.dark-mode .modal-comentarios * {
   background: #232323 !important;
   color: #f1f1f1 !important;
 }
+body.dark-mode .rally-card {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+  border-color: #444 !important;
+}
+body.dark-mode .estadistica-item {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+  border-radius: 8px;
+  margin-bottom: 8px;
+}
+body.dark-mode tr {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+}
+body.dark-mode th {
+  background: #626262 !important;
+  color: #f1f1f1 !important;
+}
+body.dark-mode .foto-galeria {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+  border-color: #444 !important;
+}
+body.dark-mode .top5-card {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+}
+body.dark-mode .top5-list li {
+  background: #2c2c2c !important;
+  color: #f1f1f1 !important;
+}
+body.dark-mode .top5-titulo,
+body.dark-mode .top5-posicion,
+body.dark-mode .top5-votos {
+  color: #f1f1f1 !important;
+}

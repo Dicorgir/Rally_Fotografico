@@ -6,6 +6,8 @@
     <title>Mis Fotos</title>
     <link rel="stylesheet" href="../css/ver_fotos_style.css" />
     <link rel="stylesheet" href="../css/style.css" />
+    <link rel="stylesheet" href="../css/modo_oscuro.css" />
+    <link rel="stylesheet" href="../css/switch_style.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   </head>
   <body>
@@ -14,6 +16,11 @@
       <div class="logo" title="Rally Fotográfico">
         <img src="../../img/logo_rallyFotografico.png" alt="Logo" style="width: 104px; height: 104px;" />
       </div>
+      <!-- Switch de modo oscuro/claro -->
+      <label class="switch" style="margin: 16px auto; display: flex; justify-content: center;">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+      </label>
       <a href="../index.html">
         <div class="nav-item">
           <i class="fa-solid fa-house"></i>
@@ -160,5 +167,23 @@
         });
       });
     </script>
+    <script>
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  document.body.classList.add('dark-mode');
+  themeToggle.checked = true;
+}
+themeToggle.addEventListener('change', function() {
+  if (this.checked) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+  }
+});
+</script>
   </body>
 </html>

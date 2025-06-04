@@ -464,6 +464,17 @@
             if (aviso && aviso.classList.contains('aviso-rapido')) aviso.remove();
             // Desactiva los botones de votación y comentarios
             desactivarBotonesVotacion();
+            // Muestra mensaje de rally terminado
+            if (!countdownElem.nextElementSibling || !countdownElem.nextElementSibling.classList.contains('mensaje-terminado')) {
+              const mensaje = document.createElement('div');
+              mensaje.className = 'mensaje-terminado';
+              mensaje.textContent = "¡El tiempo para votar ha terminado!";
+              mensaje.style.color = "#ff4f4f";
+              mensaje.style.fontSize = "1.2rem";
+              mensaje.style.fontWeight = "bold";
+              mensaje.style.marginTop = "0.5em";
+              countdownElem.parentNode.insertBefore(mensaje, countdownElem.nextSibling);
+            }
             return;
           }
           const dias = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');

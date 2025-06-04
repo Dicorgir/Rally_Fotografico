@@ -282,3 +282,10 @@
   opacity: 0.7;
   pointer-events: none;
 }
+
+.votar-btn:hover {
+  background-color: #4caf50 !important; /* Verde */
+  color: #fff !important;
+  border-color: #388e3c !important;
+  transition: background 0.2s;
+}
