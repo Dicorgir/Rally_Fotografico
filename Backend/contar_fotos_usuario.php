@@ -10,6 +10,15 @@ if (!$email || !$id_rally) {
     exit;
 }
 
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['error' => 'Formato de email no válido']);
+    exit;
+}
+if (!ctype_digit($id_rally) || intval($id_rally) <= 0) {
+    echo json_encode(['error' => 'ID de rally no válido']);
+    exit;
+}
+
 // Obtener el id_usuario
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
 $stmt->bind_param("s", $email);

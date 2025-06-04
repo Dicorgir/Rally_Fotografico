@@ -8,6 +8,11 @@ if (!isset($_GET['email'])) {
 }
 
 $email = $_GET['email'];
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['error' => 'Formato de email no válido']);
+    exit;
+}
+
 $sql = "SELECT nombre_completo, email, telefono, fecha_nacimiento, pais, genero, foto_perfil FROM usuarios WHERE email = ?";
 $stmt = $mysqli->prepare($sql);
 if (!$stmt) {
