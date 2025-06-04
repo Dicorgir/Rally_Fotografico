@@ -145,7 +145,10 @@ document.addEventListener('DOMContentLoaded', async function() {
         body: formData
       });
       const data = await res.json();
-      document.getElementById('mensaje-usuarios').textContent = data.message || 'Usuario actualizado';
+      document.getElementById('mensaje-usuarios').textContent = data.message || 'Usuario actualizado correctamente';
+      setTimeout(() => {
+        document.getElementById('mensaje-usuarios').textContent = '';
+      }, 3000);
     }
 
     // Eliminar usuario

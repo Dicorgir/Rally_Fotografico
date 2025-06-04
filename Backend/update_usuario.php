@@ -9,6 +9,26 @@ $telefono = $_POST['telefono'] ?? '';
 $pais = $_POST['pais'] ?? '';
 $genero = $_POST['genero'] ?? '';
 
+if (!$id_usuario || !$nombre || !$email) {
+    echo json_encode(['message' => 'Faltan datos obligatorios']);
+    exit;
+}
+
+if (!is_numeric($id_usuario)) {
+    echo json_encode(['message' => 'ID de usuario inválido']);
+    exit;
+}
+
+if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    echo json_encode(['message' => 'El correo no es válido']);
+    exit;
+}
+
+if ($pais !== null && strlen($pais) > 50) {
+    echo json_encode(['message' => 'El país no puede tener más de 50 caracteres']);
+    exit;
+}
+
 $sql = "UPDATE usuarios SET nombre_completo=?, email=?, telefono=?, pais=?, genero=? WHERE id_usuario=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sssssi", $nombre, $email, $telefono, $pais, $genero, $id_usuario);
