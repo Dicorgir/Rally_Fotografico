@@ -1,0 +1,27 @@
+body.dark-mode {
+  background: #181818;
+  color: #f1f1f1;
+}
+body.dark-mode .sidebar {
+  background: #232323;
+}
+body.dark-mode .main-content {
+  background: #181818;
+  color: #f1f1f1;
+}
+body.dark-mode .nav-item {
+  background: transparent;
+  color: #f1f1f1;
+}
+body.dark-mode #modal-content {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+}
+body.dark-mode #modal-title {
+  color: #b497ff !important;
+}
+body.dark-mode .modal-comentarios,
+body.dark-mode .modal-comentarios * {
+  background: #232323 !important;
+  color: #f1f1f1 !important;
+}

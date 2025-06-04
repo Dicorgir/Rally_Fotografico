@@ -7,7 +7,7 @@
   justify-content: center; /* Centra horizontalmente las cards */
 }
 .rally-card {
-  background: #ede7f6; /* Morado claro */
+  background: #b4aac3; /* Morado claro */
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(60,60,120,0.10);
   padding: 1.5rem 2rem;
@@ -17,7 +17,8 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;      /* Centra horizontalmente el contenido */
+  text-align: center;       /* Centra el texto */
 }
 .rally-card:hover {
   transform: translateY(-6px) scale(1.03);
@@ -111,7 +112,7 @@
 /* Estilos para el título principal */
 .title {
   display: inline-block;
-  background: rgba(207, 206, 206, 0.85);
+  background: rgba(213, 197, 229, 0.85);
   border-radius: 18px;
   padding: 10px 25px;
   box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
@@ -138,7 +139,7 @@
   margin-bottom: 0.7em;
   text-align: center;
   letter-spacing: 2px;
-  color: #4f8cff;
+  color: #240b79;
   font-family: 'Roboto Mono', 'Consolas', monospace;
 }
 
@@ -222,4 +223,62 @@
 .ranking-grafico-container #grafico-votos {
   margin: 0;
   align-self: center;
+}
+
+.comentario-btn {
+  margin-top: 0.7em;
+  background: #ede7f6;
+  color: #6f42c1;
+  border: none;
+  border-radius: 8px;
+  padding: 0.4em 1em;
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.5em;
+  transition: background 0.2s;
+}
+.comentario-btn:hover {
+  background: #d1c4e9;
+}
+
+.comentario-form {
+  margin-top: 0.5em;
+  background: #f8f6fc;
+  border-radius: 8px;
+  padding: 0.7em;
+  box-shadow: 0 2px 8px rgba(60,60,120,0.06);
+}
+
+.comentario-text {
+  width: 100%;
+  border-radius: 6px;
+  border: 1px solid #b4aac3;
+  padding: 0.5em;
+  margin-bottom: 0.5em;
+  resize: vertical;
+}
+
+.guardar-comentario-btn {
+  background: #6f42c1;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.4em 1em;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.guardar-comentario-btn:hover {
+  background: #4b2a8a;
+}
+
+.btn-desactivado {
+  background: #ccc !important;
+  color: #888 !important;
+  border: 1px solid #bbb !important;
+  cursor: not-allowed !important;
+  opacity: 0.7;
+  pointer-events: none;
 }

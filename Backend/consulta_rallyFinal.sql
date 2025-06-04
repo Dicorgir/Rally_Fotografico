@@ -59,7 +59,7 @@ CREATE TABLE votaciones (
 CREATE TABLE comentarios (
     id_comentario INT AUTO_INCREMENT PRIMARY KEY,
     id_fotografia INT NOT NULL,
-    id_usuario INT NOT NULL,
+    id_usuario INT NULL,
     comentario TEXT NOT NULL,
     fecha_comentario TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (id_fotografia) REFERENCES fotografias(id_fotografia) ON DELETE CASCADE,

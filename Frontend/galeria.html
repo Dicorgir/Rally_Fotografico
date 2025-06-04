@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/galeria_style.css" />
     <link rel="stylesheet" href="css/button_style.css" />
+    <link rel="stylesheet" href="css/modo_oscuro.css" />
+    <link rel="stylesheet" href="css/switch_style.css" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -19,6 +21,11 @@
       <div class="logo" title="Rally Fotográfico">
         <img src="../img/logo_rallyFotografico.png" alt="Logo" style="width: 104px; height: 104px;" />
       </div>
+      <!-- Switch de modo oscuro/claro -->
+      <label class="switch" style="margin: 16px auto; display: flex; justify-content: center;">
+        <input type="checkbox" id="theme-toggle">
+        <span class="slider"></span>
+      </label>
 
       <a href="index.html">
         <div class="nav-item">
@@ -104,7 +111,7 @@
             ralliesCards.appendChild(card);
 
             // Iniciar contador
-            iniciarCountdown('countdown-' + rally.id_rally, rally.fecha_fin);
+            iniciarCountdown('countdown-' + rally.id_rally, rally.fecha_fin_votacion);
           });
         }
 
@@ -135,6 +142,16 @@
                 <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
                 <button class="dislike-btn" data-id="${foto.id_fotografia}">Dislike</button>
                 <span class="votos">Votos: ${foto.votos}</span>
+                <button class="comentario-btn" data-id="${foto.id_fotografia}" title="Comentar">
+                  <i class="fa-solid fa-cloud"></i> Comentar
+                </button>
+                <div class="comentario-form" style="display:none;">
+                  <textarea class="comentario-text" rows="2" placeholder="Escribe tu comentario..."></textarea>
+                  <button class="guardar-comentario-btn" data-id="${foto.id_fotografia}">Guardar</button>
+                  <button class="ver-comentarios-btn" data-id="${foto.id_fotografia}" title="Ver comentarios">
+                    <i class="fa-solid fa-comments"></i>
+                  </button>
+                </div>
               `;
               galeria.appendChild(div);
             });
@@ -162,6 +179,122 @@
                 const result = await res.json();
                 alert(result.message || (result.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
                 if (result.success) location.reload(); // Solo recarga si el dislike fue exitoso
+              }
+
+              // Mostrar/ocultar formulario de comentario
+              if (e.target.classList.contains('comentario-btn') || e.target.closest('.comentario-btn')) {
+                const btn = e.target.closest('.comentario-btn');
+                const form = btn.nextElementSibling;
+                form.style.display = form.style.display === 'none' ? 'block' : 'none';
+              }
+
+              // Guardar comentario
+              if (e.target.classList.contains('guardar-comentario-btn')) {
+                const id = e.target.getAttribute('data-id');
+                const textarea = e.target.parentElement.querySelector('.comentario-text');
+                const comentario = textarea.value.trim();
+                if (!comentario) {
+                  alert('El comentario no puede estar vacío.');
+                  return;
+                }
+                const res = await fetch('http://localhost/Rally_Fotografico/Backend/guardar_comentario.php', {
+                  method: 'POST',
+                  headers: {'Content-Type': 'application/json'},
+                  body: JSON.stringify({ id_fotografia: id, comentario })
+                });
+                const result = await res.json();
+                alert(result.message || (result.success ? 'Comentario guardado' : 'No se pudo guardar el comentario'));
+                if (result.success) {
+                  textarea.value = '';
+                  e.target.parentElement.style.display = 'none';
+                }
+              }
+
+              // Ver comentarios
+              if (e.target.classList.contains('ver-comentarios-btn') || e.target.closest('.ver-comentarios-btn')) {
+                const btn = e.target.closest('.ver-comentarios-btn');
+                const idFoto = btn.getAttribute('data-id');
+                // Llama al backend para obtener los comentarios de esa foto
+                const res = await fetch('http://localhost/Rally_Fotografico/Backend/obtener_comentarios.php?id_fotografia=' + idFoto);
+                const data = await res.json();
+
+                // Crea el fondo oscurecido
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = 0;
+                overlay.style.left = 0;
+                overlay.style.width = '100vw';
+                overlay.style.height = '100vh';
+                overlay.style.background = 'rgba(0,0,0,0.5)';
+                overlay.style.zIndex = 9999;
+                overlay.style.display = 'flex';
+                overlay.style.justifyContent = 'center';
+                overlay.style.alignItems = 'center';
+
+                // Crea la tarjeta blanca centrada
+                const modal = document.createElement('div');
+                modal.className = 'modal-comentarios'; // Añade esta línea
+                modal.style.background = '#fff';
+                modal.style.borderRadius = '16px';
+                modal.style.boxShadow = '0 8px 32px rgba(60,60,120,0.16)';
+                modal.style.padding = '2em 2em 1em 2em';
+                modal.style.maxWidth = '500px';
+                modal.style.width = '90vw';
+                modal.style.maxHeight = '80vh';
+                modal.style.overflowY = 'auto';
+                modal.style.display = 'flex';
+                modal.style.flexDirection = 'column';
+                modal.style.alignItems = 'center';
+
+                // Botón de cerrar
+                const closeBtn = document.createElement('span');
+                closeBtn.innerHTML = '&times;';
+                closeBtn.style.fontSize = '2rem';
+                closeBtn.style.cursor = 'pointer';
+                closeBtn.style.alignSelf = 'flex-end';
+                closeBtn.style.marginBottom = '0.5em';
+                closeBtn.onclick = () => document.body.removeChild(overlay);
+                modal.appendChild(closeBtn);
+
+                // Título
+                const titulo = document.createElement('h2');
+                titulo.textContent = 'COMENTARIOS';
+                titulo.style.color = '#6f42c1';
+                modal.appendChild(titulo);
+
+                // Lista de comentarios
+                if (data.success && data.comentarios.length > 0) {
+                  data.comentarios.forEach(com => {
+                    const div = document.createElement('div');
+                    div.style.background = '#ede7f6';
+                    div.style.borderRadius = '8px';
+                    div.style.margin = '0.5em 0';
+                    div.style.padding = '1em';
+                    div.style.width = '100%';
+                    div.style.boxShadow = '0 2px 8px rgba(60,60,120,0.06)';
+                    // Formatea la fecha y hora
+                    const fecha = com.fecha_comentario 
+                      ? new Date(com.fecha_comentario).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' }) 
+                      : '';
+                    div.innerHTML = `<div style="font-size:1.1em;">${com.comentario}</div>
+                      <div style="color:#6f42c1;font-size:0.95em;margin-top:0.5em;">${fecha}</div>`;
+                    modal.appendChild(div);
+                  });
+                } else {
+                  const sinComentarios = document.createElement('div');
+                  sinComentarios.textContent = 'No hay comentarios aún.';
+                  sinComentarios.style.color = '#888';
+                  modal.appendChild(sinComentarios);
+                }
+
+                overlay.appendChild(modal);
+                document.body.appendChild(overlay);
+
+                overlay.addEventListener('click', function(e) {
+                  if (e.target === overlay) {
+                    document.body.removeChild(overlay);
+                  }
+                });
               }
             });
 
@@ -238,6 +371,16 @@
             <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
             <button class="dislike-btn" data-id="${foto.id_fotografia}">Dislike</button>
             <span class="votos">Votos: ${foto.votos}</span>
+            <button class="comentario-btn" data-id="${foto.id_fotografia}" title="Comentar">
+              <i class="fa-solid fa-cloud"></i> Comentar
+            </button>
+            <div class="comentario-form" style="display:none;">
+              <textarea class="comentario-text" rows="2" placeholder="Escribe tu comentario..."></textarea>
+              <button class="guardar-comentario-btn" data-id="${foto.id_fotografia}">Guardar</button>
+              <button class="ver-comentarios-btn" data-id="${foto.id_fotografia}" title="Ver comentarios">
+                <i class="fa-solid fa-comments"></i>
+              </button>
+            </div>
           `;
           galeria.appendChild(div);
         });
@@ -316,6 +459,11 @@
           if (diff <= 0) {
             countdownElem.textContent = "00:00:00:00";
             countdownElem.style.color = "#ff4f4f";
+            // Elimina aviso si existe
+            const aviso = countdownElem.nextElementSibling;
+            if (aviso && aviso.classList.contains('aviso-rapido')) aviso.remove();
+            // Desactiva los botones de votación y comentarios
+            desactivarBotonesVotacion();
             return;
           }
           const dias = String(Math.floor(diff / (1000 * 60 * 60 * 24))).padStart(2, '0');
@@ -323,16 +471,57 @@
           const minutos = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, '0');
           const segundos = String(Math.floor((diff / 1000) % 60)).padStart(2, '0');
           countdownElem.textContent = `${dias}:${horas}:${minutos}:${segundos}`;
-          // Cambia a rojo si quedan menos de 2 días
+          // Cambia a rojo si quedan menos de 2 días y muestra aviso
           if (parseInt(dias) < 2) {
             countdownElem.style.color = "#ff4f4f";
+            // Mostrar aviso si no existe
+            if (!countdownElem.nextElementSibling || !countdownElem.nextElementSibling.classList.contains('aviso-rapido')) {
+              const aviso = document.createElement('div');
+              aviso.className = 'aviso-rapido';
+                aviso.textContent = "¡Quedan menos de 2 días para votar!";
+                aviso.style.color = "#ff4f4f";
+                aviso.style.fontSize = "1.4rem";
+                aviso.style.fontWeight = "bold";
+                aviso.style.marginTop = "0.3em";
+                aviso.style.display = "block";
+                aviso.style.marginBottom = "1em";
+              countdownElem.parentNode.insertBefore(aviso, countdownElem.nextSibling);
+            }
           } else {
-            countdownElem.style.color = "#4f8cff";
+            countdownElem.style.color = "#6f42c1";
+            // Elimina aviso si existe
+            const aviso = countdownElem.nextElementSibling;
+            if (aviso && aviso.classList.contains('aviso-rapido')) aviso.remove();
           }
           setTimeout(actualizar, 1000);
         }
         actualizar();
       }
+
+      function desactivarBotonesVotacion() {
+        document.querySelectorAll('.votar-btn, .dislike-btn, .comentario-btn, .guardar-comentario-btn').forEach(btn => {
+          btn.disabled = true;
+          btn.classList.add('btn-desactivado');
+        });
+      }
     </script>
+    <script>
+      const themeToggle = document.getElementById('theme-toggle');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-mode');
+        themeToggle.checked = true;
+      }
+      themeToggle.addEventListener('change', function() {
+        if (this.checked) {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+      </script>
   </body>
 </html>
