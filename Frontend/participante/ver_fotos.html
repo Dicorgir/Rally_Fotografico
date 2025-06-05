@@ -159,6 +159,9 @@
               if (result.success) {
                 btn.closest('.foto-item').remove();
                 mensaje.textContent = "Foto eliminada correctamente.";
+                setTimeout(() => {
+                  mensaje.textContent = "";
+                }, 3000);
               } else {
                 mensaje.textContent = result.message || "No se pudo eliminar la foto.";
               }

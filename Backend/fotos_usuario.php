@@ -5,6 +5,7 @@ require_once 'conexion.php';
 $email = $_GET['email'] ?? '';
 
 if (!$email) {
+    http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Email no proporcionado', 'fotos' => []]);
     exit;
 }
@@ -15,6 +16,7 @@ $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->bind_result($id_usuario);
 if (!$stmt->fetch()) {
+    http_response_code(404);
     echo json_encode(['success' => false, 'message' => 'Usuario no encontrado', 'fotos' => []]);
     exit;
 }
