@@ -10,6 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $id_rally = $_POST['id_rally'] ?? null;
 
     if (!$id_rally) {
+        http_response_code(400);
         echo json_encode(['success' => false, 'message' => 'ID de rally no proporcionado']);
         exit;
     }
@@ -21,12 +22,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         echo json_encode(['success' => true, 'message' => 'Rally eliminado correctamente']);
     } else {
+        http_response_code(500);
         echo json_encode(['success' => false, 'message' => 'Error al eliminar el rally']);
     }
 
     $stmt->close();
     $mysqli->close();
 } else {
+    http_response_code(405);
     echo json_encode(['success' => false, 'message' => 'Método no permitido']);
 }
 ?>
