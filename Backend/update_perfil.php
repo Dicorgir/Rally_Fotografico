@@ -35,17 +35,20 @@ if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_
 
 // Validar formato de correo
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
     echo json_encode(['message' => 'El correo no es válido']);
     exit;
 }
 
 // Validar longitud del país
 if ($pais !== null && strlen($pais) > 50) {
+    http_response_code(400);
     echo json_encode(['message' => 'El país no puede tener más de 50 caracteres']);
     exit;
 }
 
 if (!$email || !$nombre_completo) {
+    http_response_code(400);
     echo json_encode(['message' => 'Faltan datos obligatorios']);
     exit;
 }
