@@ -6,15 +6,18 @@ $email = $_GET['email'] ?? '';
 $id_rally = $_GET['id_rally'] ?? '';
 
 if (!$email || !$id_rally) {
+    http_response_code(400);
     echo json_encode(['error' => 'Email o ID de rally no proporcionados']);
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
     echo json_encode(['error' => 'Formato de email no válido']);
     exit;
 }
 if (!ctype_digit($id_rally) || intval($id_rally) <= 0) {
+    http_response_code(400);
     echo json_encode(['error' => 'ID de rally no válido']);
     exit;
 }
@@ -25,6 +28,7 @@ $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->bind_result($id_usuario);
 if (!$stmt->fetch()) {
+    http_response_code(404);
     echo json_encode(['error' => 'Usuario no encontrado']);
     exit;
 }

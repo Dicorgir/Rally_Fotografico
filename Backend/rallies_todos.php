@@ -5,6 +5,7 @@ require_once 'conexion.php';
 
 $res = $mysqli->query("SELECT id_rally, nombre, fecha_inicio, fecha_fin FROM rallies ORDER BY fecha_inicio ASC");
 if (!$res) {
+    http_response_code(500);
     echo json_encode(['success' => false, 'error' => 'Error en la consulta: ' . $mysqli->error]);
     exit;
 }
