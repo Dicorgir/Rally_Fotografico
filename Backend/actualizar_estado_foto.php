@@ -4,16 +4,21 @@ include 'conexion.php';
 
 $id_fotografia = $_POST['id_fotografia'] ?? '';
 $estado = $_POST['estado'] ?? '';
+
 if (!in_array($estado, ['pendiente', 'admitida', 'rechazada'])) {
+    http_response_code(400);
     echo json_encode(['message' => 'Estado no válido']);
     exit;
 }
+
 $sql = "UPDATE fotografias SET estado=? WHERE id_fotografia=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("si", $estado, $id_fotografia);
+
 if ($stmt->execute()) {
     echo json_encode(['message' => 'ESTADO ACTUALIZADO CORRECTAMENTE']);
 } else {
+    http_response_code(500);
     echo json_encode(['message' => 'ERROR AL ACTUALIZAR EL ESTADO']);
 }
 $stmt->close();

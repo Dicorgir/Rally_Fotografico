@@ -13,6 +13,14 @@ $sql = "SELECT
         JOIN rallies r ON f.id_rally = r.id_rally
         WHERE f.estado IN ('pendiente', 'admitida', 'rechazada')";
 $result = $mysqli->query($sql);
+
+if (!$result) {
+    http_response_code(500);
+    echo json_encode(['error' => 'Error en la consulta: ' . $mysqli->error]);
+    $mysqli->close();
+    exit;
+}
+
 $fotos = [];
 while ($row = $result->fetch_assoc()) {
     $fotos[] = $row;
