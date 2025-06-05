@@ -17,6 +17,7 @@ $sql = "SELECT r.nombre AS nombre_rally, r.fecha_fin, f.imagen_base64, u.nombre_
 
 $res = $mysqli->query($sql);
 if (!$res) {
+    http_response_code(500);
     echo json_encode(['error' => $mysqli->error, 'sql' => $sql]);
     $mysqli->close();
     exit;
