@@ -97,12 +97,13 @@
     </script>
     <script>
 document.addEventListener('DOMContentLoaded', async function() {
-  // Cargar todos los rallies
+  // Cargar todos los rallies existentes y mostrarlos en la tabla
   const res = await fetch('../../Backend/get_rallies.php');
   const rallies = await res.json();
   const tbody = document.querySelector('#tabla-rallies tbody');
   tbody.innerHTML = '';
   rallies.forEach(rally => {
+    // Por cada rally, crea una fila editable con sus datos
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><input type="text" value="${rally.nombre || ''}" data-campo="nombre"></td>
@@ -119,7 +120,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     tbody.appendChild(tr);
   });
 
-  // Guardar cambios de un rally
+  // Guardar cambios de un rally existente
   tbody.addEventListener('click', async function(e) {
     if (e.target.classList.contains('guardar-btn')) {
       const tr = e.target.closest('tr');
@@ -130,6 +131,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       inputs.forEach(input => {
         formData.append(input.dataset.campo, input.value);
       });
+      // Envía los datos al backend para actualizar el rally
       const res = await fetch('../../Backend/update_rally.php', {
         method: 'POST',
         body: formData
@@ -138,33 +140,32 @@ document.addEventListener('DOMContentLoaded', async function() {
       document.getElementById('mensaje-config').textContent = data.message || 'Configuración guardada';
       setTimeout(() => {
         document.getElementById('mensaje-config').textContent = '';
-      }, 3000); // 3 segundos
+      }, 3000); // Limpia el mensaje tras 3 segundos
     }
+    // Eliminar un rally
     if (e.target.classList.contains('eliminar-btn')) {
-  if (confirm('¿Seguro que deseas eliminar este rally?')) {
-    const id_rally = e.target.dataset.id;
-    console.log('Intentando borrar rally', id_rally); // <-- Agrega esto
-    const res = await fetch('../../Backend/eliminar_rally.php', {
-      method: 'POST',
-      body: new URLSearchParams({ id_rally })
-    });
-    const data = await res.json();
-    console.log('Respuesta backend:', data); // <-- Y esto
-    document.getElementById('mensaje-config').textContent = data.message || 'Rally eliminado';
-setTimeout(() => {
-  document.getElementById('mensaje-config').textContent = '';
-}, 3000); // 3 segundos
-    if (data.success) {
-      e.target.closest('tr').remove();
+      if (confirm('¿Seguro que deseas eliminar este rally?')) {
+        const id_rally = e.target.dataset.id;
+        const res = await fetch('../../Backend/eliminar_rally.php', {
+          method: 'POST',
+          body: new URLSearchParams({ id_rally })
+        });
+        const data = await res.json();
+        document.getElementById('mensaje-config').textContent = data.message || 'Rally eliminado';
+        setTimeout(() => {
+          document.getElementById('mensaje-config').textContent = '';
+        }, 3000);
+        if (data.success) {
+          e.target.closest('tr').remove();
+        }
+      }
     }
-  }
-}
   });
 
-  // Añadir fila de creación de rally
+  // Añadir una nueva fila para crear un rally
   document.getElementById('nuevo-rally-btn').addEventListener('click', function() {
     const tbody = document.querySelector('#tabla-rallies tbody');
-    // Evitar múltiples formularios
+    // Evita que se creen múltiples formularios de creación
     if (tbody.querySelector('.nuevo-rally-row')) return;
     const tr = document.createElement('tr');
     tr.classList.add('nuevo-rally-row');
@@ -183,8 +184,9 @@ setTimeout(() => {
     tbody.appendChild(tr);
   });
 
-  // Manejar creación y cancelación
+  // Manejar la creación y cancelación de un nuevo rally
   document.querySelector('#tabla-rallies tbody').addEventListener('click', async function(e) {
+    // Crear un nuevo rally
     if (e.target.classList.contains('crear-btn')) {
       const tr = e.target.closest('tr');
       const inputs = tr.querySelectorAll('input');
@@ -200,9 +202,10 @@ setTimeout(() => {
       document.getElementById('mensaje-config').textContent = data.message || 'Rally creado';
       if (data.success) {
         tr.remove();
-        location.reload(); // Recargar para mostrar el nuevo rally
+        location.reload(); // Recarga la página para mostrar el nuevo rally
       }
     }
+    // Cancelar la creación de un rally
     if (e.target.classList.contains('cancelar-btn')) {
       e.target.closest('tr').remove();
     }
@@ -210,6 +213,7 @@ setTimeout(() => {
 });
 </script>
 <script>
+/* Modo oscuro/claro para la interfaz admin */
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const savedTheme = localStorage.getItem('theme');

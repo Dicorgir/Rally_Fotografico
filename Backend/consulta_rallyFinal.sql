@@ -1,5 +1,4 @@
-CREATE DATABASE rally_fotografico;
-USE rally_fotografico;
+
 
 -- Tabla de Usuarios
 CREATE TABLE usuarios (

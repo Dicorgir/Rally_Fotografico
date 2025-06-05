@@ -84,14 +84,14 @@
     </div>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script>
-      let chartInstance = null; // Añade esto fuera del eventListener
-      let idRallySeleccionado = null;
-
       document.addEventListener('DOMContentLoaded', async function() {
+        // Referencias a elementos principales
         const ralliesCards = document.getElementById('rallies-cards');
         const galeria = document.getElementById('galeria-fotos');
         const rankingDiv = document.getElementById('ranking');
         const grafico = document.getElementById('grafico-votos').getContext('2d');
+        let chartInstance = null;
+        let idRallySeleccionado = null;
 
         // 1. Cargar rallies y mostrarlos como cards
         const resRallies = await fetch('http://localhost/Rally_Fotografico/Backend/listar_rallies.php');
@@ -109,8 +109,7 @@
               <button class="ver-fotos-btn" data-id="${rally.id_rally}">Ver fotos</button>
             `;
             ralliesCards.appendChild(card);
-
-            // Iniciar contador
+            // Inicia el contador de tiempo para cada rally
             iniciarCountdown('countdown-' + rally.id_rally, rally.fecha_fin_votacion);
           });
         }
@@ -123,6 +122,7 @@
             rankingDiv.innerHTML = '';
             grafico.clearRect(0, 0, 400, 200);
 
+            // Carga las fotos admitidas del rally seleccionado
             const res = await fetch(`http://localhost/Rally_Fotografico/Backend/galeria_fotos.php?id_rally=${idRallySeleccionado}`);
             const data = await res.json();
             if (!data.success) {
@@ -130,7 +130,7 @@
               return;
             }
 
-            // Mostrar fotos
+            // Muestra cada foto y sus botones de votar, dislike y comentar
             galeria.innerHTML = '';
             data.fotos.forEach(foto => {
               const div = document.createElement('div');
@@ -156,8 +156,9 @@
               galeria.appendChild(div);
             });
 
-            // Votación
+            // Votación, dislike, comentarios y ver comentarios
             galeria.addEventListener('click', async function(e) {
+              // Votar por una foto
               if (e.target.classList.contains('votar-btn')) {
                 const id = e.target.getAttribute('data-id');
                 const res = await fetch('http://localhost/Rally_Fotografico/Backend/votar_foto.php', {
@@ -167,8 +168,9 @@
                 });
                 const result = await res.json();
                 alert(result.message || (result.success ? '¡Voto registrado!' : 'No se pudo votar.'));
-                if (result.success) location.reload(); // Solo recarga si el voto fue exitoso
+                if (result.success) location.reload();
               }
+              // Quitar voto (dislike)
               if (e.target.classList.contains('dislike-btn')) {
                 const id = e.target.getAttribute('data-id');
                 const res = await fetch('http://localhost/Rally_Fotografico/Backend/quitar_voto.php', {
@@ -178,16 +180,14 @@
                 });
                 const result = await res.json();
                 alert(result.message || (result.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
-                if (result.success) location.reload(); // Solo recarga si el dislike fue exitoso
+                if (result.success) location.reload();
               }
-
               // Mostrar/ocultar formulario de comentario
               if (e.target.classList.contains('comentario-btn') || e.target.closest('.comentario-btn')) {
                 const btn = e.target.closest('.comentario-btn');
                 const form = btn.nextElementSibling;
                 form.style.display = form.style.display === 'none' ? 'block' : 'none';
               }
-
               // Guardar comentario
               if (e.target.classList.contains('guardar-comentario-btn')) {
                 const id = e.target.getAttribute('data-id');
@@ -209,7 +209,6 @@
                   e.target.parentElement.style.display = 'none';
                 }
               }
-
               // Ver comentarios
               if (e.target.classList.contains('ver-comentarios-btn') || e.target.closest('.ver-comentarios-btn')) {
                 const btn = e.target.closest('.ver-comentarios-btn');
@@ -218,7 +217,7 @@
                 const res = await fetch('http://localhost/Rally_Fotografico/Backend/obtener_comentarios.php?id_fotografia=' + idFoto);
                 const data = await res.json();
 
-                // Crea el fondo oscurecido
+                // Crea el fondo oscurecido y la ventana modal para mostrar los comentarios
                 const overlay = document.createElement('div');
                 overlay.style.position = 'fixed';
                 overlay.style.top = 0;
@@ -231,9 +230,8 @@
                 overlay.style.justifyContent = 'center';
                 overlay.style.alignItems = 'center';
 
-                // Crea la tarjeta blanca centrada
                 const modal = document.createElement('div');
-                modal.className = 'modal-comentarios'; // Añade esta línea
+                modal.className = 'modal-comentarios';
                 modal.style.background = '#fff';
                 modal.style.borderRadius = '16px';
                 modal.style.boxShadow = '0 8px 32px rgba(60,60,120,0.16)';
@@ -298,7 +296,7 @@
               }
             });
 
-            // Ranking de fotos
+            // Ranking de fotos (Top 5)
             const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
             rankingDiv.innerHTML = `
               <div class="top5-card">
@@ -315,12 +313,12 @@
               </div>
             `;
 
-            // Gráfico de votos
+            // Gráfico de votos con Chart.js
             if (chartInstance) {
               chartInstance.destroy();
             }
             chartInstance = new Chart(grafico, {
-              type: 'doughnut', // o 'pie'
+              type: 'doughnut',
               data: {
                 labels: data.fotos.map(f => f.titulo),
                 datasets: [{
@@ -350,6 +348,7 @@
         });
       });
 
+      // Función para recargar las fotos del rally seleccionado
       async function cargarFotosDelRallySeleccionado() {
         if (!idRallySeleccionado) return;
         // Simula el click en el botón de ver fotos del rally seleccionado
@@ -385,7 +384,7 @@
           galeria.appendChild(div);
         });
 
-        // Ranking de fotos
+        // Ranking de fotos (Top 5)
         const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
         rankingDiv.innerHTML = `
           <div class="top5-card">
@@ -402,12 +401,12 @@
           </div>
         `;
 
-        // Gráfico de votos
+        // Gráfico de votos con Chart.js
         if (chartInstance) {
           chartInstance.destroy();
         }
         chartInstance = new Chart(grafico, {
-          type: 'doughnut', // o 'pie'
+          type: 'doughnut',
           data: {
             labels: data.fotos.map(f => f.titulo),
             datasets: [{
@@ -435,20 +434,7 @@
         });
       }
 
-      function quitarVoto(id_fotografia) {
-        fetch('Backend/quitar_voto.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id_fotografia })
-        })
-        .then(res => res.json())
-        .then(data => {
-          alert(data.message || (data.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
-          // Recarga la galería o actualiza los votos
-          cargarFotosDelRallySeleccionado();
-        });
-      }
-
+      // Cuenta atrás para el fin de votación de cada rally
       function iniciarCountdown(elementId, fechaFin) {
         function actualizar() {
           const countdownElem = document.getElementById(elementId);
@@ -485,22 +471,20 @@
           // Cambia a rojo si quedan menos de 2 días y muestra aviso
           if (parseInt(dias) < 2) {
             countdownElem.style.color = "#ff4f4f";
-            // Mostrar aviso si no existe
             if (!countdownElem.nextElementSibling || !countdownElem.nextElementSibling.classList.contains('aviso-rapido')) {
               const aviso = document.createElement('div');
               aviso.className = 'aviso-rapido';
-                aviso.textContent = "¡Quedan menos de 2 días para votar!";
-                aviso.style.color = "#ff4f4f";
-                aviso.style.fontSize = "1.4rem";
-                aviso.style.fontWeight = "bold";
-                aviso.style.marginTop = "0.3em";
-                aviso.style.display = "block";
-                aviso.style.marginBottom = "1em";
+              aviso.textContent = "¡Quedan menos de 2 días para votar!";
+              aviso.style.color = "#ff4f4f";
+              aviso.style.fontSize = "1.4rem";
+              aviso.style.fontWeight = "bold";
+              aviso.style.marginTop = "0.3em";
+              aviso.style.display = "block";
+              aviso.style.marginBottom = "1em";
               countdownElem.parentNode.insertBefore(aviso, countdownElem.nextSibling);
             }
           } else {
             countdownElem.style.color = "#6f42c1";
-            // Elimina aviso si existe
             const aviso = countdownElem.nextElementSibling;
             if (aviso && aviso.classList.contains('aviso-rapido')) aviso.remove();
           }
@@ -509,14 +493,15 @@
         actualizar();
       }
 
+      // Desactiva los botones de votación y comentarios cuando termina el rally
       function desactivarBotonesVotacion() {
         document.querySelectorAll('.votar-btn, .dislike-btn, .comentario-btn, .guardar-comentario-btn').forEach(btn => {
           btn.disabled = true;
           btn.classList.add('btn-desactivado');
         });
       }
-    </script>
-    <script>
+
+      // Modo oscuro
       const themeToggle = document.getElementById('theme-toggle');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('theme');
@@ -533,6 +518,6 @@
           localStorage.setItem('theme', 'light');
         }
       });
-      </script>
+    </script>
   </body>
 </html>

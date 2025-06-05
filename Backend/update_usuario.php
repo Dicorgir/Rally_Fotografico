@@ -1,7 +1,8 @@
 <?php
-header('Content-Type: application/json');
-include 'conexion.php';
+header('Content-Type: application/json'); // Respuesta en JSON
+include 'conexion.php'; // Conexión a la base de datos
 
+// Recoge los datos enviados por POST
 $id_usuario = $_POST['id_usuario'] ?? '';
 $nombre = $_POST['nombre_completo'] ?? '';
 $email = $_POST['email'] ?? '';
@@ -9,6 +10,7 @@ $telefono = $_POST['telefono'] ?? '';
 $pais = $_POST['pais'] ?? '';
 $genero = $_POST['genero'] ?? '';
 
+// Validaciones básicas
 if (!$id_usuario || !$nombre || !$email) {
     http_response_code(400);
     echo json_encode(['message' => 'Faltan datos obligatorios']);
@@ -33,6 +35,7 @@ if ($pais !== null && strlen($pais) > 50) {
     exit;
 }
 
+// Actualiza los datos del usuario en la base de datos
 $sql = "UPDATE usuarios SET nombre_completo=?, email=?, telefono=?, pais=?, genero=? WHERE id_usuario=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param("sssssi", $nombre, $email, $telefono, $pais, $genero, $id_usuario);

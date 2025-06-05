@@ -1,9 +1,12 @@
 console.log("register.js cargado");
 
+// Espera a que el DOM esté listo
 document.addEventListener('DOMContentLoaded', function() {
+  // Añade un listener al formulario de registro
   document.querySelector('.form-container form')?.addEventListener('submit', async function(e) {
-    e.preventDefault();
+    e.preventDefault(); // Evita el envío tradicional
 
+    // Obtiene los valores de los campos del formulario
     const nombre_completo = document.getElementById('nombre_completo').value;
     const email = document.getElementById('email').value;
     const telefono = document.getElementById('telefono').value;
@@ -14,6 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const password_confirmation = document.getElementById('confirm-password').value;
 
     try {
+      // Envía los datos al backend usando fetch
       const response = await fetch('http://localhost/Rally_Fotografico/Backend/register.php', {
         method: 'POST',
         headers: {
@@ -34,7 +38,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const data = await response.json();
       if (response.ok) {
         alert('Registro exitoso');
-        e.target.reset();
+        e.target.reset(); // Limpia el formulario
       } else {
         alert('Error: ' + (data.message || JSON.stringify(data.errors)));
       }

@@ -1,7 +1,8 @@
 <?php
-header('Content-Type: application/json');
-include 'conexion.php';
+header('Content-Type: application/json'); // Respuesta en JSON
+include 'conexion.php'; // Conexión a la base de datos
 
+// Consulta para obtener fotos pendientes, admitidas y rechazadas, junto con usuario y rally
 $sql = "SELECT 
             f.id_fotografia, 
             f.imagen_base64, 
@@ -15,7 +16,7 @@ $sql = "SELECT
 $result = $mysqli->query($sql);
 
 if (!$result) {
-    http_response_code(500);
+    http_response_code(500); // Error en la consulta
     echo json_encode(['error' => 'Error en la consulta: ' . $mysqli->error]);
     $mysqli->close();
     exit;
@@ -23,8 +24,8 @@ if (!$result) {
 
 $fotos = [];
 while ($row = $result->fetch_assoc()) {
-    $fotos[] = $row;
+    $fotos[] = $row; // Añade cada foto al array
 }
-echo json_encode($fotos);
+echo json_encode($fotos); // Devuelve el array de fotos en JSON
 $mysqli->close();
 ?>

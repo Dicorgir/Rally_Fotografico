@@ -2,6 +2,7 @@
 header('Content-Type: application/json');
 include 'conexion.php';
 
+// Recoge los datos enviados por POST
 $nombre_completo = $_POST['nombre_completo'] ?? '';
 $email = $_POST['email'] ?? '';
 $telefono = $_POST['telefono'] ?? null;
@@ -9,7 +10,7 @@ $fecha_nacimiento = $_POST['fecha_nacimiento'] ?? null;
 $pais = $_POST['pais'] ?? null;
 $genero = $_POST['genero'] ?? null;
 
-// Procesar la foto de perfil si se subió
+// Procesa la foto de perfil si se subió una nueva
 $foto_perfil = null;
 if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
     $ext = pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION);
@@ -22,7 +23,7 @@ if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_
         $foto_perfil = 'uploads/' . $nombre_archivo;
     }
 } else {
-    // Mantener la foto anterior si no se subió una nueva
+    // Si no se subió una nueva, mantiene la foto anterior
     $stmt = $mysqli->prepare("SELECT foto_perfil FROM usuarios WHERE email=?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
@@ -33,26 +34,24 @@ if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_
     $stmt->close();
 }
 
-// Validar formato de correo
+// Validaciones básicas
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(['message' => 'El correo no es válido']);
     exit;
 }
-
-// Validar longitud del país
 if ($pais !== null && strlen($pais) > 50) {
     http_response_code(400);
     echo json_encode(['message' => 'El país no puede tener más de 50 caracteres']);
     exit;
 }
-
 if (!$email || !$nombre_completo) {
     http_response_code(400);
     echo json_encode(['message' => 'Faltan datos obligatorios']);
     exit;
 }
 
+// Actualiza los datos del usuario en la base de datos
 $sql = "UPDATE usuarios SET nombre_completo=?, telefono=?, fecha_nacimiento=?, pais=?, genero=?, foto_perfil=? WHERE email=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param(

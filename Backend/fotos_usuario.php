@@ -1,22 +1,23 @@
 <?php
-header('Content-Type: application/json');
-require_once 'conexion.php';
+header('Content-Type: application/json'); // Indica que la respuesta será en formato JSON
+require_once 'conexion.php'; // Incluye la conexión a la base de datos
 
-$email = $_GET['email'] ?? '';
+$email = $_GET['email'] ?? ''; // Obtiene el email desde la URL o una cadena vacía si no existe
 
+// Valida que el email haya sido proporcionado
 if (!$email) {
-    http_response_code(400);
+    http_response_code(400); // Código HTTP 400: petición incorrecta
     echo json_encode(['success' => false, 'message' => 'Email no proporcionado', 'fotos' => []]);
     exit;
 }
 
-// Obtener id_usuario
+// Obtener id_usuario a partir del email
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
 $stmt->bind_result($id_usuario);
 if (!$stmt->fetch()) {
-    http_response_code(404);
+    http_response_code(404); // Código HTTP 404: usuario no encontrado
     echo json_encode(['success' => false, 'message' => 'Usuario no encontrado', 'fotos' => []]);
     exit;
 }
@@ -33,9 +34,10 @@ $stmt->bind_param("i", $id_usuario);
 $stmt->execute();
 $stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $estado, $nombre_rally, $fecha_inicio, $fecha_fin);
 
-$hoy = date('Y-m-d');
+$hoy = date('Y-m-d'); // Obtiene la fecha actual
 $fotos = [];
 while ($stmt->fetch()) {
+    // Determina si la foto es eliminable según la fecha actual y las fechas del rally
     $eliminable = ($hoy >= $fecha_inicio && $hoy <= $fecha_fin);
     $fotos[] = [
         'id_fotografia' => $id_fotografia,
@@ -51,5 +53,6 @@ while ($stmt->fetch()) {
 }
 $stmt->close();
 
+// Devuelve la lista de fotos en formato JSON
 echo json_encode(['success' => true, 'fotos' => $fotos]);
 ?>

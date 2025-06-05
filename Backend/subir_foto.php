@@ -4,17 +4,19 @@ error_reporting(E_ALL);
 header('Content-Type: application/json');
 require_once 'conexion.php';
 
+// Recoge los datos enviados por POST
 $titulo = $_POST['titulo'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
 $email = $_POST['email'] ?? '';
 
+// Valida que los datos obligatorios estén presentes
 if (!$titulo || !$email || !isset($_FILES['foto'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Faltan datos obligatorios']);
     exit;
 }
 
-// Obtener id_usuario
+// Busca el id del usuario a partir del email
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email=?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -26,6 +28,7 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
+// Valida que se haya seleccionado un rally
 $id_rally = $_POST['rally'] ?? null;
 if (!$id_rally) {
     http_response_code(400);
@@ -33,7 +36,7 @@ if (!$id_rally) {
     exit;
 }
 
-// Validar y convertir la imagen a base64
+// Valida el formato y tamaño de la imagen
 $foto = $_FILES['foto'];
 $ext = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
 $permitidos = ['jpg', 'jpeg', 'png'];
@@ -47,10 +50,12 @@ if ($foto['size'] > 5 * 1024 * 1024) {
     echo json_encode(['success' => false, 'message' => 'La imagen supera el tamaño máximo de 5MB']);
     exit;
 }
+
+// Convierte la imagen a base64
 $contenido = file_get_contents($foto['tmp_name']);
 $base64 = base64_encode($contenido);
 
-// Insertar en la base de datos (estado pendiente)
+// Inserta la foto en la base de datos con estado 'pendiente'
 $stmt = $mysqli->prepare("INSERT INTO fotografias (id_usuario, id_rally, titulo, descripcion, imagen_base64, estado, fecha_subida) VALUES (?, ?, ?, ?, ?, 'pendiente', NOW())");
 $stmt->bind_param("iisss", $id_usuario, $id_rally, $titulo, $descripcion, $base64);
 

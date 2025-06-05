@@ -54,61 +54,29 @@
       </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                localStorage.removeItem('usuarioRol');
-                localStorage.removeItem('usuarioNombre');
-                window.location.href = '../index.html';
-            });
-            document.getElementById('logout-settings').addEventListener('click', function() {
-                window.location.href = 'configuracion_admin.html';
-            });
-            document.getElementById('logout-gestion').addEventListener('click', function() {
-                window.location.href = 'gestion_usuario_admin.html';
-            });
-            document.getElementById('logout-validation').addEventListener('click', function() {
-                window.location.href = 'validacion_fotos_admin.html';
-            });
-            
-        
+document.addEventListener('DOMContentLoaded', function() {
+  // Botones de navegación lateral para admin
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    localStorage.removeItem('usuarioRol');
+    localStorage.removeItem('usuarioNombre');
+    window.location.href = '../index.html';
+  });
+  document.getElementById('logout-settings').addEventListener('click', function() {
+    window.location.href = 'configuracion_admin.html';
+  });
+  document.getElementById('logout-gestion').addEventListener('click', function() {
+    window.location.href = 'gestion_usuario_admin.html';
+  });
+  document.getElementById('logout-validation').addEventListener('click', function() {
+    window.location.href = 'validacion_fotos_admin.html';
+  });
+});
+</script>
 
-        });
-    </script>
-    <div class="main-content">
-      <div class="form-container">
-        <h2>Estadísticas y Resultados</h2>
-        <div id="estadisticas">
-          <div class="estadistica-item"><strong>Total de usuarios:</strong> <span id="total-usuarios">-</span></div>
-          <div class="estadistica-item"><strong>Total de rallies:</strong> <span id="total-rallies">-</span></div>
-          <div class="estadistica-item"><strong>Total de fotografías:</strong> <span id="total-fotos">-</span></div>
-          <div class="estadistica-item"><strong>Fotos admitidas:</strong> <span id="fotos-admitidas">-</span></div>
-          <div class="estadistica-item"><strong>Fotos rechazadas:</strong> <span id="fotos-rechazadas">-</span></div>
-          <div class="estadistica-item"><strong>Fotos pendientes:</strong> <span id="fotos-pendientes">-</span></div>
-        </div>
-        <h3 style="margin-top:2em;">Ganadores por rally</h3>
-        <table id="tabla-ganadores">
-          <thead>
-            <tr>
-              <th>Rally</th>
-              <th>Estado</th>
-              <th>Foto ganadora</th>
-              <th>Usuario</th>
-              <th>Votos</th>
-            </tr>
-          </thead>
-          <tbody>
-            <!-- Aquí se llenarán los ganadores -->
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div id="modal-foto" class="modal-foto">
-  <span class="cerrar-modal">&times;</span>
-  <img id="img-modal-foto" src="" alt="Foto ampliada">
-</div>
-    <script>
+<script>
+// Estadísticas y resultados de rallies
 document.addEventListener('DOMContentLoaded', async function() {
-  // Estadísticas generales
+  // Estadísticas generales (usuarios, rallies, fotos, etc.)
   const resEst = await fetch('../../Backend/estadisticas_admin.php');
   const est = await resEst.json();
   document.getElementById('total-usuarios').textContent = est.total_usuarios;
@@ -124,10 +92,11 @@ document.addEventListener('DOMContentLoaded', async function() {
   const tbody = document.querySelector('#tabla-ganadores tbody');
   tbody.innerHTML = '';
   ganadores.forEach(g => {
-    // Calcular estado del rally
+    // Calcula el estado del rally (activo o finalizado)
     const hoy = new Date().toISOString().slice(0, 10);
     const estado = (g.fecha_fin >= hoy) ? 'Activo' : 'Finalizado';
 
+    // Muestra la fila con la foto ganadora, usuario y votos
     tbody.innerHTML += `
       <tr>
         <td>${g.nombre_rally}</td>
@@ -139,7 +108,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     `;
   });
 
-  // --- Modal para ampliar imagen ---
+  // Modal para ampliar la imagen de la foto ganadora
   document.querySelector('#tabla-ganadores').addEventListener('click', function(e) {
     if (e.target.tagName === 'IMG') {
       document.getElementById('img-modal-foto').src = e.target.src;
@@ -156,7 +125,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   };
 });
 </script>
+
 <script>
+// Modo oscuro/claro para la interfaz admin
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const savedTheme = localStorage.getItem('theme');

@@ -52,27 +52,6 @@
         <span class="nav-text">Cerrar<br>sesión</span>
       </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                localStorage.removeItem('usuarioRol');
-                localStorage.removeItem('usuarioNombre');
-                window.location.href = '../index.html';
-            });
-            document.getElementById('logout-settings').addEventListener('click', function() {
-                window.location.href = 'configuracion_admin.html';
-            });
-            document.getElementById('logout-gestion').addEventListener('click', function() {
-                window.location.href = 'gestion_usuario_admin.html';
-            });
-            document.getElementById('logout-results').addEventListener('click', function() {
-                window.location.href = 'resultados_admin.html';
-            });
-            
-            
-            
-        });
-    </script>
     <div class="main-content">
       <div class="form-container">
         <h2>Validación de Fotografías</h2>
@@ -98,13 +77,35 @@
   <img id="img-modal-foto" src="" alt="Foto ampliada">
 </div>
     <script>
+// Navegación lateral para admin: redirecciones y cerrar sesión
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    localStorage.removeItem('usuarioRol');
+    localStorage.removeItem('usuarioNombre');
+    window.location.href = '../index.html';
+  });
+  document.getElementById('logout-settings').addEventListener('click', function() {
+    window.location.href = 'configuracion_admin.html';
+  });
+  document.getElementById('logout-gestion').addEventListener('click', function() {
+    window.location.href = 'gestion_usuario_admin.html';
+  });
+  document.getElementById('logout-results').addEventListener('click', function() {
+    window.location.href = 'resultados_admin.html';
+  });
+});
+</script>
+
+<script>
+// Cargar y gestionar la validación de fotos
 document.addEventListener('DOMContentLoaded', async function() {
-  // Cargar todas las fotos pendientes
+  // Cargar todas las fotos pendientes de validación
   const res = await fetch('../../Backend/get_fotos_pendientes.php');
   const fotos = await res.json();
   const tbody = document.querySelector('#tabla-fotos tbody');
   tbody.innerHTML = '';
   fotos.forEach(foto => {
+    // Por cada foto, crea una fila con botones para admitir o rechazar
     const tr = document.createElement('tr');
     tr.innerHTML = `
       <td><img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="Foto" style="max-width:120px;max-height:90px;border-radius:8px;"></td>
@@ -123,7 +124,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     tbody.appendChild(tr);
   });
 
-  // Acciones de admitir/rechazar
+  // Acciones de admitir o rechazar una foto
   tbody.addEventListener('click', async function(e) {
     if (e.target.classList.contains('admitir-btn') || e.target.classList.contains('rechazar-btn')) {
       const id_foto = e.target.dataset.id;
@@ -137,12 +138,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
       const data = await res.json();
       document.getElementById('mensaje-fotos').textContent = data.message || 'Estado actualizado';
-      // Recargar la tabla (opcional: puedes actualizar solo la fila)
+      // Recarga la tabla tras la acción
       setTimeout(() => location.reload(), 1000);
     }
   });
 
-  // Evento para ampliar la foto
+  // Evento para ampliar la foto en un modal
   document.querySelector('#tabla-fotos').addEventListener('click', function(e) {
     if (e.target.tagName === 'IMG') {
       const src = e.target.src;
@@ -151,7 +152,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     }
   });
 
-  // Cerrar modal al hacer clic en la X o fuera de la imagen
+  // Cerrar el modal al hacer clic en la X o fuera de la imagen
   document.querySelector('.cerrar-modal').onclick = function() {
     document.getElementById('modal-foto').style.display = 'none';
   };
@@ -162,7 +163,9 @@ document.addEventListener('DOMContentLoaded', async function() {
   };
 });
 </script>
+
 <script>
+// Modo oscuro/claro para la interfaz admin
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const savedTheme = localStorage.getItem('theme');

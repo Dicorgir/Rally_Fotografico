@@ -116,22 +116,21 @@
     <script>
     document.addEventListener('DOMContentLoaded', async function() {
       const nombre = localStorage.getItem('usuarioNombre');
-      const email = localStorage.getItem('usuarioEmail'); // Guarda esto en login.js al autenticar
-
-      console.log(email); // <-- AQUÍ
+      const email = localStorage.getItem('usuarioEmail'); // Se obtiene el email guardado al hacer login
 
       // Obtener datos actuales del perfil
       if (email) {
         const res = await fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email));
         if (res.ok) {
           const data = await res.json();
+          // Rellena los campos del formulario con los datos del usuario
           document.getElementById('nombre_completo').value = data.nombre_completo || '';
           document.getElementById('email').value = data.email || '';
           document.getElementById('telefono').value = data.telefono || '';
           document.getElementById('fecha_nacimiento').value = data.fecha_nacimiento || '';
           document.getElementById('pais').value = data.pais || '';
           document.getElementById('genero').value = data.genero || '';
-          // Mostrar la foto de perfil si existe
+          // Muestra la foto de perfil si existe, si no pone la predeterminada
           const profilePic = document.getElementById('profile-pic');
           const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
           if (data.foto_perfil) {
@@ -145,45 +144,47 @@
         }
       }
 
-      // Guardar cambios
+      // Guardar cambios del perfil
       document.getElementById('perfil-form').addEventListener('submit', async function(e) {
         e.preventDefault();
         const form = document.getElementById('perfil-form');
         const formData = new FormData(form);
 
-        // Si el email no es editable, añádelo manualmente:
+        // Si el email no es editable, se añade manualmente
         formData.set('email', document.getElementById('email').value);
 
+        // Envía los datos al backend para actualizar el perfil
         const res = await fetch('http://localhost/Rally_Fotografico/Backend/update_perfil.php', {
           method: 'POST',
           body: formData
         });
         const data = await res.json();
-        // Mostrar SIEMPRE el mensaje que devuelve el backend
+        // Muestra siempre el mensaje que devuelve el backend
         alert(data.message || 'No se pudo actualizar');
         if (res.ok && data.message === 'Perfil actualizado correctamente') {
-          location.reload(); // Solo recarga si fue exitoso
+          location.reload(); // Recarga la página si fue exitoso
         }
       });
     });
     </script>
     <script>
-const themeToggle = document.getElementById('theme-toggle');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-  document.body.classList.add('dark-mode');
-  themeToggle.checked = true;
-}
-themeToggle.addEventListener('change', function() {
-  if (this.checked) {
-    document.body.classList.add('dark-mode');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.body.classList.remove('dark-mode');
-    localStorage.setItem('theme', 'light');
-  }
-});
-</script>
+      // Modo oscuro/claro
+      const themeToggle = document.getElementById('theme-toggle');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.body.classList.add('dark-mode');
+        themeToggle.checked = true;
+      }
+      themeToggle.addEventListener('change', function() {
+        if (this.checked) {
+          document.body.classList.add('dark-mode');
+          localStorage.setItem('theme', 'dark');
+        } else {
+          document.body.classList.remove('dark-mode');
+          localStorage.setItem('theme', 'light');
+        }
+      });
+    </script>
   </body>
 </html>

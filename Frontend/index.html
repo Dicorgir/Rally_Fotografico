@@ -1,20 +1,15 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Página principal</title>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
     <link rel="stylesheet" href="css/style.css" />
     <link rel="stylesheet" href="css/carrusel_style.css" />
     <link rel="stylesheet" href="css/button_style.css" />
     <link rel="stylesheet" href="css/switch_style.css" />
     <link rel="stylesheet" href="css/modo_oscuro.css" />
-
-
   </head>
   <body>
     <!-- Left sidebar -->
@@ -29,53 +24,54 @@
       </label>
 
       <div class="nav-item active">
-          <i class="fa-solid fa-house"></i>
-          <span class="nav-text">Inicio</span>
+        <i class="fa-solid fa-house"></i>
+        <span class="nav-text">Inicio</span>
       </div>
-        <!-- CUANDO ERES ADMIN VES ESTOS BOTONES -->
-          <div class="nav-item" id="logout-settings" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M2.256 15.632c.034-.323.268-.583.736-1.104l1.031-1.153c.252-.32.431-.875.431-1.375s-.179-1.056-.43-1.375L2.991 9.472c-.468-.52-.702-.781-.736-1.104s.14-.627.49-1.234l.494-.857c.373-.648.56-.972.878-1.1c.317-.13.676-.028 1.395.176l1.22.343c.459.106.94.046 1.358-.169l.337-.194a2 2 0 0 0 .788-.968l.334-.997c.22-.66.33-.99.591-1.18C10.403 2 10.75 2 11.444 2h1.115c.694 0 1.042 0 1.303.189s.371.519.59 1.179l.335.997a2 2 0 0 0 .788.968l.337.194c.418.215.9.275 1.358.17l1.22-.344c.719-.204 1.078-.306 1.395-.177c.318.13.505.453.878 1.101l.493.857c.35.607.525.91.491 1.234s-.268.583-.736 1.104l-1.031 1.153c-.252.319-.431.875-.431 1.375s.179 1.056.43 1.375l1.032 1.153c.468.52.702.781.736 1.104s-.14.627-.49 1.234l-.494.857c-.373.648-.56.972-.878 1.1c-.317.13-.676.028-1.395-.176l-1.22-.343a2 2 0 0 0-1.359.169l-.336.194c-.36.23-.636.57-.788.968l-.334.997c-.22.66-.33.99-.591 1.18c-.261.188-.609.188-1.303.188h-1.115c-.694 0-1.041 0-1.303-.189c-.261-.189-.371-.518-.59-1.178"/><path d="M2.737 18.78c1.08-1.08 4.752-4.716 5.112-5.136c.381-.444.072-1.044.256-2.904c.089-.9.282-1.574.836-2.076c.66-.624 1.2-.624 3.06-.666c1.62.042 1.812-.138 1.98.282c.12.3-.24.48-.672.96c-.96.96-1.524 1.44-1.578 1.74c-.39 1.32 1.146 2.1 1.986 1.26c.318-.318 1.788-1.8 1.932-1.92c.108-.096.367-.092.492.06c.108.106.12.12.108.6c-.01.444-.006 1.082-.004 1.74c.001.852-.044 1.8-.404 2.28c-.72 1.08-1.92 1.14-3 1.188c-1.02.06-1.86-.048-2.124.144c-.216.108-1.356 1.308-2.736 2.688l-2.46 2.46c-2.04 1.62-4.284-.9-2.784-2.7"/></g></svg>
-            <span class="nav-text">Config</span>
-          </div>
-          
-        <div class="nav-item" id="logout-gestion" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 32 32"><path fill="currentColor" d="M15 20H9a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3m-3-1a4 4 0 1 0-4-4a4 4 0 0 0 4 4m0-6a2 2 0 1 1-2 2a2 2 0 0 1 2-2"/><path fill="currentColor" d="M28 19v9H4V8h12V6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2v-9Z"/><path fill="currentColor" d="M20 19h6v2h-6zm2 4h4v2h-4zm10-13V8h-2.101a5 5 0 0 0-.732-1.753l1.49-1.49l-1.414-1.414l-1.49 1.49A5 5 0 0 0 26 4.101V2h-2v2.101a5 5 0 0 0-1.753.732l-1.49-1.49l-1.414 1.414l1.49 1.49A5 5 0 0 0 20.101 8H18v2h2.101a5 5 0 0 0 .732 1.753l-1.49 1.49l1.414 1.414l1.49-1.49a5 5 0 0 0 1.753.732V16h2v-2.101a5 5 0 0 0 1.753-.732l1.49 1.49l1.414-1.414l-1.49-1.49A5 5 0 0 0 29.899 10zm-7 2a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3"/></svg>
-            <span class="nav-text">Gestión <br> usuarios</span>
-        </div>
-        
-        <div class="nav-item" id="logout-validation" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M9.727 2c-3.26 0-4.892 0-6.024.798a4.1 4.1 0 0 0-.855.805C2 4.669 2 6.203 2 9.273v2.545c0 2.963 0 4.445.469 5.628c.754 1.903 2.348 3.403 4.37 4.113c1.257.441 2.83.441 5.98.441c1.798 0 2.698 0 3.416-.252c1.155-.406 2.066-1.263 2.497-2.35c.268-.676.268-1.523.268-3.216V15.5m-4-8s.5 0 1 1c0 0 1.588-2.5 3-3"/><path fill="currentColor" d="M22 7a5 5 0 1 1-10 0a5 5 0 0 1 10 0M2 12a3.333 3.333 0 0 0 3.333 3.333c.666 0 1.451-.116 2.098.057a1.67 1.67 0 0 1 1.179 1.18c.173.647.057 1.432.057 2.098A3.333 3.333 0 0 0 12 22"/></g></svg>            
-            <span class="nav-text">Validación <br> fotos</span>
-        </div>
-
-        <div class="nav-item" id="logout-results" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.5 18c0-1.414 0-2.121.44-2.56C4.378 15 5.085 15 6.5 15H7c.943 0 1.414 0 1.707.293S9 16.057 9 17v5H3.5zM15 19c0-.943 0-1.414.293-1.707S16.057 17 17 17h.5c1.414 0 2.121 0 2.56.44c.44.439.44 1.146.44 2.56v2H15zM2 22h20M9 16c0-1.414 0-2.121.44-2.56C9.878 13 10.585 13 12 13s2.121 0 2.56.44c.44.439.44 1.146.44 2.56v6H9zm3.691-13.422l.704 1.42a.87.87 0 0 0 .568.423l1.276.213c.816.137 1.008.734.42 1.323l-.992 1a.88.88 0 0 0-.208.73l.284 1.238c.224.98-.292 1.359-1.152.847l-1.196-.714a.86.86 0 0 0-.792 0l-1.196.714c-.856.512-1.376.129-1.152-.847l.284-1.238a.88.88 0 0 0-.208-.73l-.991-1c-.584-.589-.396-1.186.42-1.323l1.275-.213a.87.87 0 0 0 .564-.424l.704-1.42c.384-.77 1.008-.77 1.388 0" color="currentColor"/></svg>  
-            <span class="nav-text">Resultados</span>
-        </div>
-        
-        <!-- CUANDO ERES PARTICIPANTE VES ESTOS BOTONES -->
-        <div class="nav-item" id="logout-profile" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M16 9a4 4 0 1 1-8 0a4 4 0 0 1 8 0m-2 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1M3 12c0 2.09.713 4.014 1.908 5.542A8.99 8.99 0 0 1 12.065 14a8.98 8.98 0 0 1 7.092 3.458A9 9 0 1 0 3 12m9 9a8.96 8.96 0 0 1-5.672-2.012A6.99 6.99 0 0 1 12.065 16a6.99 6.99 0 0 1 5.689 2.92A8.96 8.96 0 0 1 12 21"/></g></svg>            
-            <span class="nav-text">Perfil</span>
-        </div>
-        <div class="nav-item" id="logout-add-photos" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"><path d="M38 21v19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2h18.364"/><path fill="currentColor" d="M12 31.03L18 23l3 3l3.5-5.5L32 31.03z"/><path d="M34 10h8m-4.005-4.205v8"/></g></svg>            
-            <span class="nav-text">Subir <br> Fotos</span>
-        </div>
-        <div class="nav-item" id="logout-view-photos" style="display:none;">
-            <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 8 8"><path fill="currentColor" d="m3 4l1-2l1 3H1l1-2m5 4V2h1v6H1V7m5-1V1H0v5"/></svg>
-            <span class="nav-text">Ver <br>fotos</span>
-        </div>
-
+      <!-- CUANDO ERES ADMIN VES ESTOS BOTONES -->
+      <div class="nav-item" id="logout-settings" style="display:none;">
+        <!-- SVG icono config -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M2.256 15.632c.034-.323.268-.583.736-1.104l1.031-1.153c.252-.32.431-.875.431-1.375s-.179-1.056-.43-1.375L2.991 9.472c-.468-.52-.702-.781-.736-1.104s.14-.627.49-1.234l.494-.857c.373-.648.56-.972.878-1.1c.317-.13.676-.028 1.395.176l1.22.343c.459.106.94.046 1.358-.169l.337-.194a2 2 0 0 0 .788-.968l.334-.997c.22-.66.33-.99.591-1.18C10.403 2 10.75 2 11.444 2h1.115c.694 0 1.042 0 1.303.189s.371.519.59 1.179l.335.997a2 2 0 0 0 .788.968l.337.194c.418.215.9.275 1.358.17l1.22-.344c.719-.204 1.078-.306 1.395-.177c.318.13.505.453.878 1.101l.493.857c.35.607.525.91.491 1.234s-.268.583-.736 1.104l-1.031 1.153c-.252.319-.431.875-.431 1.375s.179 1.056.43 1.375l1.032 1.153c.468.52.702.781.736 1.104s-.14.627-.49 1.234l-.494.857c-.373.648-.56.972-.878 1.1c-.317.13-.676.028-1.395-.176l-1.22-.343a2 2 0 0 0-1.359.169l-.336.194c-.36.23-.636.57-.788.968l-.334.997c-.22.66-.33.99-.591 1.18c-.261.188-.609.188-1.303.188h-1.115c-.694 0-1.041 0-1.303-.189c-.261-.189-.371-.518-.59-1.178"/><path d="M2.737 18.78c1.08-1.08 4.752-4.716 5.112-5.136c.381-.444.072-1.044.256-2.904c.089-.9.282-1.574.836-2.076c.66-.624 1.2-.624 3.06-.666c1.62.042 1.812-.138 1.98.282c.12.3-.24.48-.672.96c-.96.96-1.524 1.44-1.578 1.74c-.39 1.32 1.146 2.1 1.986 1.26c.318-.318 1.788-1.8 1.932-1.92c.108-.096.367-.092.492.06c.108.106.12.12.108.6c-.01.444-.006 1.082-.004 1.74c.001.852-.044 1.8-.404 2.28c-.72 1.08-1.92 1.14-3 1.188c-1.02.06-1.86-.048-2.124.144c-.216.108-1.356 1.308-2.736 2.688l-2.46 2.46c-2.04 1.62-4.284-.9-2.784-2.7"/></g></svg>
+        <span class="nav-text">Config</span>
+      </div>
+      <div class="nav-item" id="logout-gestion" style="display:none;">
+        <!-- SVG icono gestión usuarios -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 32 32"><path fill="currentColor" d="M15 20H9a3 3 0 0 0-3 3v2h2v-2a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v2h2v-2a3 3 0 0 0-3-3m-3-1a4 4 0 1 0-4-4a4 4 0 0 0 4 4m0-6a2 2 0 1 1-2 2a2 2 0 0 1 2-2"/><path fill="currentColor" d="M28 19v9H4V8h12V6H4a2 2 0 0 0-2 2v20a2 2 0 0 0 2 2h24a2 2 0 0 0 2-2v-9Z"/><path fill="currentColor" d="M20 19h6v2h-6zm2 4h4v2h-4zm10-13V8h-2.101a5 5 0 0 0-.732-1.753l1.49-1.49l-1.414-1.414l-1.49 1.49A5 5 0 0 0 26 4.101V2h-2v2.101a5 5 0 0 0-1.753.732l-1.49-1.49l-1.414 1.414l1.49 1.49A5 5 0 0 0 20.101 8H18v2h2.101a5 5 0 0 0 .732 1.753l-1.49 1.49l1.414 1.414l1.49-1.49a5 5 0 0 0 1.753.732V16h2v-2.101a5 5 0 0 0 1.753-.732l1.49 1.49l1.414-1.414l-1.49-1.49A5 5 0 0 0 29.899 10zm-7 2a3 3 0 1 1 3-3a3.003 3.003 0 0 1-3 3"/></svg>
+        <span class="nav-text">Gestión <br> usuarios</span>
+      </div>
+      <div class="nav-item" id="logout-validation" style="display:none;">
+        <!-- SVG icono validación fotos -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" color="currentColor"><path d="M9.727 2c-3.26 0-4.892 0-6.024.798a4.1 4.1 0 0 0-.855.805C2 4.669 2 6.203 2 9.273v2.545c0 2.963 0 4.445.469 5.628c.754 1.903 2.348 3.403 4.37 4.113c1.257.441 2.83.441 5.98.441c1.798 0 2.698 0 3.416-.252c1.155-.406 2.066-1.263 2.497-2.35c.268-.676.268-1.523.268-3.216V15.5m-4-8s.5 0 1 1c0 0 1.588-2.5 3-3"/><path fill="currentColor" d="M22 7a5 5 0 1 1-10 0a5 5 0 0 1 10 0M2 12a3.333 3.333 0 0 0 3.333 3.333c.666 0 1.451-.116 2.098.057a1.67 1.67 0 0 1 1.179 1.18c.173.647.057 1.432.057 2.098A3.333 3.333 0 0 0 12 22"/></g></svg>
+        <span class="nav-text">Validación <br> fotos</span>
+      </div>
+      <div class="nav-item" id="logout-results" style="display:none;">
+        <!-- SVG icono resultados -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3.5 18c0-1.414 0-2.121.44-2.56C4.378 15 5.085 15 6.5 15H7c.943 0 1.414 0 1.707.293S9 16.057 9 17v5H3.5zM15 19c0-.943 0-1.414.293-1.707S16.057 17 17 17h.5c1.414 0 2.121 0 2.56.44c.44.439.44 1.146.44 2.56v2H15zM2 22h20M9 16c0-1.414 0-2.121.44-2.56C9.878 13 10.585 13 12 13s2.121 0 2.56.44c.44.439.44 1.146.44 2.56v6H9zm3.691-13.422l.704 1.42a.87.87 0 0 0 .568.423l1.276.213c.816.137 1.008.734.42 1.323l-.992 1a.88.88 0 0 0-.208.73l.284 1.238c.224.98-.292 1.359-1.152.847l-1.196-.714a.86.86 0 0 0-.792 0l-1.196.714c-.856.512-1.376.129-1.152-.847l.284-1.238a.88.88 0 0 0-.208-.73l-.991-1c-.584-.589-.396-1.186.42-1.323l1.275-.213a.87.87 0 0 0 .564-.424l.704-1.42c.384-.77 1.008-.77 1.388 0" color="currentColor"/></svg>
+        <span class="nav-text">Resultados</span>
+      </div>
+      <!-- CUANDO ERES PARTICIPANTE VES ESTOS BOTONES -->
+      <div class="nav-item" id="logout-profile" style="display:none;">
+        <!-- SVG icono perfil -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 24 24"><g fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"><path d="M16 9a4 4 0 1 1-8 0a4 4 0 0 1 8 0m-2 0a2 2 0 1 1-4 0a2 2 0 0 1 4 0"/><path d="M12 1C5.925 1 1 5.925 1 12s4.925 11 11 11s11-4.925 11-11S18.075 1 12 1M3 12c0 2.09.713 4.014 1.908 5.542A8.99 8.99 0 0 1 12.065 14a8.98 8.98 0 0 1 7.092 3.458A9 9 0 1 0 3 12m9 9a8.96 8.96 0 0 1-5.672-2.012A6.99 6.99 0 0 1 12.065 16a6.99 6.99 0 0 1 5.689 2.92A8.96 8.96 0 0 1 12 21"/></g></svg>
+        <span class="nav-text">Perfil</span>
+      </div>
+      <div class="nav-item" id="logout-add-photos" style="display:none;">
+        <!-- SVG icono subir fotos -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="44" height="44" viewBox="0 0 48 48"><g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-miterlimit="10" stroke-width="4"><path d="M38 21v19a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2V12a2 2 0 0 1 2-2h18.364"/><path fill="currentColor" d="M12 31.03L18 23l3 3l3.5-5.5L32 31.03z"/><path d="M34 10h8m-4.005-4.205v8"/></g></svg>
+        <span class="nav-text">Subir <br> Fotos</span>
+      </div>
+      <div class="nav-item" id="logout-view-photos" style="display:none;">
+        <!-- SVG icono ver fotos -->
+        <svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 8 8"><path fill="currentColor" d="m3 4l1-2l1 3H1l1-2m5 4V2h1v6H1V7m5-1V1H0v5"/></svg>
+        <span class="nav-text">Ver <br>fotos</span>
+      </div>
       <a href="registro.html">
-        <div class="nav-item" >
+        <div class="nav-item">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
             <path fill="currentColor" d="M15 14c-2.67 0-8 1.33-8 4v2h16v-2c0-2.67-5.33-4-8-4m-9-4V7H4v3H1v2h3v3h2v-3h3v-2m6 2a4 4 0 0 0 4-4a4 4 0 0 0-4-4a4 4 0 0 0-4 4a4 4 0 0 0 4 4"/>
           </svg>
           <span class="nav-text">Registro</span>
         </div>
       </a>
-
       <a href="login.html">
         <div class="nav-item">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
@@ -85,272 +81,266 @@
         </div>
       </a>
       <a href="galeria.html">
-      <div class="nav-item">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 36 36">
-          <path fill="currentColor" d="M30.14 3a1 1 0 0 0-1-1h-22a1 1 0 0 0-1 1v1h24Z" class="clr-i-solid clr-i-solid-path-1"/><path fill="currentColor" d="M32.12 7a1 1 0 0 0-1-1h-26a1 1 0 0 0-1 1v1h28Z" class="clr-i-solid clr-i-solid-path-2"/><path fill="currentColor" d="M32.12 10H3.88A1.88 1.88 0 0 0 2 11.88v18.24A1.88 1.88 0 0 0 3.88 32h28.24A1.88 1.88 0 0 0 34 30.12V11.88A1.88 1.88 0 0 0 32.12 10M8.56 13.45a3 3 0 1 1-3 3a3 3 0 0 1 3-3M30 28H6l7.46-7.47a.71.71 0 0 1 1 0l3.68 3.68L23.21 19a.71.71 0 0 1 1 0L30 24.79Z" class="clr-i-solid clr-i-solid-path-3"/><path fill="none" d="M0 0h36v36H0z"/>
-        </svg>
-        <span class="nav-text">Galería</span>
-      </div>
+        <div class="nav-item">
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 36 36">
+            <path fill="currentColor" d="M30.14 3a1 1 0 0 0-1-1h-22a1 1 0 0 0-1 1v1h24Z" class="clr-i-solid clr-i-solid-path-1"/><path fill="currentColor" d="M32.12 7a1 1 0 0 0-1-1h-26a1 1 0 0 0-1 1v1h28Z" class="clr-i-solid clr-i-solid-path-2"/><path fill="currentColor" d="M32.12 10H3.88A1.88 1.88 0 0 0 2 11.88v18.24A1.88 1.88 0 0 0 3.88 32h28.24A1.88 1.88 0 0 0 34 30.12V11.88A1.88 1.88 0 0 0 32.12 10M8.56 13.45a3 3 0 1 1-3 3a3 3 0 0 1 3-3M30 28H6l7.46-7.47a.71.71 0 0 1 1 0l3.68 3.68L23.21 19a.71.71 0 0 1 1 0L30 24.79Z" class="clr-i-solid clr-i-solid-path-3"/><path fill="none" d="M0 0h36v36H0z"/>
+          </svg>
+          <span class="nav-text">Galería</span>
+        </div>
       </a>
-
       <div class="nav-divider"></div>
-
       <div class="nav-item">
         <i class="fa-solid fa-gear"></i>
       </div>
-
       <!-- Botón de cerrar sesión -->
       <div class="nav-item" id="logout-btn" style="cursor:pointer; display:none;">
         <i class="fa-solid fa-right-from-bracket"></i>
         <span class="nav-text">Cerrar<br>sesión</span>
       </div>
-      
     </div>
 
     <!-- Contenido Principal -->
     <div class="main-content">
       <div class="header">
-      <div class="carousel">
-        <div class="carousel-title">CAPTURA EL MOMENTO, COMPARTE TU VISIÓN</div>
-        <div class="carousel-track">
-              <div class="carousel-slide">
-                  <img src="https://img.pccomponentes.com/pcblog/407/elige-una-camara-reflex-para-iniciarte-en-la-fotografia-2.jpg" alt="Imagen 1">
-                </div>
-              <div class="carousel-slide">
-                  <img src="https://static.eldiario.es/clip/051ad19d-7505-4064-a960-4fafbc95aa84_16-9-discover-aspect-ratio_default_0.jpg " alt="Imagen 2">
-              </div>  
-              <div class="carousel-slide">
-                  <img src="https://i.blogs.es/854e4f/pasos-basicos-conseguir-buena-fotografia-paisaje-01/1366_2000.jpg" alt="Imagen 3">
-              </div>
+        <div class="carousel">
+          <div class="carousel-title">CAPTURA EL MOMENTO, COMPARTE TU VISIÓN</div>
+          <div class="carousel-track">
+            <div class="carousel-slide">
+              <img src="https://img.pccomponentes.com/pcblog/407/elige-una-camara-reflex-para-iniciarte-en-la-fotografia-2.jpg" alt="Imagen 1">
+            </div>
+            <div class="carousel-slide">
+              <img src="https://static.eldiario.es/clip/051ad19d-7505-4064-a960-4fafbc95aa84_16-9-discover-aspect-ratio_default_0.jpg " alt="Imagen 2">
+            </div>  
+            <div class="carousel-slide">
+              <img src="https://i.blogs.es/854e4f/pasos-basicos-conseguir-buena-fotografia-paisaje-01/1366_2000.jpg" alt="Imagen 3">
+            </div>
           </div>
           <div class="carousel-buttons">
-              <button class="carousel-button prev">⟨</button>
-              <button class="carousel-button next">⟩</button>
+            <button class="carousel-button prev">⟨</button>
+            <button class="carousel-button next">⟩</button>
           </div>
           <div class="carousel-indicators">
-              <div class="carousel-indicator active"></div>
-              <div class="carousel-indicator"></div>
-              <div class="carousel-indicator"></div>
+            <div class="carousel-indicator active"></div>
+            <div class="carousel-indicator"></div>
+            <div class="carousel-indicator"></div>
           </div>
           <script src="js/carrusel.js"></script>
-          
-            <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 20px;">
-              <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
-                <button id="btn-plazos">
-                  <span class="circle1"></span>
-                  <span class="circle2"></span>
-                  <span class="circle3"></span>
-                  <span class="circle4"></span>
-                  <span class="circle5"></span>
-                  <span class="text">PLAZOS</span>
-                </button>
-                <button id="btn-bases" title="BASES DEL CONCURSO">
-                  <span class="circle1"></span>
-                  <span class="circle2"></span>
-                  <span class="circle3"></span>
-                  <span class="circle4"></span>
-                  <span class="circle5"></span>
-                  <span class="text">BASES</span>
-                </button>
-                <button id="btn-info">
-                  <span class="circle1"></span>
-                  <span class="circle2"></span>
-                  <span class="circle3"></span>
-                  <span class="circle4"></span>
-                  <span class="circle5"></span>
-                  <span class="text">➕ INFO</span>
-                </button>
-              </div>
-              <!-- Botones de redes sociales debajo, en línea -->
-              <div class="social-buttons" style="display: flex; flex-direction: row; gap: 24px; margin-top: 18px; justify-content: center;">
-                <a href="https://instagram.com/" target="_blank" title="Instagram" class="social-btn instagram" style="display: flex; align-items: center; justify-content: center;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"/>
-                  </svg>
-                </a>
-                <a href="mailto:rallyfotografico@email.com" title="Correo" class="social-btn mail" style="display: flex; align-items: center; justify-content: center;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"/>
-                </a>
-                <a href="https://x.com/" target="_blank" title="X (Twitter)" class="social-btn x" style="display: flex; align-items: center; justify-content: center;">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 14 14">
-                    <g fill="none">
-                      <g clip-path="url(#primeTwitter0)">
-                        <path fill="currentColor" d="M11.025.656h2.147L8.482 6.03L14 13.344H9.68L6.294 8.909l-3.87 4.435H.275l5.016-5.75L0 .657h4.43L7.486 4.71zm-.755 11.4h1.19L3.78 1.877H2.504z"/>
-                      </g>
-                      <defs>
-                        <clipPath id="primeTwitter0">
-                          <path fill="#fff" d="M0 0h14v14H0z"/>
-                        </clipPath>
-                      </defs>
+          <div style="display: flex; flex-direction: column; align-items: center; gap: 16px; margin-top: 20px;">
+            <div style="display: flex; justify-content: center; align-items: center; gap: 20px;">
+              <button id="btn-plazos">
+                <span class="circle1"></span>
+                <span class="circle2"></span>
+                <span class="circle3"></span>
+                <span class="circle4"></span>
+                <span class="circle5"></span>
+                <span class="text">PLAZOS</span>
+              </button>
+              <button id="btn-bases" title="BASES DEL CONCURSO">
+                <span class="circle1"></span>
+                <span class="circle2"></span>
+                <span class="circle3"></span>
+                <span class="circle4"></span>
+                <span class="circle5"></span>
+                <span class="text">BASES</span>
+              </button>
+              <button id="btn-info">
+                <span class="circle1"></span>
+                <span class="circle2"></span>
+                <span class="circle3"></span>
+                <span class="circle4"></span>
+                <span class="circle5"></span>
+                <span class="text">➕ INFO</span>
+              </button>
+            </div>
+            <!-- Botones de redes sociales debajo, en línea -->
+            <div class="social-buttons" style="display: flex; flex-direction: row; gap: 24px; margin-top: 18px; justify-content: center;">
+              <a href="https://instagram.com/" target="_blank" title="Instagram" class="social-btn instagram" style="display: flex; align-items: center; justify-content: center;">
+                <!-- SVG Instagram -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"/>
+                </svg>
+              </a>
+              <a href="mailto:rallyfotografico@email.com" title="Correo" class="social-btn mail" style="display: flex; align-items: center; justify-content: center;">
+                <!-- SVG Mail -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24">
+                  <path fill="currentColor" d="M4 20q-.825 0-1.412-.587T2 18V6q0-.825.588-1.412T4 4h16q.825 0 1.413.588T22 6v12q0 .825-.587 1.413T20 20zm8-7l8-5V6l-8 5l-8-5v2z"/>
+                </svg>
+              </a>
+              <a href="https://x.com/" target="_blank" title="X (Twitter)" class="social-btn x" style="display: flex; align-items: center; justify-content: center;">
+                <!-- SVG X -->
+                <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 14 14">
+                  <g fill="none">
+                    <g clip-path="url(#primeTwitter0)">
+                      <path fill="currentColor" d="M11.025.656h2.147L8.482 6.03L14 13.344H9.68L6.294 8.909l-3.87 4.435H.275l5.016-5.75L0 .657h4.43L7.486 4.71zm-.755 11.4h1.19L3.78 1.877H2.504z"/>
                     </g>
-                  </svg>
-                </a>
-              </div>
+                    <defs>
+                      <clipPath id="primeTwitter0">
+                        <path fill="#fff" d="M0 0h14v14H0z"/>
+                      </clipPath>
+                    </defs>
+                  </g>
+                </svg>
+              </a>
             </div>
-            <div style="text-align: center; margin-top: 20px;">
-              <h1 style="font-family: Arial, sans-serif; font-size: 32px; color: #333;">"RallyClick"</h1>
-              <h1 style="font-family: Arial, sans-serif; font-size: 24px; color: #333;">
-                Descubre la belleza a través de tu lente
-              </h1>
-            </div>
-      </div>
-      </div>
-      
-        
+          </div>
+          <div style="text-align: center; margin-top: 20px;">
+            <h1 style="font-family: Arial, sans-serif; font-size: 32px; color: #333;">"RallyClick"</h1>
+            <h1 style="font-family: Arial, sans-serif; font-size: 24px; color: #333;">
+              Descubre la belleza a través de tu lente
+            </h1>
+          </div>
+        </div>
       </div>
     </div>
     <!-- Modal reutilizable -->
-<div id="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
-  <div id="modal-content" style="background:#fff; border-radius:16px; box-shadow:0 8px 32px rgba(60,60,120,0.16); padding:2em 2em 1em 2em; max-width:600px; width:90vw; max-height:80vh; overflow-y:auto; display:flex; flex-direction:column; align-items:center; position:relative;">
-    <span id="modal-close" style="position:absolute; top:1em; right:1em; font-size:2rem; cursor:pointer;">&times;</span>
-    <h2 id="modal-title" style="color:#6f42c1; margin-top:0;"></h2>
-    <div id="modal-body" style="width:100%;"></div>
-  </div>
-</div>
+    <div id="modal-overlay" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
+      <div id="modal-content" style="background:#fff; border-radius:16px; box-shadow:0 8px 32px rgba(60,60,120,0.16); padding:2em 2em 1em 2em; max-width:600px; width:90vw; max-height:80vh; overflow-y:auto; display:flex; flex-direction:column; align-items:center; position:relative;">
+        <span id="modal-close" style="position:absolute; top:1em; right:1em; font-size:2rem; cursor:pointer;">&times;</span>
+        <h2 id="modal-title" style="color:#6f42c1; margin-top:0;"></h2>
+        <div id="modal-body" style="width:100%;"></div>
+      </div>
+    </div>
+    <script src="js/carrusel.js"></script>
     <script>
-document.addEventListener('DOMContentLoaded', function() {
-    const rol = localStorage.getItem('usuarioRol');
-    if (rol === 'admin') {
-        document.getElementById('logout-settings').style.display = 'flex';
-        document.getElementById('logout-btn').style.display = 'flex';
-        document.getElementById('logout-gestion').style.display = 'flex';
-        document.getElementById('logout-validation').style.display = 'flex';
-        document.getElementById('logout-results').style.display = 'flex';
-        document.querySelectorAll('.sidebar .nav-item:not(.active):not(#logout-btn):not(#logout-settings):not(#logout-gestion):not(#logout-validation):not(#logout-results)').forEach(function(item) {
-            item.style.display = 'none';
+    document.addEventListener('DOMContentLoaded', function() {
+        // Muestra u oculta los botones del sidebar según el rol guardado en localStorage
+        const rol = localStorage.getItem('usuarioRol');
+        if (rol === 'admin') {
+            document.getElementById('logout-settings').style.display = 'flex';
+            document.getElementById('logout-btn').style.display = 'flex';
+            document.getElementById('logout-gestion').style.display = 'flex';
+            document.getElementById('logout-validation').style.display = 'flex';
+            document.getElementById('logout-results').style.display = 'flex';
+            document.querySelectorAll('.sidebar .nav-item:not(.active):not(#logout-btn):not(#logout-settings):not(#logout-gestion):not(#logout-validation):not(#logout-results)').forEach(function(item) {
+                item.style.display = 'none';
+            });
+            document.querySelectorAll('.sidebar a').forEach(function(link) {
+                link.style.display = 'none';
+            });
+            document.querySelectorAll('.sidebar .fa-gear').forEach(function(gear) {
+                gear.parentElement.style.display = 'none';
+            });
+        } else if (rol === 'participante') {
+            document.getElementById('logout-profile').style.display = 'flex';
+            document.getElementById('logout-add-photos').style.display = 'flex';
+            document.getElementById('logout-view-photos').style.display = 'flex';
+            document.querySelectorAll('.sidebar .nav-item:not(.active):not(#logout-btn):not(#logout-profile):not(#logout-add-photos):not(#logout-view-photos)').forEach(function(item) {
+                item.style.display = 'none';
+            });
+            document.getElementById('logout-btn').style.display = 'flex';
+            document.querySelectorAll('.sidebar a').forEach(function(link) {
+                link.style.display = 'none';
+            });
+            document.querySelectorAll('.sidebar .fa-gear').forEach(function(gear) {
+                gear.parentElement.style.display = 'none';
+            });
+        }
+
+        // Evento para cerrar sesión
+        document.getElementById('logout-btn').addEventListener('click', function() {
+            localStorage.removeItem('usuarioRol');
+            localStorage.removeItem('usuarioNombre');
+            location.reload(); // Recarga la página para mostrar el index original
         });
-        document.querySelectorAll('.sidebar a').forEach(function(link) {
-            link.style.display = 'none';
+
+        // Redirecciones según el botón pulsado
+        document.getElementById('logout-settings').addEventListener('click', function() {
+            window.location.href = 'admin/configuracion_admin.html';
         });
-        document.querySelectorAll('.sidebar .fa-gear').forEach(function(gear) {
-            gear.parentElement.style.display = 'none';
+        document.getElementById('logout-gestion').addEventListener('click', function() {
+            window.location.href = 'admin/gestion_usuario_admin.html';
         });
-    } else if (rol === 'participante') {
-        document.getElementById('logout-profile').style.display = 'flex';
-        document.getElementById('logout-add-photos').style.display = 'flex';
-        document.getElementById('logout-view-photos').style.display = 'flex';
-        document.querySelectorAll('.sidebar .nav-item:not(.active):not(#logout-btn):not(#logout-profile):not(#logout-add-photos):not(#logout-view-photos)').forEach(function(item) {
-            item.style.display = 'none';
+        document.getElementById('logout-validation').addEventListener('click', function() {
+            window.location.href = 'admin/validacion_fotos_admin.html';
         });
-        // Muestra el botón de cerrar sesión
-        document.getElementById('logout-btn').style.display = 'flex';
-        // Oculta todos los enlaces
-        document.querySelectorAll('.sidebar a').forEach(function(link) {
-            link.style.display = 'none';
+        document.getElementById('logout-results').addEventListener('click', function() {
+            window.location.href = 'admin/resultados_admin.html';
         });
-        // Oculta el engranaje
-        document.querySelectorAll('.sidebar .fa-gear').forEach(function(gear) {
-            gear.parentElement.style.display = 'none';
+        document.getElementById('logout-profile').addEventListener('click', function() {
+            window.location.href = 'participante/perfil_participante.html';
         });
+        document.getElementById('logout-add-photos').addEventListener('click', function() {
+            window.location.href = 'participante/subir_fotos.html';
+        });
+        document.getElementById('logout-view-photos').addEventListener('click', function() {
+            window.location.href = 'participante/ver_fotos.html';
+        });
+
+        // Modal reutilizable para mostrar información
+        const modalOverlay = document.getElementById('modal-overlay');
+        const modalTitle = document.getElementById('modal-title');
+        const modalBody = document.getElementById('modal-body');
+        const modalClose = document.getElementById('modal-close');
+
+        function showModal(title, html) {
+          modalTitle.textContent = title;
+          modalBody.innerHTML = html;
+          modalOverlay.style.display = 'flex';
+        }
+        modalClose.onclick = () => modalOverlay.style.display = 'none';
+        modalOverlay.onclick = (e) => { if (e.target === modalOverlay) modalOverlay.style.display = 'none'; };
+
+        // Botón PLAZOS
+        document.getElementById('btn-plazos').onclick = function() {
+          showModal('Plazos de los rallies', `
+            <ul style="text-align:left;">
+              <li><b>Rally Primavera:</b> Inscripción: 1-10 marzo. Votación: 15-20 marzo.</li>
+              <li><b>Rally Verano:</b> Inscripción: 1-10 junio. Votación: 15-20 junio.</li>
+              <li><b>Rally Otoño:</b> Inscripción: 1-10 septiembre. Votación: 15-20 septiembre.</li>
+            </ul>
+            <p style="margin-top:1em; color:#6f42c1;">¡No pierdas el plazo para participar y votar!</p>
+          `);
+        };
+
+        // Botón BASES
+        document.getElementById('btn-bases').onclick = function() {
+          showModal('Bases del concurso', `
+            <ol style="text-align:left;">
+              <li>La participación es gratuita y abierta a cualquier persona.</li>
+              <li>Cada participante podrá presentar hasta 5 fotografías por rally.</li>
+              <li>Las fotos deben ser originales y tomadas por el participante.</li>
+              <li>No se permite el uso de IA para generar imágenes.</li>
+              <li>Las fotografías no deben haber sido premiadas en otros concursos.</li>
+              <li>El jurado y el público votarán las mejores fotos.</li>
+              <li>Cada usuario solo podrá votar una vez por dirección IP en cada rally.</li>
+              <li>Consulta las bases completas en la web oficial.</li>
+            </ol>
+          `);
+        };
+
+        // Botón +INFO
+        document.getElementById('btn-info').onclick = function() {
+          showModal('Más información', `
+            <p style="text-align:left;">
+              El Rally Fotográfico es una oportunidad para mostrar tu creatividad y tu visión única del mundo.<br><br>
+              <b>¿Cómo participar?</b><br>
+              1. Regístrate en la web.<br>
+              2. Sube tus fotos durante el plazo de inscripción.<br>
+              3. Invita a tus amigos a votar.<br><br>
+              <b>Premios:</b> Los ganadores recibirán diplomas y premios sorpresa.<br>
+              <b>Contacto:</b> rallyfotografico@email.com
+            </p>
+          `);
+        };
+    });
+
+    // Modo oscuro/claro
+    const themeToggle = document.getElementById('theme-toggle');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+      document.body.classList.add('dark-mode');
+      themeToggle.checked = true;
     }
-    // Evento para cerrar sesión
-    document.getElementById('logout-btn').addEventListener('click', function() {
-        localStorage.removeItem('usuarioRol');
-        localStorage.removeItem('usuarioNombre');
-        location.reload(); // Recarga la página para mostrar el index original
+    themeToggle.addEventListener('change', function() {
+      if (this.checked) {
+        document.body.classList.add('dark-mode');
+        localStorage.setItem('theme', 'dark');
+      } else {
+        document.body.classList.remove('dark-mode');
+        localStorage.setItem('theme', 'light');
+      }
     });
-    // Redirigir a la página de configuración
-    document.getElementById('logout-settings').addEventListener('click', function() {
-        window.location.href = 'admin/configuracion_admin.html';
-    });
-    // Redirigir a la página de gestión de usuarios
-    document.getElementById('logout-gestion').addEventListener('click', function() {
-        window.location.href = 'admin/gestion_usuario_admin.html';
-    });
-    document.getElementById('logout-validation').addEventListener('click', function() {
-        window.location.href = 'admin/validacion_fotos_admin.html';
-    });
-    document.getElementById('logout-results').addEventListener('click', function() {
-        window.location.href = 'admin/resultados_admin.html';
-    });
-    // Redirigir a las páginas de participante
-    document.getElementById('logout-profile').addEventListener('click', function() {
-        window.location.href = 'participante/perfil_participante.html';
-    });
-    document.getElementById('logout-add-photos').addEventListener('click', function() {
-        window.location.href = 'participante/subir_fotos.html';
-    });
-    document.getElementById('logout-view-photos').addEventListener('click', function() {
-        window.location.href = 'participante/ver_fotos.html';
-    });
-    
-    // Modal reutilizable
-    const modalOverlay = document.getElementById('modal-overlay');
-    const modalTitle = document.getElementById('modal-title');
-    const modalBody = document.getElementById('modal-body');
-    const modalClose = document.getElementById('modal-close');
-
-    function showModal(title, html) {
-      modalTitle.textContent = title;
-      modalBody.innerHTML = html;
-      modalOverlay.style.display = 'flex';
-    }
-    modalClose.onclick = () => modalOverlay.style.display = 'none';
-    modalOverlay.onclick = (e) => { if (e.target === modalOverlay) modalOverlay.style.display = 'none'; };
-
-    // Botón PLAZOS
-    document.getElementById('btn-plazos').onclick = function() {
-      showModal('Plazos de los rallies', `
-        <ul style="text-align:left;">
-          <li><b>Rally Primavera:</b> Inscripción: 1-10 marzo. Votación: 15-20 marzo.</li>
-          <li><b>Rally Verano:</b> Inscripción: 1-10 junio. Votación: 15-20 junio.</li>
-          <li><b>Rally Otoño:</b> Inscripción: 1-10 septiembre. Votación: 15-20 septiembre.</li>
-        </ul>
-        <p style="margin-top:1em; color:#6f42c1;">¡No pierdas el plazo para participar y votar!</p>
-      `);
-    };
-
-    // Botón BASES
-    document.getElementById('btn-bases').onclick = function() {
-      showModal('Bases del concurso', `
-        <ol style="text-align:left;">
-          <li>La participación es gratuita y abierta a cualquier persona.</li>
-          <li>Cada participante podrá presentar hasta 5 fotografías por rally.</li>
-          <li>Las fotos deben ser originales y tomadas por el participante.</li>
-          <li>No se permite el uso de IA para generar imágenes.</li>
-          <li>Las fotografías no deben haber sido premiadas en otros concursos.</li>
-          <li>El jurado y el público votarán las mejores fotos.</li>
-          <li>Cada usuario solo podrá votar una vez por dirección IP en cada rally.</li>
-          <li>Consulta las bases completas en la web oficial.</li>
-        </ol>
-      `);
-    };
-
-    // Botón +INFO
-    document.getElementById('btn-info').onclick = function() {
-      showModal('Más información', `
-        <p style="text-align:left;">
-          El Rally Fotográfico es una oportunidad para mostrar tu creatividad y tu visión única del mundo.<br><br>
-          <b>¿Cómo participar?</b><br>
-          1. Regístrate en la web.<br>
-          2. Sube tus fotos durante el plazo de inscripción.<br>
-          3. Invita a tus amigos a votar.<br><br>
-          <b>Premios:</b> Los ganadores recibirán diplomas y premios sorpresa.<br>
-          <b>Contacto:</b> rallyfotografico@email.com
-        </p>
-      `);
-    };
-});
-
-// Modo oscuro/claro
-const themeToggle = document.getElementById('theme-toggle');
-const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-const savedTheme = localStorage.getItem('theme');
-if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-  document.body.classList.add('dark-mode');
-  themeToggle.checked = true;
-}
-themeToggle.addEventListener('change', function() {
-  if (this.checked) {
-    document.body.classList.add('dark-mode');
-    localStorage.setItem('theme', 'dark');
-  } else {
-    document.body.classList.remove('dark-mode');
-    localStorage.setItem('theme', 'light');
-  }
-});
-</script>
-
-</body>
+    </script>
+  </body>
 </html>

@@ -74,6 +74,7 @@
     <div class="main-content">
       <div class="form-container">
         <p class="title">Registro 📋</p>
+        <!-- Formulario de registro de usuario -->
         <form method="POST" autocomplete="off">
           <div class="input-group">
             <label for="nombre_completo">Nombre completo</label>
@@ -114,6 +115,8 @@
           </div>
           <button style="margin-top:6%;" class="sign" type="submit">REGISTRARSE</button>
         </form>
+
+        <!-- Mensaje informativo debajo del formulario -->
         <div class="social-message">
           <div class="line"></div>
           <p class="message">Introduce tus datos para registrarte</p>
@@ -121,8 +124,10 @@
         </div>
       </div>
     </div>
+    <!-- Script para registrar usuario y modo oscuro -->
     <script src="js/register.js"></script>
     <script>
+      // Modo oscuro/claro
       const themeToggle = document.getElementById('theme-toggle');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('theme');

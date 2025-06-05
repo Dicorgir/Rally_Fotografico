@@ -1,7 +1,8 @@
 <?php
-header('Content-Type: application/json');
-include 'conexion.php';
+header('Content-Type: application/json'); // Respuesta en JSON
+include 'conexion.php'; // Conexión a la base de datos
 
+// Consulta para obtener el ganador de cada rally (foto admitida con más votos)
 $sql = "SELECT r.nombre AS nombre_rally, r.fecha_fin, f.imagen_base64, u.nombre_completo AS nombre_usuario, f.total_votos
         FROM rallies r
         JOIN fotografias f ON f.id_rally = r.id_rally
@@ -17,15 +18,16 @@ $sql = "SELECT r.nombre AS nombre_rally, r.fecha_fin, f.imagen_base64, u.nombre_
 
 $res = $mysqli->query($sql);
 if (!$res) {
-    http_response_code(500);
+    http_response_code(500); // Error en la consulta
     echo json_encode(['error' => $mysqli->error, 'sql' => $sql]);
     $mysqli->close();
     exit;
 }
+
 $ganadores = [];
 while ($row = $res->fetch_assoc()) {
-    $ganadores[] = $row;
+    $ganadores[] = $row; // Añade cada ganador al array
 }
-echo json_encode($ganadores);
+echo json_encode($ganadores); // Devuelve los ganadores en JSON
 $mysqli->close();
 ?>

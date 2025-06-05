@@ -4,7 +4,7 @@ require_once 'conexion.php';
 
 $data = json_decode(file_get_contents('php://input'), true);
 $id_fotografia = $data['id_fotografia'] ?? null;
-$ip = $_SERVER['REMOTE_ADDR'];
+$ip = $_SERVER['REMOTE_ADDR']; // IP del usuario
 
 if (!$id_fotografia) {
     echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
