@@ -10,21 +10,25 @@ $pais = $_POST['pais'] ?? '';
 $genero = $_POST['genero'] ?? '';
 
 if (!$id_usuario || !$nombre || !$email) {
+    http_response_code(400);
     echo json_encode(['message' => 'Faltan datos obligatorios']);
     exit;
 }
 
 if (!is_numeric($id_usuario)) {
+    http_response_code(400);
     echo json_encode(['message' => 'ID de usuario inválido']);
     exit;
 }
 
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+    http_response_code(400);
     echo json_encode(['message' => 'El correo no es válido']);
     exit;
 }
 
 if ($pais !== null && strlen($pais) > 50) {
+    http_response_code(400);
     echo json_encode(['message' => 'El país no puede tener más de 50 caracteres']);
     exit;
 }
@@ -36,6 +40,7 @@ $stmt->bind_param("sssssi", $nombre, $email, $telefono, $pais, $genero, $id_usua
 if ($stmt->execute()) {
     echo json_encode(['message' => 'USUARIO ACTUALIZADO CORRECTAMENTE']);
 } else {
+    http_response_code(500);
     echo json_encode(['message' => 'ERROR AL ACTUALIZAR EL USUARIO']);
 }
 $stmt->close();
