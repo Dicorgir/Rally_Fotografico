@@ -7,6 +7,8 @@ header('Content-Type: application/json'); // Respuesta en JSON
 require_once 'conexion.php'; // Conexión a la base de datos
 session_start(); // Inicia la sesión para obtener el usuario
 
+date_default_timezone_set('Europe/Madrid');
+
 // Recibe los datos en JSON
 $input = json_decode(file_get_contents('php://input'), true);
 
@@ -20,13 +22,16 @@ if ($id_fotografia <= 0 || $comentario === '') {
     exit;
 }
 
+// Fecha y hora actual en España
+$fecha_comentario = date('Y-m-d H:i:s');
+
 // Prepara la consulta para guardar el comentario
-$stmt = $mysqli->prepare("INSERT INTO comentarios (id_fotografia, id_usuario, comentario, fecha_comentario) VALUES (?, ?, ?, NOW())");
+$stmt = $mysqli->prepare("INSERT INTO comentarios (id_fotografia, id_usuario, comentario, fecha_comentario) VALUES (?, ?, ?, ?)");
 if (!$stmt) {
     echo json_encode(['success' => false, 'message' => 'Error en prepare: ' . $mysqli->error]);
     exit;
 }
-$stmt->bind_param("iss", $id_fotografia, $id_usuario, $comentario);
+$stmt->bind_param("isss", $id_fotografia, $id_usuario, $comentario, $fecha_comentario);
 
 // Ejecuta la consulta y responde según el resultado
 if ($stmt->execute()) {
