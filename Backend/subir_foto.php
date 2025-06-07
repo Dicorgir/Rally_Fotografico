@@ -1,22 +1,45 @@
 <?php
+/**
+ * subir_foto.php
+ *
+ * Permite a un usuario subir una fotografía a un rally.
+ * Recibe los datos por POST (título, descripción, email, id de rally y archivo de imagen).
+ * Valida los datos, el formato y tamaño de la imagen, y guarda la foto en la base de datos en estado 'pendiente'.
+ * Devuelve una respuesta JSON indicando el resultado de la operación.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 ini_set('display_errors', 1);
 error_reporting(E_ALL); 
 header('Content-Type: application/json');
 require_once 'conexion.php';
 
 // Recoge los datos enviados por POST
+/**
+ * @var string $titulo Título de la foto
+ * @var string $descripcion Descripción de la foto
+ * @var string $email Email del usuario
+ */
 $titulo = $_POST['titulo'] ?? '';
 $descripcion = $_POST['descripcion'] ?? '';
 $email = $_POST['email'] ?? '';
 
-// Valida que los datos obligatorios estén presentes
+/**
+ * Valida que los datos obligatorios estén presentes.
+ */
 if (!$titulo || !$email || !isset($_FILES['foto'])) {
     http_response_code(400);
     echo json_encode(['success' => false, 'message' => 'Faltan datos obligatorios']);
     exit;
 }
 
-// Busca el id del usuario a partir del email
+/**
+ * Busca el id del usuario a partir del email.
+ */
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email=?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -28,7 +51,10 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Valida que se haya seleccionado un rally
+/**
+ * Valida que se haya seleccionado un rally.
+ * @var int|null $id_rally
+ */
 $id_rally = $_POST['rally'] ?? null;
 if (!$id_rally) {
     http_response_code(400);
@@ -36,7 +62,12 @@ if (!$id_rally) {
     exit;
 }
 
-// Valida el formato y tamaño de la imagen
+/**
+ * Valida el formato y tamaño de la imagen.
+ * @var array $foto
+ * @var string $ext
+ * @var array $permitidos
+ */
 $foto = $_FILES['foto'];
 $ext = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION));
 $permitidos = ['jpg', 'jpeg', 'png'];
@@ -51,11 +82,18 @@ if ($foto['size'] > 5 * 1024 * 1024) {
     exit;
 }
 
-// Convierte la imagen a base64
+/**
+ * Convierte la imagen a base64.
+ * @var string $contenido
+ * @var string $base64
+ */
 $contenido = file_get_contents($foto['tmp_name']);
 $base64 = base64_encode($contenido);
 
-// Inserta la foto en la base de datos con estado 'pendiente'
+/**
+ * Inserta la foto en la base de datos con estado 'pendiente'.
+ * @var mysqli_stmt $stmt
+ */
 $stmt = $mysqli->prepare("INSERT INTO fotografias (id_usuario, id_rally, titulo, descripcion, imagen_base64, estado, fecha_subida) VALUES (?, ?, ?, ?, ?, 'pendiente', NOW())");
 $stmt->bind_param("iisss", $id_usuario, $id_rally, $titulo, $descripcion, $base64);
 
@@ -65,6 +103,9 @@ if (!$stmt->execute()) {
     exit;
 }
 
+/**
+ * Devuelve una respuesta de éxito en formato JSON.
+ */
 echo json_encode(['success' => true, 'message' => 'Foto subida correctamente. Queda pendiente de validación.']);
 
 $stmt->close();

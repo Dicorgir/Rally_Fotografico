@@ -78,24 +78,34 @@
       </div>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                localStorage.removeItem('usuarioRol');
-                localStorage.removeItem('usuarioNombre');
-                window.location.href = '../index.html';
-            });
-            document.getElementById('logout-gestion').addEventListener('click', function() {
-                window.location.href = 'gestion_usuario_admin.html';
-            });
-            document.getElementById('logout-validation').addEventListener('click', function() {
-                window.location.href = 'validacion_fotos_admin.html';
-            });
-            document.getElementById('logout-results').addEventListener('click', function() {
-                window.location.href = 'resultados_admin.html';
-            });
-        });
-    </script>
-    <script>
+/**
+ * Asigna listeners a los botones del sidebar para navegación y cierre de sesión.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.removeItem('usuarioRol');
+        localStorage.removeItem('usuarioNombre');
+        window.location.href = '../index.html';
+    });
+    document.getElementById('logout-gestion').addEventListener('click', function() {
+        window.location.href = 'gestion_usuario_admin.html';
+    });
+    document.getElementById('logout-validation').addEventListener('click', function() {
+        window.location.href = 'validacion_fotos_admin.html';
+    });
+    document.getElementById('logout-results').addEventListener('click', function() {
+        window.location.href = 'resultados_admin.html';
+    });
+});
+</script>
+
+<script>
+/**
+ * Carga, edita, elimina y crea rallies en la tabla de configuración.
+ * Gestiona la interacción con el backend para la administración de rallies.
+ * @event DOMContentLoaded
+ */
 document.addEventListener('DOMContentLoaded', async function() {
   // Cargar todos los rallies existentes y mostrarlos en la tabla
   const res = await fetch('../../Backend/get_rallies.php');
@@ -213,7 +223,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 });
 </script>
 <script>
-/* Modo oscuro/claro para la interfaz admin */
+/**
+ * Controla el cambio entre modo oscuro y claro en la interfaz admin.
+ * Guarda la preferencia en localStorage.
+ * @event
+ */
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const savedTheme = localStorage.getItem('theme');

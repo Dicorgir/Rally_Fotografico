@@ -1,4 +1,9 @@
-// Añade un listener al formulario de login
+/**
+ * Añade un listener al formulario de login.
+ * Envía los datos al backend y gestiona la autenticación del usuario.
+ * @async
+ * @param {Event} e - El evento submit del formulario.
+ */
 document.querySelector('.form-container form')?.addEventListener('submit', async function(e) {
     e.preventDefault(); // Evita el envío tradicional del formulario
 

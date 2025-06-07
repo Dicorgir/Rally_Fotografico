@@ -1,0 +1,221 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Rally Fotográfico: Referencia del espacio de nombres Rally_Fotografico</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Rally Fotográfico
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('namespace_rally___fotografico.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del espacio de nombres Rally_Fotografico</div></div>
+</div><!--header-->
+<div class="contents">
+<a name="details" id="details"></a><h2 id="header-details" class="groupheader">Descripción detallada</h2>
+<div class="textblock"><p><a class="el" href="actualizar__estado__foto_8php.html">actualizar_estado_foto.php</a></p>
+<p>Actualiza el estado de una fotografía en la base de datos (pendiente, admitida o rechazada). Recibe el ID de la fotografía y el nuevo estado por POST.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="conexion_8php.html">conexion.php</a></p>
+<p>Establece la conexión a la base de datos MySQL para el sistema Rally Fotográfico. Si ocurre un error, devuelve un mensaje en formato JSON y detiene la ejecución.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="contar__fotos__usuario_8php.html">contar_fotos_usuario.php</a></p>
+<p>Devuelve la cantidad de fotos que un usuario ha subido, ya sea en total o a un rally específico. Recibe el email del usuario y opcionalmente el id_rally por GET. Responde con el número de fotos subidas y el máximo permitido.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="crear__rally_8php.html">crear_rally.php</a></p>
+<p>Crea un nuevo rally en la base de datos con los datos recibidos por POST. Valida los campos obligatorios y el máximo de fotos por participante. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="delete__usuario_8php.html">delete_usuario.php</a></p>
+<p>Elimina un usuario de la base de datos a partir de su ID recibido por POST. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="eliminar__foto_8php.html">eliminar_foto.php</a></p>
+<p>Elimina una fotografía de la base de datos si pertenece al usuario y el rally está activo. Recibe el ID de la fotografía y el email del usuario por JSON (POST). Solo permite eliminar si el rally no ha finalizado ni está pendiente de inicio. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="eliminar__rally_8php.html">eliminar_rally.php</a></p>
+<p>Elimina un rally de la base de datos a partir de su ID recibido por POST. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="estadisticas__admin_8php.html">estadisticas_admin.php</a></p>
+<p>Devuelve estadísticas generales del sistema para el panel de administración: total de usuarios, rallies, fotos subidas, fotos admitidas, rechazadas y pendientes. Responde en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="fotos__usuario_8php.html">fotos_usuario.php</a></p>
+<p>Devuelve todas las fotos subidas por un usuario, junto con su información y si pueden ser eliminadas. Recibe el email del usuario por GET. Responde con un array de fotos en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="galeria__fotos_8php.html">galeria_fotos.php</a></p>
+<p>Devuelve todas las fotos admitidas de un rally, junto con su información y votos. Recibe el id del rally por GET. Responde con un array de fotos en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="ganadores__rallies_8php.html">ganadores_rallies.php</a></p>
+<p>Devuelve el ganador de cada rally (foto admitida con más votos) junto con la información relevante. Responde en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="get__fotos__pendientes_8php.html">get_fotos_pendientes.php</a></p>
+<p>Devuelve todas las fotos pendientes, admitidas y rechazadas, junto con información del usuario y del rally. Responde en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="get__perfil_8php.html">get_perfil.php</a></p>
+<p>Devuelve el perfil de un usuario a partir de su email recibido por GET. Responde con los datos del usuario en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="get__rallies_8php.html">get_rallies.php</a></p>
+<p>Devuelve todos los rallies registrados en la base de datos. Responde con un array de rallies en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="get__usuarios_8php.html">get_usuarios.php</a></p>
+<p>Devuelve todos los usuarios registrados en la base de datos con información básica. Responde con un array de usuarios en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="guardar__comentario_8php.html">guardar_comentario.php</a></p>
+<p>Guarda un comentario realizado por un usuario sobre una fotografía. Recibe el id de la fotografía y el comentario por JSON (POST). Utiliza la sesión para identificar al usuario. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="listar__rallies_8php.html">listar_rallies.php</a></p>
+<p>Devuelve la lista de todos los rallies ordenados por fecha de inicio descendente. Responde con un array de rallies en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="login_8php.html">login.php</a></p>
+<p>Endpoint para autenticar usuarios en el sistema Rally Fotográfico. Recibe email y contraseña por POST (JSON) y devuelve los datos del usuario si las credenciales son correctas.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="obtener__comentarios_8php.html">obtener_comentarios.php</a></p>
+<p>Devuelve los comentarios de una fotografía específica. Recibe el id de la fotografía por GET. Responde con un array de comentarios en formato JSON.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="quitar__voto_8php.html">quitar_voto.php</a></p>
+<p>Elimina el voto de una fotografía realizado por la IP actual. Recibe el id de la fotografía por JSON (POST). Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="rallies__todos_8php.html">rallies_todos.php</a></p>
+<p>Devuelve todos los rallies ordenados por fecha de inicio ascendente. Responde con un array de rallies en formato JSON y fuerza la codificación UTF-8.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="register_8php.html">register.php</a></p>
+<p>Registra un nuevo usuario en el sistema Rally Fotográfico. Recibe los datos del usuario por JSON (POST), valida los campos y guarda el usuario en la base de datos. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="subir__foto_8php.html">subir_foto.php</a></p>
+<p>Permite a un usuario subir una fotografía a un rally. Recibe los datos por POST (título, descripción, email, id de rally y archivo de imagen). Valida los datos, el formato y tamaño de la imagen, y guarda la foto en la base de datos en estado 'pendiente'. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="update__perfil_8php.html">update_perfil.php</a></p>
+<p>Actualiza el perfil de un usuario en la base de datos. Recibe los datos del usuario por POST, valida los campos y actualiza la información. Permite actualizar la foto de perfil. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="update__rally_8php.html">update_rally.php</a></p>
+<p>Actualiza los datos de un rally existente en la base de datos. Recibe los datos por POST, valida los campos y actualiza la información. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="update__usuario_8php.html">update_usuario.php</a></p>
+<p>Actualiza los datos de un usuario en la base de datos. Recibe los datos por POST, valida los campos y actualiza la información. Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend</dd></dl>
+<p><a class="el" href="votar__foto_8php.html">votar_foto.php</a></p>
+<p>Permite votar por una fotografía de un rally, controlando que solo se permita un voto por IP en cada rally. Recibe el id de la fotografía por JSON (POST). Devuelve una respuesta JSON indicando el resultado de la operación.</p>
+<p>PHP version 8.0.30</p>
+<dl class="section author"><dt>Autor</dt><dd>Diego André Cornejo Giraldo \Backend </dd></dl>
+</div></div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="namespace_rally___fotografico.html">Rally_Fotografico</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

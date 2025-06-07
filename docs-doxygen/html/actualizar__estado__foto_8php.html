@@ -1,0 +1,219 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Rally Fotográfico: Referencia del archivo Backend/actualizar_estado_foto.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Rally Fotográfico
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('actualizar__estado__foto_8php.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del archivo actualizar_estado_foto.php</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:Rally_5FFotografico" id="r_Rally_5FFotografico"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_rally___fotografico.html">Rally_Fotografico</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a24c5f867682bebda5833e08d0981d81c" id="r_a24c5f867682bebda5833e08d0981d81c"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a24c5f867682bebda5833e08d0981d81c">$id_fotografia</a> = $_POST['id_fotografia'] ?? ''</td></tr>
+<tr class="memitem:add65399d2cbedf45a9f2299cf9555539" id="r_add65399d2cbedf45a9f2299cf9555539"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#add65399d2cbedf45a9f2299cf9555539">$estado</a> = $_POST['estado'] ?? ''</td></tr>
+<tr class="memitem:a047170d6020a882807665812a27e2525" id="r_a047170d6020a882807665812a27e2525"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a047170d6020a882807665812a27e2525">$sql</a> = &quot;UPDATE fotografias SET estado=? WHERE id_fotografia=?&quot;</td></tr>
+<tr class="memitem:af27a9140d5f2658693e7fd107f716449" id="r_af27a9140d5f2658693e7fd107f716449"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af27a9140d5f2658693e7fd107f716449">$stmt</a> = $mysqli-&gt;prepare($sql)</td></tr>
+<tr class="memitem:a13feb61b92e1e15e598806dc6e51f328" id="r_a13feb61b92e1e15e598806dc6e51f328"><td class="memItemLeft" align="right" valign="top"><a class="el" href="estadisticas__admin_8php.html#a05d40b3c81a1b7ba9de328b4588d83a2">if</a>($stmt-&gt;execute())&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a13feb61b92e1e15e598806dc6e51f328">else</a></td></tr>
+</table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentación de variables</h2>
+<a id="add65399d2cbedf45a9f2299cf9555539" name="add65399d2cbedf45a9f2299cf9555539"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#add65399d2cbedf45a9f2299cf9555539">&#9670;&#160;</a></span>$estado</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$estado = $_POST['estado'] ?? ''</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Obtiene el nuevo estado desde la petición POST, o una cadena vacía si no existe </p>
+
+</div>
+</div>
+<a id="a24c5f867682bebda5833e08d0981d81c" name="a24c5f867682bebda5833e08d0981d81c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a24c5f867682bebda5833e08d0981d81c">&#9670;&#160;</a></span>$id_fotografia</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$id_fotografia = $_POST['id_fotografia'] ?? ''</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Incluye el archivo de conexión a la base de datos Obtiene el id de la fotografía desde la petición POST, o una cadena vacía si no existe</p>
+<p>Extrae el id de la fotografía y el email del usuario del array recibido.</p>
+<p>Obtiene el id de la fotografía, el comentario y el id del usuario.</p>
+<p>Obtiene el id de la fotografía desde GET.</p>
+<p>Obtiene el id de la fotografía y la IP del usuario. </p>
+
+</div>
+</div>
+<a id="a047170d6020a882807665812a27e2525" name="a047170d6020a882807665812a27e2525"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a047170d6020a882807665812a27e2525">&#9670;&#160;</a></span>$sql</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$sql = &quot;UPDATE fotografias SET estado=? WHERE id_fotografia=?&quot;</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valida que el estado recibido sea uno de los permitidos. Prepara la consulta SQL para actualizar el estado de la fotografía</p>
+<p>Valida que el id_usuario esté presente y sea numérico. Prepara la consulta SQL para eliminar el usuario con el id proporcionado.</p>
+<p>Consulta para obtener el ganador de cada rally (foto admitida con más votos).</p>
+<p>Consulta para obtener fotos pendientes, admitidas y rechazadas, junto con usuario y rally.</p>
+<p>Prepara la consulta para buscar el perfil del usuario.</p>
+<p>Consulta todos los rallies registrados.</p>
+<p>Consulta para obtener los usuarios registrados. </p>
+
+</div>
+</div>
+<a id="af27a9140d5f2658693e7fd107f716449" name="af27a9140d5f2658693e7fd107f716449"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af27a9140d5f2658693e7fd107f716449">&#9670;&#160;</a></span>$stmt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$stmt = $mysqli-&gt;prepare($sql)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Prepara la consulta SQL para obtener las fotos admitidas y sus votos del rally seleccionado.</p>
+<p>Prepara la consulta para guardar el comentario.</p>
+<p>Busca el usuario por email.</p>
+<p>Valida que se haya recibido el id de la fotografía. Verifica si existe el voto de esta IP para la foto.</p>
+<p>Inserta la foto en la base de datos con estado 'pendiente'. </p>
+<p>Si la actualización fue exitosa, devuelve un mensaje de éxito en JSON</p>
+
+</div>
+</div>
+<a id="a13feb61b92e1e15e598806dc6e51f328" name="a13feb61b92e1e15e598806dc6e51f328"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a13feb61b92e1e15e598806dc6e51f328">&#9670;&#160;</a></span>else</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="estadisticas__admin_8php.html#a05d40b3c81a1b7ba9de328b4588d83a2">if</a> ( $stmt-&gt;execute()) else</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<b>Valor inicial:</b><div class="fragment"><div class="line">{</div>
+<div class="line">    </div>
+<div class="line">    http_response_code(500)</div>
+</div><!-- fragment --><p>Ejecuta la consulta y responde según el resultado. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d97893c72dedf4e0b2e9e1e8df755fbd.html">Backend</a></li><li class="navelem"><a href="actualizar__estado__foto_8php.html">actualizar_estado_foto.php</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

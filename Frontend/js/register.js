@@ -1,8 +1,16 @@
 console.log("register.js cargado");
 
-// Espera a que el DOM esté listo
+/**
+ * Espera a que el DOM esté listo y añade el listener al formulario de registro.
+ * @event DOMContentLoaded
+ */
 document.addEventListener('DOMContentLoaded', function() {
-  // Añade un listener al formulario de registro
+  /**
+   * Maneja el envío del formulario de registro de usuario.
+   * Envía los datos al backend y muestra alertas según el resultado.
+   * @async
+   * @param {Event} e - El evento submit del formulario.
+   */
   document.querySelector('.form-container form')?.addEventListener('submit', async function(e) {
     e.preventDefault(); // Evita el envío tradicional
 

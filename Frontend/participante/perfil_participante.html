@@ -52,22 +52,6 @@
         <span class="nav-text">Cerrar<br>sesión</span>
       </div>
     </div>
-    <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('logout-btn').addEventListener('click', function() {
-          localStorage.removeItem('usuarioRol');
-          localStorage.removeItem('usuarioNombre');
-          window.location.href = '../index.html';
-        });
-        document.getElementById('logout-add-photos').addEventListener('click', function() {
-          window.location.href = 'subir_fotos.html';
-        });
-        document.getElementById('logout-view-photos').addEventListener('click', function() {
-          window.location.href = 'ver_fotos.html';
-        });
-        
-      });
-    </script>
     <!-- ...sidebar y cabecera... -->
     <div class="main-content">
       <div class="form-container">
@@ -114,77 +98,110 @@
       </div>
     </div>
     <script>
-    document.addEventListener('DOMContentLoaded', async function() {
-      const nombre = localStorage.getItem('usuarioNombre');
-      const email = localStorage.getItem('usuarioEmail'); // Se obtiene el email guardado al hacer login
+/**
+ * Asigna listeners a los botones del sidebar para navegación y cierre de sesión.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    localStorage.removeItem('usuarioRol');
+    localStorage.removeItem('usuarioNombre');
+    window.location.href = '../index.html';
+  });
+  document.getElementById('logout-add-photos').addEventListener('click', function() {
+    window.location.href = 'subir_fotos.html';
+  });
+  document.getElementById('logout-view-photos').addEventListener('click', function() {
+    window.location.href = 'ver_fotos.html';
+  });
+});
+</script>
 
-      // Obtener datos actuales del perfil
-      if (email) {
-        const res = await fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email));
-        if (res.ok) {
-          const data = await res.json();
-          // Rellena los campos del formulario con los datos del usuario
-          document.getElementById('nombre_completo').value = data.nombre_completo || '';
-          document.getElementById('email').value = data.email || '';
-          document.getElementById('telefono').value = data.telefono || '';
-          document.getElementById('fecha_nacimiento').value = data.fecha_nacimiento || '';
-          document.getElementById('pais').value = data.pais || '';
-          document.getElementById('genero').value = data.genero || '';
-          // Muestra la foto de perfil si existe, si no pone la predeterminada
-          const profilePic = document.getElementById('profile-pic');
-          const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
-          if (data.foto_perfil) {
-            profilePic.src = '../../Backend/' + data.foto_perfil;
-            sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
-            sidebarProfilePic.title = data.nombre_completo || 'Usuario';
-          } else {
-            profilePic.src = '../../img/default_profile.png';
-            sidebarProfilePic.src = '../../img/default_profile.png';
-          }
-        }
+<script>
+/**
+ * Carga los datos del perfil del usuario y gestiona la actualización del perfil.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', async function() {
+  const nombre = localStorage.getItem('usuarioNombre');
+  const email = localStorage.getItem('usuarioEmail');
+
+  // Obtener datos actuales del perfil
+  if (email) {
+    const res = await fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email));
+    if (res.ok) {
+      const data = await res.json();
+      // Rellena los campos del formulario con los datos del usuario
+      document.getElementById('nombre_completo').value = data.nombre_completo || '';
+      document.getElementById('email').value = data.email || '';
+      document.getElementById('telefono').value = data.telefono || '';
+      document.getElementById('fecha_nacimiento').value = data.fecha_nacimiento || '';
+      document.getElementById('pais').value = data.pais || '';
+      document.getElementById('genero').value = data.genero || '';
+      // Muestra la foto de perfil si existe, si no pone la predeterminada
+      const profilePic = document.getElementById('profile-pic');
+      const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
+      if (data.foto_perfil) {
+        profilePic.src = '../../Backend/' + data.foto_perfil;
+        sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
+        sidebarProfilePic.title = data.nombre_completo || 'Usuario';
+      } else {
+        profilePic.src = '../../img/default_profile.png';
+        sidebarProfilePic.src = '../../img/default_profile.png';
       }
+    }
+  }
 
-      // Guardar cambios del perfil
-      document.getElementById('perfil-form').addEventListener('submit', async function(e) {
-        e.preventDefault();
-        const form = document.getElementById('perfil-form');
-        const formData = new FormData(form);
+  /**
+   * Envía los cambios del formulario de perfil al backend.
+   * @async
+   * @param {Event} e - El evento submit del formulario.
+   */
+  document.getElementById('perfil-form').addEventListener('submit', async function(e) {
+    e.preventDefault();
+    const form = document.getElementById('perfil-form');
+    const formData = new FormData(form);
 
-        // Si el email no es editable, se añade manualmente
-        formData.set('email', document.getElementById('email').value);
+    // Si el email no es editable, se añade manualmente
+    formData.set('email', document.getElementById('email').value);
 
-        // Envía los datos al backend para actualizar el perfil
-        const res = await fetch('http://localhost/Rally_Fotografico/Backend/update_perfil.php', {
-          method: 'POST',
-          body: formData
-        });
-        const data = await res.json();
-        // Muestra siempre el mensaje que devuelve el backend
-        alert(data.message || 'No se pudo actualizar');
-        if (res.ok && data.message === 'Perfil actualizado correctamente') {
-          location.reload(); // Recarga la página si fue exitoso
-        }
-      });
+    // Envía los datos al backend para actualizar el perfil
+    const res = await fetch('http://localhost/Rally_Fotografico/Backend/update_perfil.php', {
+      method: 'POST',
+      body: formData
     });
-    </script>
-    <script>
-      // Modo oscuro/claro
-      const themeToggle = document.getElementById('theme-toggle');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.body.classList.add('dark-mode');
-        themeToggle.checked = true;
-      }
-      themeToggle.addEventListener('change', function() {
-        if (this.checked) {
-          document.body.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.body.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light');
-        }
-      });
-    </script>
+    const data = await res.json();
+    // Muestra siempre el mensaje que devuelve el backend
+    alert(data.message || 'No se pudo actualizar');
+    if (res.ok && data.message === 'Perfil actualizado correctamente') {
+      location.reload(); // Recarga la página si fue exitoso
+    }
+  });
+});
+</script>
+
+<script>
+/**
+ * Controla el cambio entre modo oscuro y claro.
+ * Guarda la preferencia en localStorage.
+ * @event
+ */
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  document.body.classList.add('dark-mode');
+  themeToggle.checked = true;
+}
+themeToggle.addEventListener('change', function() {
+  if (this.checked) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+  }
+});
+</script>
   </body>
 </html>

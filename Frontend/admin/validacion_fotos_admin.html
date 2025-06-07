@@ -77,7 +77,10 @@
   <img id="img-modal-foto" src="" alt="Foto ampliada">
 </div>
     <script>
-// Navegación lateral para admin: redirecciones y cerrar sesión
+/**
+ * Asigna listeners a los botones del sidebar para navegación y cierre de sesión.
+ * @event DOMContentLoaded
+ */
 document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('logout-btn').addEventListener('click', function() {
     localStorage.removeItem('usuarioRol');
@@ -97,7 +100,11 @@ document.addEventListener('DOMContentLoaded', function() {
 </script>
 
 <script>
-// Cargar y gestionar la validación de fotos
+/**
+ * Carga y gestiona la validación de fotos pendientes.
+ * Permite admitir o rechazar fotos y muestra un modal para ampliarlas.
+ * @event DOMContentLoaded
+ */
 document.addEventListener('DOMContentLoaded', async function() {
   // Cargar todas las fotos pendientes de validación
   const res = await fetch('../../Backend/get_fotos_pendientes.php');
@@ -165,7 +172,11 @@ document.addEventListener('DOMContentLoaded', async function() {
 </script>
 
 <script>
-// Modo oscuro/claro para la interfaz admin
+/**
+ * Controla el cambio entre modo oscuro y claro en la interfaz admin.
+ * Guarda la preferencia en localStorage.
+ * @event
+ */
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const savedTheme = localStorage.getItem('theme');

@@ -1,8 +1,30 @@
 <?php
+/**
+ * update_perfil.php
+ *
+ * Actualiza el perfil de un usuario en la base de datos.
+ * Recibe los datos del usuario por POST, valida los campos y actualiza la información.
+ * Permite actualizar la foto de perfil.
+ * Devuelve una respuesta JSON indicando el resultado de la operación.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json');
 include 'conexion.php';
 
 // Recoge los datos enviados por POST
+/**
+ * @var string $nombre_completo
+ * @var string $email
+ * @var string|null $telefono
+ * @var string|null $fecha_nacimiento
+ * @var string|null $pais
+ * @var string|null $genero
+ */
 $nombre_completo = $_POST['nombre_completo'] ?? '';
 $email = $_POST['email'] ?? '';
 $telefono = $_POST['telefono'] ?? null;
@@ -11,6 +33,9 @@ $pais = $_POST['pais'] ?? null;
 $genero = $_POST['genero'] ?? null;
 
 // Procesa la foto de perfil si se subió una nueva
+/**
+ * @var string|null $foto_perfil
+ */
 $foto_perfil = null;
 if (isset($_FILES['foto_perfil']) && $_FILES['foto_perfil']['error'] === UPLOAD_ERR_OK) {
     $ext = pathinfo($_FILES['foto_perfil']['name'], PATHINFO_EXTENSION);
@@ -51,7 +76,9 @@ if (!$email || !$nombre_completo) {
     exit;
 }
 
-// Actualiza los datos del usuario en la base de datos
+/**
+ * Actualiza los datos del usuario en la base de datos.
+ */
 $sql = "UPDATE usuarios SET nombre_completo=?, telefono=?, fecha_nacimiento=?, pais=?, genero=?, foto_perfil=? WHERE email=?";
 $stmt = $mysqli->prepare($sql);
 $stmt->bind_param(

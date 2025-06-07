@@ -58,136 +58,148 @@
       </div>
     </div>
     <script>
-      document.addEventListener('DOMContentLoaded', async function() {
-        // Navegación sidebar
-        document.getElementById('logout-btn').onclick = function() {
-          localStorage.clear();
-          window.location.href = '../index.html';
-        };
-        document.getElementById('logout-profile').onclick = function() {
-          window.location.href = 'perfil_participante.html';
-        };
-        document.getElementById('logout-add-photos').onclick = function() {
-          window.location.href = 'subir_fotos.html';
-        };
-        document.getElementById('logout-view-photos').onclick = function() {
-          window.location.href = 'ver_fotos.html';
-        };
+/**
+ * Gestiona la navegación del sidebar, la carga y visualización de fotos del usuario,
+ * y la eliminación de fotos. También controla el modo oscuro.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', async function() {
+  // Navegación sidebar
+  document.getElementById('logout-btn').onclick = function() {
+    localStorage.clear();
+    window.location.href = '../index.html';
+  };
+  document.getElementById('logout-profile').onclick = function() {
+    window.location.href = 'perfil_participante.html';
+  };
+  document.getElementById('logout-add-photos').onclick = function() {
+    window.location.href = 'subir_fotos.html';
+  };
+  document.getElementById('logout-view-photos').onclick = function() {
+    window.location.href = 'ver_fotos.html';
+  };
 
-        // Cargar fotos del usuario
-        const email = localStorage.getItem('usuarioEmail');
-        const fotosList = document.getElementById('fotos-list');
-        const mensaje = document.getElementById('mensaje');
-        fotosList.innerHTML = '';
-        mensaje.textContent = '';
+  // Cargar fotos del usuario
+  const email = localStorage.getItem('usuarioEmail');
+  const fotosList = document.getElementById('fotos-list');
+  const mensaje = document.getElementById('mensaje');
+  fotosList.innerHTML = '';
+  mensaje.textContent = '';
 
-        // Mostrar foto de perfil y nombre en el sidebar
-        const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
-        if (email) {
-          fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email))
-            .then(res => res.json())
-            .then(data => {
-              if (data.foto_perfil) {
-                sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
-              } else {
-                sidebarProfilePic.src = '../../img/default_profile.png';
-              }
-              sidebarProfilePic.title = data.nombre_completo || 'Usuario';
-            });
-        }
-
-        if (!email) {
-          mensaje.textContent = "No se ha encontrado el usuario.";
-          return;
-        }
-
-        // Obtener fotos del usuario
-        const res = await fetch('http://localhost/Rally_Fotografico/Backend/fotos_usuario.php?email=' + encodeURIComponent(email));
-        const data = await res.json();
-
-        if (!data.success) {
-          mensaje.textContent = data.message || "No se pudieron cargar las fotos.";
-          return;
-        }
-
-        if (data.fotos.length === 0) {
-          mensaje.textContent = "No has subido ninguna foto.";
-          return;
-        }
-
-        // Muestra cada foto y su información
-        data.fotos.forEach(foto => {
-          let motivo = '';
-          if (!foto.eliminable) {
-            const hoy = new Date();
-            const fechaInicio = new Date(foto.fecha_inicio);
-            const fechaFin = new Date(foto.fecha_fin);
-            if (hoy < fechaInicio) {
-              motivo = 'No se puede eliminar la foto porque el rally aún no ha comenzado.';
-            } else if (hoy > fechaFin) {
-              motivo = 'No se puede eliminar la foto porque el rally ya ha finalizado.';
-            }
-          }
-
-          const fotoDiv = document.createElement('div');
-          fotoDiv.className = 'foto-item' + (foto.eliminable ? '' : ' desactivada');
-          fotoDiv.innerHTML = `
-            <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-img"/>
-            <div class="foto-info">
-              <h3>${foto.titulo}</h3>
-              <p>${foto.descripcion || ''}</p>
-              <p class="rally-nombre"><strong>Rally:</strong> ${foto.nombre_rally || 'Desconocido'}</p>
-              <span class="estado ${foto.estado}">Estado: ${foto.estado}</span>
-              <button class="eliminar-btn" data-id="${foto.id_fotografia}" ${foto.eliminable ? '' : 'disabled'}><i class="fa-solid fa-trash"></i> Eliminar</button>
-              ${!foto.eliminable ? `<div class="motivo-no-eliminar">${motivo}</div>` : ''}
-            </div>
-          `;
-          fotosList.appendChild(fotoDiv);
-        });
-
-        // Eliminar foto
-        fotosList.addEventListener('click', async function(e) {
-          if (e.target.closest('.eliminar-btn')) {
-            const btn = e.target.closest('.eliminar-btn');
-            const id = btn.getAttribute('data-id');
-            if (confirm('¿Seguro que quieres eliminar esta foto?')) {
-              const res = await fetch('http://localhost/Rally_Fotografico/Backend/eliminar_foto.php', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ id_fotografia: id, email })
-              });
-              const result = await res.json();
-              if (result.success) {
-                btn.closest('.foto-item').remove();
-                mensaje.textContent = "Foto eliminada correctamente.";
-                setTimeout(() => {
-                  mensaje.textContent = "";
-                }, 3000);
-              } else {
-                mensaje.textContent = result.message || "No se pudo eliminar la foto.";
-              }
-            }
-          }
-        });
-      });
-
-      // Modo oscuro
-      const themeToggle = document.getElementById('theme-toggle');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.body.classList.add('dark-mode');
-        themeToggle.checked = true;
-      }
-      themeToggle.addEventListener('change', function() {
-        if (this.checked) {
-          document.body.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark');
+  // Mostrar foto de perfil y nombre en el sidebar
+  const sidebarProfilePic = document.getElementById('sidebar-profile-pic');
+  if (email) {
+    fetch('http://localhost/Rally_Fotografico/Backend/get_perfil.php?email=' + encodeURIComponent(email))
+      .then(res => res.json())
+      .then(data => {
+        if (data.foto_perfil) {
+          sidebarProfilePic.src = '../../Backend/' + data.foto_perfil;
         } else {
-          document.body.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light');
+          sidebarProfilePic.src = '../../img/default_profile.png';
         }
+        sidebarProfilePic.title = data.nombre_completo || 'Usuario';
       });
-    </script>
+  }
+
+  if (!email) {
+    mensaje.textContent = "No se ha encontrado el usuario.";
+    return;
+  }
+
+  // Obtener fotos del usuario
+  const res = await fetch('http://localhost/Rally_Fotografico/Backend/fotos_usuario.php?email=' + encodeURIComponent(email));
+  const data = await res.json();
+
+  if (!data.success) {
+    mensaje.textContent = data.message || "No se pudieron cargar las fotos.";
+    return;
+  }
+
+  if (data.fotos.length === 0) {
+    mensaje.textContent = "No has subido ninguna foto.";
+    return;
+  }
+
+  // Muestra cada foto y su información
+  data.fotos.forEach(foto => {
+    let motivo = '';
+    if (!foto.eliminable) {
+      const hoy = new Date();
+      const fechaInicio = new Date(foto.fecha_inicio);
+      const fechaFin = new Date(foto.fecha_fin);
+      if (hoy < fechaInicio) {
+        motivo = 'No se puede eliminar la foto porque el rally aún no ha comenzado.';
+      } else if (hoy > fechaFin) {
+        motivo = 'No se puede eliminar la foto porque el rally ya ha finalizado.';
+      }
+    }
+
+    const fotoDiv = document.createElement('div');
+    fotoDiv.className = 'foto-item' + (foto.eliminable ? '' : ' desactivada');
+    fotoDiv.innerHTML = `
+      <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-img"/>
+      <div class="foto-info">
+        <h3>${foto.titulo}</h3>
+        <p>${foto.descripcion || ''}</p>
+        <p class="rally-nombre"><strong>Rally:</strong> ${foto.nombre_rally || 'Desconocido'}</p>
+        <span class="estado ${foto.estado}">Estado: ${foto.estado}</span>
+        <button class="eliminar-btn" data-id="${foto.id_fotografia}" ${foto.eliminable ? '' : 'disabled'}><i class="fa-solid fa-trash"></i> Eliminar</button>
+        ${!foto.eliminable ? `<div class="motivo-no-eliminar">${motivo}</div>` : ''}
+      </div>
+    `;
+    fotosList.appendChild(fotoDiv);
+  });
+
+  /**
+   * Permite eliminar una foto del usuario si es posible.
+   * @event click
+   */
+  fotosList.addEventListener('click', async function(e) {
+    if (e.target.closest('.eliminar-btn')) {
+      const btn = e.target.closest('.eliminar-btn');
+      const id = btn.getAttribute('data-id');
+      if (confirm('¿Seguro que quieres eliminar esta foto?')) {
+        const res = await fetch('http://localhost/Rally_Fotografico/Backend/eliminar_foto.php', {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({ id_fotografia: id, email })
+        });
+        const result = await res.json();
+        if (result.success) {
+          btn.closest('.foto-item').remove();
+          mensaje.textContent = "Foto eliminada correctamente.";
+          setTimeout(() => {
+            mensaje.textContent = "";
+          }, 3000);
+        } else {
+          mensaje.textContent = result.message || "No se pudo eliminar la foto.";
+        }
+      }
+    }
+  });
+});
+
+/**
+ * Controla el cambio entre modo oscuro y claro.
+ * Guarda la preferencia en localStorage.
+ * @event
+ */
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  document.body.classList.add('dark-mode');
+  themeToggle.checked = true;
+}
+themeToggle.addEventListener('change', function() {
+  if (this.checked) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+  }
+});
+</script>
   </body>
 </html>

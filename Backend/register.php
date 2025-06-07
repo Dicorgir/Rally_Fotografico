@@ -1,4 +1,17 @@
 <?php
+/**
+ * register.php
+ *
+ * Registra un nuevo usuario en el sistema Rally Fotográfico.
+ * Recibe los datos del usuario por JSON (POST), valida los campos y guarda el usuario en la base de datos.
+ * Devuelve una respuesta JSON indicando el resultado de la operación.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json');
 header('Access-Control-Allow-Origin: *');
 
@@ -9,9 +22,24 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Obtener datos JSON
+/**
+ * Obtiene los datos del usuario enviados en formato JSON.
+ * @var array $input
+ */
 $input = json_decode(file_get_contents('php://input'), true);
 
+/**
+ * Extrae y valida los campos recibidos.
+ * @var string $nombre_completo
+ * @var string $email
+ * @var string|null $telefono
+ * @var string|null $fecha_nacimiento
+ * @var string|null $pais
+ * @var string|null $genero
+ * @var string|null $foto_perfil
+ * @var string $password
+ * @var string $password_confirmation
+ */
 $nombre_completo = $input['nombre_completo'] ?? '';
 $email = $input['email'] ?? '';
 $telefono = $input['telefono'] ?? null;
@@ -22,7 +50,9 @@ $foto_perfil = $input['foto_perfil'] ?? null;
 $password = $input['password'] ?? '';
 $password_confirmation = $input['password_confirmation'] ?? '';
 
-// Validaciones básicas
+/**
+ * Validaciones básicas de los campos recibidos.
+ */
 if (!$nombre_completo || !$email || !$password || !$password_confirmation) {
     http_response_code(400);
     echo json_encode(['message' => 'Todos los campos obligatorios deben completarse']);
@@ -47,7 +77,9 @@ if ($pais !== null && strlen($pais) > 50) {
 // Conexión a la base de datos
 include 'conexion.php';
 
-// Verificar si el email ya existe
+/**
+ * Verifica si el email ya existe en la base de datos.
+ */
 $stmt = $mysqli->prepare('SELECT id_usuario FROM usuarios WHERE email = ?');
 $stmt->bind_param('s', $email);
 $stmt->execute();
@@ -59,7 +91,9 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// Insertar usuario
+/**
+ * Inserta el nuevo usuario en la base de datos.
+ */
 $hash = password_hash($password, PASSWORD_DEFAULT);
 $stmt = $mysqli->prepare('INSERT INTO usuarios (nombre_completo, email, contrasena, telefono, fecha_nacimiento, pais, genero, foto_perfil) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
 $stmt->bind_param('ssssssss', $nombre_completo, $email, $hash, $telefono, $fecha_nacimiento, $pais, $genero, $foto_perfil);

@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Registro</title>
     <link rel="stylesheet" href="css/style.css" />
-    <link rel="stylesheet" href="css/carrusel_style.css" />
     <link rel="stylesheet" href="css/button_style.css" />
     <link rel="stylesheet" href="css/login_style.css" />
     <link rel="stylesheet" href="css/modo_oscuro.css" />
@@ -127,7 +126,11 @@
     <!-- Script para registrar usuario y modo oscuro -->
     <script src="js/register.js"></script>
     <script>
-      // Modo oscuro/claro
+      /**
+       * Controla el cambio entre modo oscuro y claro.
+       * Guarda la preferencia en localStorage.
+       * @event
+       */
       const themeToggle = document.getElementById('theme-toggle');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
       const savedTheme = localStorage.getItem('theme');

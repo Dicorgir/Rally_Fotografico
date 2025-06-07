@@ -1,11 +1,35 @@
 <?php
+/**
+ * contar_fotos_usuario.php
+ *
+ * Devuelve la cantidad de fotos que un usuario ha subido, ya sea en total o a un rally específico.
+ * Recibe el email del usuario y opcionalmente el id_rally por GET.
+ * Responde con el número de fotos subidas y el máximo permitido.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json');
 require_once 'conexion.php';
 
+/**
+ * Email del usuario recibido por GET.
+ * @var string
+ */
 $email = $_GET['email'] ?? '';
+
+/**
+ * ID del rally recibido por GET (opcional).
+ * @var string
+ */
 $id_rally = $_GET['id_rally'] ?? '';
 
-// Valida el email
+/**
+ * Valida el email recibido por GET.
+ */
 if (!$email) {
     http_response_code(400);
     echo json_encode(['error' => 'Email no proporcionado']);
@@ -17,7 +41,9 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     exit;
 }
 
-// Busca el id_usuario correspondiente al email
+/**
+ * Busca el id_usuario correspondiente al email.
+ */
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -30,7 +56,9 @@ if (!$stmt->fetch()) {
 $stmt->close();
 
 if ($id_rally) {
-    // Valida que el id_rally sea un número entero positivo
+    /**
+     * Si se recibe id_rally, valida que sea un número entero positivo y cuenta las fotos en ese rally.
+     */
     if (!ctype_digit($id_rally) || intval($id_rally) <= 0) {
         http_response_code(400);
         echo json_encode(['error' => 'ID de rally no válido']);
@@ -58,7 +86,9 @@ if ($id_rally) {
         'nombre_rally' => $nombre_rally
     ]);
 } else {
-    // Cuenta todas las fotos del usuario (en todos los rallies)
+    /**
+     * Si no se recibe id_rally, cuenta todas las fotos del usuario en todos los rallies.
+     */
     $stmt = $mysqli->prepare("SELECT COUNT(*) FROM fotografias WHERE id_usuario = ?");
     $stmt->bind_param("i", $id_usuario);
     $stmt->execute();

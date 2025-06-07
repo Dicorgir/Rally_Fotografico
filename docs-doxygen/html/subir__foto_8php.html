@@ -1,0 +1,292 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.14.0"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Rally Fotográfico: Referencia del archivo Backend/subir_foto.php</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<script type="text/javascript" src="clipboard.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript" src="cookie.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">Rally Fotográfico
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.14.0 -->
+<script type="text/javascript">
+var searchBox = new SearchBox("searchBox", "search/",'.html');
+</script>
+<script type="text/javascript">
+$(function() { codefold.init(); });
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+$(function() {
+  initMenu('',true,false,'search.php','Buscar',true);
+  $(function() { init_search(); });
+});
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){initNavTree('subir__foto_8php.html','',''); });
+</script>
+<div id="container">
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<div id="MSearchResults">
+<div class="SRPage">
+<div id="SRIndex">
+<div id="SRResults"></div>
+<div class="SRStatus" id="Loading">Cargando...</div>
+<div class="SRStatus" id="Searching">Buscando...</div>
+<div class="SRStatus" id="NoMatches">Nada coincide</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">Referencia del archivo subir_foto.php</div></div>
+</div><!--header-->
+<div class="contents">
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-namespaces" class="groupheader"><a id="namespaces" name="namespaces"></a>
+Espacios de nombres</h2></td></tr>
+<tr class="memitem:Rally_5FFotografico" id="r_Rally_5FFotografico"><td class="memItemLeft" align="right" valign="top">namespace &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_rally___fotografico.html">Rally_Fotografico</a></td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 id="header-var-members" class="groupheader"><a id="var-members" name="var-members"></a>
+Variables</h2></td></tr>
+<tr class="memitem:a894f35d0aa77bfe5d5bee433e34cdd8f" id="r_a894f35d0aa77bfe5d5bee433e34cdd8f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a894f35d0aa77bfe5d5bee433e34cdd8f">$titulo</a> = $_POST['titulo'] ?? ''</td></tr>
+<tr class="memitem:ac9d881319e71b2a6885427edcce8cd16" id="r_ac9d881319e71b2a6885427edcce8cd16"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ac9d881319e71b2a6885427edcce8cd16">$descripcion</a> = $_POST['descripcion'] ?? ''</td></tr>
+<tr class="memitem:ad634f418b20382e2802f80532d76d3cd" id="r_ad634f418b20382e2802f80532d76d3cd"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad634f418b20382e2802f80532d76d3cd">$email</a> = $_POST['email'] ?? ''</td></tr>
+<tr class="memitem:af27a9140d5f2658693e7fd107f716449" id="r_af27a9140d5f2658693e7fd107f716449"><td class="memItemLeft" align="right" valign="top"><a class="el" href="estadisticas__admin_8php.html#a05d40b3c81a1b7ba9de328b4588d83a2">if</a>(! $titulo||! $email||!isset($_FILES['foto']))&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af27a9140d5f2658693e7fd107f716449">$stmt</a> = $mysqli-&gt;prepare(&quot;SELECT id_usuario FROM usuarios WHERE email=?&quot;)</td></tr>
+<tr class="memitem:a7157be2eddfb3ff8c3f3f04674627708" id="r_a7157be2eddfb3ff8c3f3f04674627708"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7157be2eddfb3ff8c3f3f04674627708">$id_rally</a> = $_POST['rally'] ?? null</td></tr>
+<tr class="memitem:a76adedf428cbe03fad6978c88d3eec0f" id="r_a76adedf428cbe03fad6978c88d3eec0f"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a76adedf428cbe03fad6978c88d3eec0f">$foto</a> = $_FILES['foto']</td></tr>
+<tr class="memitem:ade30ae71930839daaf6f83bd19081493" id="r_ade30ae71930839daaf6f83bd19081493"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ade30ae71930839daaf6f83bd19081493">$ext</a> = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION))</td></tr>
+<tr class="memitem:a25f8b36c0f268479531383e21ad779d5" id="r_a25f8b36c0f268479531383e21ad779d5"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a25f8b36c0f268479531383e21ad779d5">$permitidos</a> = ['jpg', 'jpeg', 'png']</td></tr>
+<tr class="memitem:acc746630ee64ff7254fea9f0473dc1c6" id="r_acc746630ee64ff7254fea9f0473dc1c6"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#acc746630ee64ff7254fea9f0473dc1c6">$contenido</a> = file_get_contents($foto['tmp_name'])</td></tr>
+<tr class="memitem:ae03ecac0e7372fa58f6f5f3c99ca2adb" id="r_ae03ecac0e7372fa58f6f5f3c99ca2adb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae03ecac0e7372fa58f6f5f3c99ca2adb">$base64</a> = base64_encode($contenido)</td></tr>
+<tr class="memitem:ae5e5cd1a9b53432979c7f127c45cf519" id="r_ae5e5cd1a9b53432979c7f127c45cf519"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae5e5cd1a9b53432979c7f127c45cf519">if</a> (! $stmt-&gt;execute())</td></tr>
+</table>
+<a name="doc-var-members" id="doc-var-members"></a><h2 id="header-doc-var-members" class="groupheader">Documentación de variables</h2>
+<a id="ae03ecac0e7372fa58f6f5f3c99ca2adb" name="ae03ecac0e7372fa58f6f5f3c99ca2adb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae03ecac0e7372fa58f6f5f3c99ca2adb">&#9670;&#160;</a></span>$base64</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$base64 = base64_encode($contenido)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="acc746630ee64ff7254fea9f0473dc1c6" name="acc746630ee64ff7254fea9f0473dc1c6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acc746630ee64ff7254fea9f0473dc1c6">&#9670;&#160;</a></span>$contenido</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$contenido = file_get_contents($foto['tmp_name'])</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ac9d881319e71b2a6885427edcce8cd16" name="ac9d881319e71b2a6885427edcce8cd16"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac9d881319e71b2a6885427edcce8cd16">&#9670;&#160;</a></span>$descripcion</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$descripcion = $_POST['descripcion'] ?? ''</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ad634f418b20382e2802f80532d76d3cd" name="ad634f418b20382e2802f80532d76d3cd"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad634f418b20382e2802f80532d76d3cd">&#9670;&#160;</a></span>$email</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$email = $_POST['email'] ?? ''</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ade30ae71930839daaf6f83bd19081493" name="ade30ae71930839daaf6f83bd19081493"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ade30ae71930839daaf6f83bd19081493">&#9670;&#160;</a></span>$ext</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$ext = strtolower(pathinfo($foto['name'], PATHINFO_EXTENSION))</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a76adedf428cbe03fad6978c88d3eec0f" name="a76adedf428cbe03fad6978c88d3eec0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a76adedf428cbe03fad6978c88d3eec0f">&#9670;&#160;</a></span>$foto</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$foto = $_FILES['foto']</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valida el formato y tamaño de la imagen. </p>
+
+</div>
+</div>
+<a id="a7157be2eddfb3ff8c3f3f04674627708" name="a7157be2eddfb3ff8c3f3f04674627708"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7157be2eddfb3ff8c3f3f04674627708">&#9670;&#160;</a></span>$id_rally</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$id_rally = $_POST['rally'] ?? null</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="a25f8b36c0f268479531383e21ad779d5" name="a25f8b36c0f268479531383e21ad779d5"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a25f8b36c0f268479531383e21ad779d5">&#9670;&#160;</a></span>$permitidos</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$permitidos = ['jpg', 'jpeg', 'png']</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="af27a9140d5f2658693e7fd107f716449" name="af27a9140d5f2658693e7fd107f716449"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af27a9140d5f2658693e7fd107f716449">&#9670;&#160;</a></span>$stmt</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$stmt = $mysqli-&gt;prepare(&quot;SELECT id_usuario FROM usuarios WHERE email=?&quot;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Valida que los datos obligatorios estén presentes. Busca el id del usuario a partir del email. </p>
+
+</div>
+</div>
+<a id="a894f35d0aa77bfe5d5bee433e34cdd8f" name="a894f35d0aa77bfe5d5bee433e34cdd8f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a894f35d0aa77bfe5d5bee433e34cdd8f">&#9670;&#160;</a></span>$titulo</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">$titulo = $_POST['titulo'] ?? ''</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+</div>
+</div>
+<a id="ae5e5cd1a9b53432979c7f127c45cf519" name="ae5e5cd1a9b53432979c7f127c45cf519"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae5e5cd1a9b53432979c7f127c45cf519">&#9670;&#160;</a></span>if</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">if(! $stmt-&gt;execute()) </td>
+          <td>(</td>
+          <td class="paramtype">! $stmt-&gt;</td>          <td class="paramname"><span class="paramname"><em>execute</em></span>()</td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Devuelve una respuesta de éxito en formato JSON. </p>
+
+</div>
+</div>
+</div><!-- contents -->
+</div><!-- doc-content -->
+<div id="page-nav" class="page-nav-panel">
+<div id="page-nav-resize-handle"></div>
+<div id="page-nav-tree">
+<div id="page-nav-contents">
+</div><!-- page-nav-contents -->
+</div><!-- page-nav-tree -->
+</div><!-- page-nav -->
+</div><!-- container -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a href="dir_d97893c72dedf4e0b2e9e1e8df755fbd.html">Backend</a></li><li class="navelem"><a href="subir__foto_8php.html">subir_foto.php</a></li>
+    <li class="footer">Generado por <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.14.0 </li>
+  </ul>
+</div>
+</body>
+</html>

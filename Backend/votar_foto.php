@@ -1,7 +1,26 @@
 <?php
+/**
+ * votar_foto.php
+ *
+ * Permite votar por una fotografía de un rally, controlando que solo se permita un voto por IP en cada rally.
+ * Recibe el id de la fotografía por JSON (POST).
+ * Devuelve una respuesta JSON indicando el resultado de la operación.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json');
 require_once 'conexion.php';
 
+/**
+ * Obtiene los datos enviados en formato JSON desde el cuerpo de la petición.
+ * @var array $data
+ * @var int|null $id_fotografia
+ * @var string $ip
+ */
 $data = json_decode(file_get_contents('php://input'), true);
 $id_fotografia = $data['id_fotografia'] ?? null;
 $ip = $_SERVER['REMOTE_ADDR']; // IP del usuario
@@ -11,7 +30,10 @@ if (!$id_fotografia) {
     exit;
 }
 
-// Obtener el id_rally de la foto seleccionada
+/**
+ * Obtener el id_rally de la foto seleccionada.
+ * @var int $id_rally
+ */
 $stmt = $mysqli->prepare("SELECT id_rally FROM fotografias WHERE id_fotografia = ?");
 $stmt->bind_param("i", $id_fotografia);
 $stmt->execute();
@@ -23,7 +45,9 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Comprobar si la votación está activa
+/**
+ * Comprobar si la votación está activa para el rally.
+ */
 $rally = $mysqli->query("
     SELECT fecha_inicio_votacion, fecha_fin_votacion
     FROM rallies
@@ -41,7 +65,9 @@ if ($hoy < $fechas['fecha_inicio_votacion'] || $hoy > $fechas['fecha_fin_votacio
     exit;
 }
 
-// Verificar si la IP ya votó por alguna foto de este rally
+/**
+ * Verificar si la IP ya votó por alguna foto de este rally.
+ */
 $stmt = $mysqli->prepare("
     SELECT v.id_fotografia
     FROM votaciones v
@@ -59,7 +85,9 @@ if ($stmt->num_rows > 0) {
 }
 $stmt->close();
 
-// Insertar el voto
+/**
+ * Insertar el voto en la base de datos.
+ */
 $stmt = $mysqli->prepare("INSERT INTO votaciones (id_fotografia, ip) VALUES (?, ?)");
 $stmt->bind_param("is", $id_fotografia, $ip);
 

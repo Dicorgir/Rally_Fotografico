@@ -1,8 +1,23 @@
 <?php
+/**
+ * ganadores_rallies.php
+ *
+ * Devuelve el ganador de cada rally (foto admitida con más votos) junto con la información relevante.
+ * Responde en formato JSON.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json'); // Respuesta en JSON
 include 'conexion.php'; // Conexión a la base de datos
 
-// Consulta para obtener el ganador de cada rally (foto admitida con más votos)
+/**
+ * Consulta para obtener el ganador de cada rally (foto admitida con más votos).
+ * @var string $sql
+ */
 $sql = "SELECT r.nombre AS nombre_rally, r.fecha_fin, f.imagen_base64, u.nombre_completo AS nombre_usuario, f.total_votos
         FROM rallies r
         JOIN fotografias f ON f.id_rally = r.id_rally
@@ -16,6 +31,10 @@ $sql = "SELECT r.nombre AS nombre_rally, r.fecha_fin, f.imagen_base64, u.nombre_
             LIMIT 1
         )";
 
+/**
+ * Ejecuta la consulta y verifica si fue exitosa.
+ * @var mysqli_result|false $res
+ */
 $res = $mysqli->query($sql);
 if (!$res) {
     http_response_code(500); // Error en la consulta
@@ -24,10 +43,19 @@ if (!$res) {
     exit;
 }
 
+/**
+ * Recorre los resultados y los almacena en un array.
+ * @var array $ganadores
+ */
 $ganadores = [];
 while ($row = $res->fetch_assoc()) {
     $ganadores[] = $row; // Añade cada ganador al array
 }
-echo json_encode($ganadores); // Devuelve los ganadores en JSON
+
+/**
+ * Devuelve los ganadores en formato JSON.
+ */
+echo json_encode($ganadores);
+
 $mysqli->close();
 ?>

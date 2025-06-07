@@ -1,8 +1,25 @@
 <?php
+/**
+ * get_rallies.php
+ *
+ * Devuelve todos los rallies registrados en la base de datos.
+ * Responde con un array de rallies en formato JSON.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json'); // Respuesta en JSON
 include 'conexion.php'; // Conexión a la base de datos
 
-$sql = "SELECT * FROM rallies"; // Consulta todos los rallies
+/**
+ * Consulta todos los rallies registrados.
+ * @var string $sql
+ * @var mysqli_result|false $result
+ */
+$sql = "SELECT * FROM rallies";
 $result = $mysqli->query($sql);
 
 if (!$result) {
@@ -12,10 +29,19 @@ if (!$result) {
     exit;
 }
 
+/**
+ * Recorre los resultados y los almacena en un array.
+ * @var array $rallies
+ */
 $rallies = [];
 while ($row = $result->fetch_assoc()) {
     $rallies[] = $row; // Añade cada rally al array
 }
-echo json_encode($rallies); // Devuelve el array de rallies en JSON
+
+/**
+ * Devuelve el array de rallies en formato JSON.
+ */
+echo json_encode($rallies);
+
 $mysqli->close();
 ?>

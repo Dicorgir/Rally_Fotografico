@@ -1,21 +1,47 @@
 <?php
+/**
+ * eliminar_foto.php
+ *
+ * Elimina una fotografía de la base de datos si pertenece al usuario y el rally está activo.
+ * Recibe el ID de la fotografía y el email del usuario por JSON (POST).
+ * Solo permite eliminar si el rally no ha finalizado ni está pendiente de inicio.
+ * Devuelve una respuesta JSON indicando el resultado de la operación.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json'); // Indica que la respuesta será en formato JSON
 require_once 'conexion.php'; // Incluye la conexión a la base de datos
 
-// Obtiene los datos enviados en formato JSON desde el cuerpo de la petición
+/**
+ * Obtiene los datos enviados en formato JSON desde el cuerpo de la petición.
+ * @var array $data
+ */
 $data = json_decode(file_get_contents('php://input'), true);
-// Extrae el id de la fotografía y el email del usuario del array recibido
+
+/**
+ * Extrae el id de la fotografía y el email del usuario del array recibido.
+ * @var int|null $id_fotografia
+ * @var string $email
+ */
 $id_fotografia = $data['id_fotografia'] ?? null;
 $email = $data['email'] ?? '';
 
-// Valida que ambos datos sean proporcionados
+/**
+ * Valida que ambos datos sean proporcionados.
+ */
 if (!$id_fotografia || !$email) {
     http_response_code(400); // Código HTTP 400: petición incorrecta
     echo json_encode(['success' => false, 'message' => 'Datos incompletos']);
     exit;
 }
 
-// Busca el id_usuario correspondiente al email proporcionado
+/**
+ * Busca el id_usuario correspondiente al email proporcionado.
+ */
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -27,7 +53,9 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Comprueba si la foto pertenece al usuario y obtiene las fechas del rally asociado
+/**
+ * Comprueba si la foto pertenece al usuario y obtiene las fechas del rally asociado.
+ */
 $stmt = $mysqli->prepare("
     SELECT f.id_fotografia, r.fecha_inicio, r.fecha_fin
     FROM fotografias f
@@ -44,7 +72,9 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Comprueba si el rally ya ha terminado o aún no ha comenzado
+/**
+ * Comprueba si el rally ya ha terminado o aún no ha comenzado.
+ */
 $hoy = date('Y-m-d');
 if ($hoy > $fecha_fin) {
     http_response_code(400);
@@ -57,9 +87,15 @@ if ($hoy < $fecha_inicio) {
     exit;
 }
 
-// Elimina la foto de la base de datos
+/**
+ * Elimina la foto de la base de datos.
+ */
 $stmt = $mysqli->prepare("DELETE FROM fotografias WHERE id_fotografia = ?");
 $stmt->bind_param("i", $id_fotografia);
+
+/**
+ * Ejecuta la consulta y responde según el resultado.
+ */
 if ($stmt->execute()) {
     // Si la eliminación fue exitosa, devuelve un mensaje de éxito
     echo json_encode(['success' => true, 'message' => 'Foto eliminada correctamente.']);

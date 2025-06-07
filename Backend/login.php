@@ -1,4 +1,17 @@
 <?php
+/**
+ * login.php
+ *
+ * Endpoint para autenticar usuarios en el sistema Rally Fotográfico.
+ * Recibe email y contraseña por POST (JSON) y devuelve los datos del usuario si las credenciales son correctas.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
+// Configuración de cabeceras para la respuesta JSON y CORS
 header('Content-Type: application/json'); // Respuesta en JSON
 header('Access-Control-Allow-Origin: *'); // Permite peticiones desde cualquier origen
 
@@ -9,20 +22,32 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     exit;
 }
 
-// Lee los datos JSON enviados en la petición
+/**
+ * Lee los datos JSON enviados en la petición.
+ * @var array $input
+ */
 $input = json_decode(file_get_contents('php://input'), true);
 
+/**
+ * Obtiene el email y la contraseña del usuario.
+ * @var string $email
+ * @var string $password
+ */
 $email = $input['email'] ?? '';
 $password = $input['password'] ?? '';
 
-// Valida que ambos campos estén presentes
+/**
+ * Valida que ambos campos estén presentes.
+ */
 if (!$email || !$password) {
     http_response_code(400);
     echo json_encode(['message' => 'Todos los campos son obligatorios']);
     exit;
 }
 
-// Valida el formato del email
+/**
+ * Valida el formato del email.
+ */
 if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
     http_response_code(400);
     echo json_encode(['message' => 'El correo no es válido']);
@@ -32,12 +57,20 @@ if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 // Conexión a la base de datos
 include 'conexion.php';
 
-// Busca el usuario por email
+/**
+ * Busca el usuario por email.
+ * @var mysqli_stmt $stmt
+ * @var mysqli_result $result
+ */
 $stmt = $mysqli->prepare('SELECT id_usuario, nombre_completo, contrasena, rol, estado FROM usuarios WHERE email = ?');
 $stmt->bind_param('s', $email);
 $stmt->execute();
 $result = $stmt->get_result();
 
+/**
+ * Procesa el resultado de la consulta y verifica la contraseña.
+ * Devuelve los datos del usuario si el login es exitoso.
+ */
 if ($row = $result->fetch_assoc()) {
     // Verifica la contraseña
     if (password_verify($password, $row['contrasena'])) {

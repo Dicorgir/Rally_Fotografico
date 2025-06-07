@@ -53,24 +53,6 @@
         <span class="nav-text">Cerrar<br>sesión</span>
       </div>
     </div>
-    <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.getElementById('logout-btn').addEventListener('click', function() {
-                localStorage.removeItem('usuarioRol');
-                localStorage.removeItem('usuarioNombre');
-                window.location.href = '../index.html';
-            });
-            document.getElementById('logout-settings').addEventListener('click', function() {
-                window.location.href = 'configuracion_admin.html';
-            });
-            document.getElementById('logout-validation').addEventListener('click', function() {
-                window.location.href = 'validacion_fotos_admin.html';
-            });
-            document.getElementById('logout-results').addEventListener('click', function() {
-                window.location.href = 'resultados_admin.html';
-            });
-        });
-    </script>
 
     <div class="main-content">
       <div class="form-container">
@@ -95,6 +77,34 @@
       </div>
     </div>
     <script>
+/**
+ * Asigna listeners a los botones del sidebar para navegación y cierre de sesión.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', function() {
+    document.getElementById('logout-btn').addEventListener('click', function() {
+        localStorage.removeItem('usuarioRol');
+        localStorage.removeItem('usuarioNombre');
+        window.location.href = '../index.html';
+    });
+    document.getElementById('logout-settings').addEventListener('click', function() {
+        window.location.href = 'configuracion_admin.html';
+    });
+    document.getElementById('logout-validation').addEventListener('click', function() {
+        window.location.href = 'validacion_fotos_admin.html';
+    });
+    document.getElementById('logout-results').addEventListener('click', function() {
+        window.location.href = 'resultados_admin.html';
+    });
+});
+</script>
+
+<script>
+/**
+ * Carga, edita y elimina usuarios en la tabla de gestión.
+ * Gestiona la interacción con el backend para la administración de usuarios.
+ * @event DOMContentLoaded
+ */
 document.addEventListener('DOMContentLoaded', async function() {
   // Cargar todos los usuarios y mostrarlos en la tabla
   const res = await fetch('../../Backend/get_usuarios.php');
@@ -130,7 +140,10 @@ document.addEventListener('DOMContentLoaded', async function() {
     tbody.appendChild(tr);
   });
 
-  // Guardar cambios de un usuario
+  /**
+   * Guarda los cambios de un usuario existente.
+   * @event click
+   */
   tbody.addEventListener('click', async function(e) {
     if (e.target.classList.contains('guardar-btn')) {
       const tr = e.target.closest('tr');
@@ -153,7 +166,10 @@ document.addEventListener('DOMContentLoaded', async function() {
       }, 3000);
     }
 
-    // Eliminar usuario
+    /**
+     * Elimina un usuario existente tras confirmación.
+     * @event click
+     */
     if (e.target.classList.contains('eliminar-btn')) {
       if (confirm('¿Seguro que quieres eliminar este usuario?')) {
         const id_usuario = e.target.dataset.id;
@@ -173,8 +189,13 @@ document.addEventListener('DOMContentLoaded', async function() {
   });
 });
 </script>
+
 <script>
-/* Modo oscuro/claro para la interfaz admin */
+/**
+ * Controla el cambio entre modo oscuro y claro en la interfaz admin.
+ * Guarda la preferencia en localStorage.
+ * @event
+ */
 const themeToggle = document.getElementById('theme-toggle');
 const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
 const savedTheme = localStorage.getItem('theme');

@@ -1,17 +1,38 @@
 <?php
+/**
+ * fotos_usuario.php
+ *
+ * Devuelve todas las fotos subidas por un usuario, junto con su información y si pueden ser eliminadas.
+ * Recibe el email del usuario por GET.
+ * Responde con un array de fotos en formato JSON.
+ *
+ * PHP version 8.0.30
+ *
+ * @author  Diego André Cornejo Giraldo
+ * @package Rally_Fotografico\Backend
+ */
+
 header('Content-Type: application/json'); // Indica que la respuesta será en formato JSON
 require_once 'conexion.php'; // Incluye la conexión a la base de datos
 
-$email = $_GET['email'] ?? ''; // Obtiene el email desde la URL o una cadena vacía si no existe
+/**
+ * Obtiene el email del usuario desde la URL o una cadena vacía si no existe.
+ * @var string $email
+ */
+$email = $_GET['email'] ?? '';
 
-// Valida que el email haya sido proporcionado
+/**
+ * Valida que el email haya sido proporcionado.
+ */
 if (!$email) {
     http_response_code(400); // Código HTTP 400: petición incorrecta
     echo json_encode(['success' => false, 'message' => 'Email no proporcionado', 'fotos' => []]);
     exit;
 }
 
-// Obtener id_usuario a partir del email
+/**
+ * Obtener id_usuario a partir del email.
+ */
 $stmt = $mysqli->prepare("SELECT id_usuario FROM usuarios WHERE email = ?");
 $stmt->bind_param("s", $email);
 $stmt->execute();
@@ -23,7 +44,9 @@ if (!$stmt->fetch()) {
 }
 $stmt->close();
 
-// Obtener todas las fotos del usuario en todos los rallies
+/**
+ * Obtener todas las fotos del usuario en todos los rallies.
+ */
 $stmt = $mysqli->prepare("
     SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.estado, r.nombre AS nombre_rally, r.fecha_inicio, r.fecha_fin
     FROM fotografias f
@@ -37,7 +60,10 @@ $stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $estad
 $hoy = date('Y-m-d'); // Obtiene la fecha actual
 $fotos = [];
 while ($stmt->fetch()) {
-    // Determina si la foto es eliminable según la fecha actual y las fechas del rally
+    /**
+     * Determina si la foto es eliminable según la fecha actual y las fechas del rally.
+     * @var bool $eliminable
+     */
     $eliminable = ($hoy >= $fecha_inicio && $hoy <= $fecha_fin);
     $fotos[] = [
         'id_fotografia' => $id_fotografia,
@@ -53,6 +79,8 @@ while ($stmt->fetch()) {
 }
 $stmt->close();
 
-// Devuelve la lista de fotos en formato JSON
+/**
+ * Devuelve la lista de fotos en formato JSON.
+ */
 echo json_encode(['success' => true, 'fotos' => $fotos]);
 ?>

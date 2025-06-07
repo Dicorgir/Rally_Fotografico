@@ -105,92 +105,106 @@
     </div>
 
     <script>
-      // Sidebar y navegación
-      document.addEventListener('DOMContentLoaded', function() {
-        document.getElementById('logout-btn').addEventListener('click', function() {
-          localStorage.removeItem('usuarioRol');
-          localStorage.removeItem('usuarioNombre');
-          window.location.href = '../index.html';
-        });
-        document.getElementById('logout-settings').addEventListener('click', function() {
-          window.location.href = 'configuracion_admin.html';
-        });
-        document.getElementById('logout-gestion').addEventListener('click', function() {
-          window.location.href = 'gestion_usuario_admin.html';
-        });
-        document.getElementById('logout-validation').addEventListener('click', function() {
-          window.location.href = 'validacion_fotos_admin.html';
-        });
-      });
+/**
+ * Asigna listeners a los botones del sidebar para navegación y cierre de sesión.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', function() {
+  document.getElementById('logout-btn').addEventListener('click', function() {
+    localStorage.removeItem('usuarioRol');
+    localStorage.removeItem('usuarioNombre');
+    window.location.href = '../index.html';
+  });
+  document.getElementById('logout-settings').addEventListener('click', function() {
+    window.location.href = 'configuracion_admin.html';
+  });
+  document.getElementById('logout-gestion').addEventListener('click', function() {
+    window.location.href = 'gestion_usuario_admin.html';
+  });
+  document.getElementById('logout-validation').addEventListener('click', function() {
+    window.location.href = 'validacion_fotos_admin.html';
+  });
+});
 
-      // Estadísticas y resultados de rallies
-      document.addEventListener('DOMContentLoaded', async function() {
-        // Estadísticas generales
-        const resEst = await fetch('../../Backend/estadisticas_admin.php');
-        const est = await resEst.json();
-        document.getElementById('total-usuarios').textContent = est.total_usuarios;
-        document.getElementById('total-rallies').textContent = est.total_rallies;
-        document.getElementById('total-fotos').textContent = est.total_fotos;
-        document.getElementById('fotos-admitidas').textContent = est.fotos_admitidas;
-        document.getElementById('fotos-rechazadas').textContent = est.fotos_rechazadas;
-        document.getElementById('fotos-pendientes').textContent = est.fotos_pendientes;
+/**
+ * Carga y muestra las estadísticas generales y los ganadores por rally.
+ * Gestiona el modal para ampliar la foto ganadora.
+ * @event DOMContentLoaded
+ */
+document.addEventListener('DOMContentLoaded', async function() {
+  // Estadísticas generales
+  const resEst = await fetch('../../Backend/estadisticas_admin.php');
+  const est = await resEst.json();
+  document.getElementById('total-usuarios').textContent = est.total_usuarios;
+  document.getElementById('total-rallies').textContent = est.total_rallies;
+  document.getElementById('total-fotos').textContent = est.total_fotos;
+  document.getElementById('fotos-admitidas').textContent = est.fotos_admitidas;
+  document.getElementById('fotos-rechazadas').textContent = est.fotos_rechazadas;
+  document.getElementById('fotos-pendientes').textContent = est.fotos_pendientes;
 
-        // Ganadores por rally
-        const resGan = await fetch('../../Backend/ganadores_rallies.php');
-        const ganadores = await resGan.json();
-        const tbody = document.querySelector('#tabla-ganadores tbody');
-        tbody.innerHTML = '';
-        ganadores.forEach(g => {
-          // Calcula el estado del rally (activo o finalizado)
-          const hoy = new Date().toISOString().slice(0, 10);
-          const estado = (g.fecha_fin >= hoy) ? 'Activo' : 'Finalizado';
+  // Ganadores por rally
+  const resGan = await fetch('../../Backend/ganadores_rallies.php');
+  const ganadores = await resGan.json();
+  const tbody = document.querySelector('#tabla-ganadores tbody');
+  tbody.innerHTML = '';
+  ganadores.forEach(g => {
+    // Calcula el estado del rally (activo o finalizado)
+    const hoy = new Date().toISOString().slice(0, 10);
+    const estado = (g.fecha_fin >= hoy) ? 'Activo' : 'Finalizado';
 
-          // Muestra la fila con la foto ganadora, usuario y votos
-          tbody.innerHTML += `
-            <tr>
-              <td>${g.nombre_rally}</td>
-              <td>${estado}</td>
-              <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;cursor:pointer;"></td>
-              <td>${g.nombre_usuario}</td>
-              <td>${g.total_votos}</td>
-            </tr>
-          `;
-        });
+    // Muestra la fila con la foto ganadora, usuario y votos
+    tbody.innerHTML += `
+      <tr>
+        <td>${g.nombre_rally}</td>
+        <td>${estado}</td>
+        <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;cursor:pointer;"></td>
+        <td>${g.nombre_usuario}</td>
+        <td>${g.total_votos}</td>
+      </tr>
+    `;
+  });
 
-        // Modal para ampliar la imagen de la foto ganadora
-        document.querySelector('#tabla-ganadores').addEventListener('click', function(e) {
-          if (e.target.tagName === 'IMG') {
-            document.getElementById('img-modal-foto').src = e.target.src;
-            document.getElementById('modal-foto').style.display = 'flex';
-          }
-        });
-        document.querySelector('.cerrar-modal').onclick = function() {
-          document.getElementById('modal-foto').style.display = 'none';
-        };
-        document.getElementById('modal-foto').onclick = function(e) {
-          if (e.target === this) {
-            this.style.display = 'none';
-          }
-        };
-      });
+  /**
+   * Muestra el modal para ampliar la foto ganadora al hacer clic en la imagen.
+   * @event click
+   */
+  document.querySelector('#tabla-ganadores').addEventListener('click', function(e) {
+    if (e.target.tagName === 'IMG') {
+      document.getElementById('img-modal-foto').src = e.target.src;
+      document.getElementById('modal-foto').style.display = 'flex';
+    }
+  });
+  document.querySelector('.cerrar-modal').onclick = function() {
+    document.getElementById('modal-foto').style.display = 'none';
+  };
+  document.getElementById('modal-foto').onclick = function(e) {
+    if (e.target === this) {
+      this.style.display = 'none';
+    }
+  };
+});
 
-      // Modo oscuro/claro para la interfaz admin
-      const themeToggle = document.getElementById('theme-toggle');
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-      const savedTheme = localStorage.getItem('theme');
-      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-        document.body.classList.add('dark-mode');
-        themeToggle.checked = true;
-      }
-      themeToggle.addEventListener('change', function() {
-        if (this.checked) {
-          document.body.classList.add('dark-mode');
-          localStorage.setItem('theme', 'dark');
-        } else {
-          document.body.classList.remove('dark-mode');
-          localStorage.setItem('theme', 'light');
-        }
-      });
+/**
+ * Controla el cambio entre modo oscuro y claro en la interfaz admin.
+ * Guarda la preferencia en localStorage.
+ * @event
+ */
+const themeToggle = document.getElementById('theme-toggle');
+const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+const savedTheme = localStorage.getItem('theme');
+if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+  document.body.classList.add('dark-mode');
+  themeToggle.checked = true;
+}
+themeToggle.addEventListener('change', function() {
+  if (this.checked) {
+    document.body.classList.add('dark-mode');
+    localStorage.setItem('theme', 'dark');
+  } else {
+    document.body.classList.remove('dark-mode');
+    localStorage.setItem('theme', 'light');
+  }
+});
     </script>
   </body>
 </html>
