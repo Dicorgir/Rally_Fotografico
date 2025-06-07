@@ -43,7 +43,7 @@ if ($hoy < $fechas['fecha_inicio_votacion'] || $hoy > $fechas['fecha_fin_votacio
 
 // Verificar si la IP ya votó por alguna foto de este rally
 $stmt = $mysqli->prepare("
-    SELECT 1
+    SELECT v.id_fotografia
     FROM votaciones v
     JOIN fotografias f ON v.id_fotografia = f.id_fotografia
     WHERE f.id_rally = ? AND v.ip = ?
@@ -53,7 +53,7 @@ $stmt->bind_param("is", $id_rally, $ip);
 $stmt->execute();
 $stmt->store_result();
 if ($stmt->num_rows > 0) {
-    echo json_encode(['success' => false, 'message' => 'Solo puedes votar una foto por rally.']);
+    echo json_encode(['success' => false, 'message' => 'Solo se permite un voto por IP en este rally. Si quieres cambiar tu voto, primero debes quitar el anterior.']);
     $stmt->close();
     exit;
 }

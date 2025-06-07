@@ -59,6 +59,9 @@ h3 {
   padding: 1.2em 2em;
   font-size: 1.1rem;
   min-width: 220px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 #tabla-ganadores {
