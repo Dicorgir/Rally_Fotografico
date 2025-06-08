@@ -1,5 +1,3 @@
-
-
 -- Tabla de Usuarios
 CREATE TABLE usuarios (
     id_usuario INT AUTO_INCREMENT PRIMARY KEY,
@@ -73,25 +71,33 @@ INSERT INTO usuarios (nombre_completo, email, contrasena, rol) VALUES
 INSERT INTO rallies (nombre, fecha_inicio, fecha_fin, max_fotos_por_participante, fecha_inicio_votacion, fecha_fin_votacion) VALUES 
 (
     'Rally Primavera 2025',
-    '2025-05-01',
-    '2025-06-30',
+    '2025-05-01',  
+    '2025-06-20',  
     5,
-    '2025-06-01',
-    '2025-06-30'
+    '2025-05-02',  
+    '2025-06-20'   
 ),
 (
     'Rally Verano 2025',
-    '2025-07-01',
-    '2025-08-31',
+    '2025-05-06',  
+    '2025-06-10',  
     5,
-    '2025-08-01',
-    '2025-08-31'
+    '2025-05-06', 
+    '2025-06-10'  
 ),
 (
-    'Rally Otoño 2025',
-    '2025-09-15',
-    '2025-11-15',
+    'Rally Invierno 2025',
+    '2025-03-01', 
+    '2025-04-15',  
     5,
-    '2025-11-01',
-    '2025-11-15'
+    '2025-03-03', 
+    '2025-04-15'  
+),
+(
+    'Rally Extra 2025',
+    '2025-07-12',  
+    '2025-09-15',
+    5,
+    '2025-07-13', 
+    '2025-09-15'   
 );
