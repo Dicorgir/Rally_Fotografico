@@ -74,7 +74,7 @@ if ($pais !== null && strlen($pais) > 50) {
     exit;
 }
 
-c
+
 
 // Conexión a la base de datos
 include 'conexion.php';
