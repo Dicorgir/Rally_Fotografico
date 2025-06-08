@@ -145,3 +145,8 @@ h3 {
     font-size: 1.3rem;
   }
 }
+
+body.dark-mode h2,
+body.dark-mode h3 {
+  color: #fff !important;
+}

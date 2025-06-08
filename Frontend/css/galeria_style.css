@@ -289,3 +289,9 @@
   border-color: #388e3c !important;
   transition: background 0.2s;
 }
+
+/* Modo oscuro: nombres y fechas de los rallies en blanco */
+body.dark-mode .rally-card h3,
+body.dark-mode .rally-card p {
+  color: #fff !important;
+}

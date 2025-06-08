@@ -44,6 +44,10 @@ h2 {
   letter-spacing: 1px;
 }
 
+body.dark-mode .form-container h2 {
+  color: #fff !important;
+}
+
 #tabla-rallies {
   width: 95%;
   margin: 0 32px 32px 32px;

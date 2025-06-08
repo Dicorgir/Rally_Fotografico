@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/button_style.css" />
     <link rel="stylesheet" href="css/modo_oscuro.css" />
     <link rel="stylesheet" href="css/switch_style.css" />
+    <link rel="icon" type="image/png" href="../img/logo_rallyFotografico.png" />
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
@@ -60,10 +61,6 @@
       </div>
 
       <div class="nav-divider"></div>
-
-      <div class="nav-item">
-        <i class="fa-solid fa-gear"></i>
-      </div>
     </div>
 
     <!-- Contenido Principal -->
@@ -104,18 +101,30 @@ document.addEventListener('DOMContentLoaded', async function() {
   if (dataRallies.success) {
     ralliesCards.innerHTML = '';
     dataRallies.rallies.forEach(rally => {
+      const ahora = new Date();
+      const fechaInicio = new Date(rally.fecha_inicio.replace(' ', 'T'));
+      let countdownHtml = '';
+      let botonHtml = '';
+      if (ahora < fechaInicio) {
+        countdownHtml = `<div class="rally-proximamente" style="color:#ff9800;font-weight:bold;font-size:2.2rem;text-align:center;letter-spacing:2px;padding:0.3em 0;">PRÓXIMAMENTE</div>`;
+        botonHtml = `<button class="ver-fotos-btn" data-id="${rally.id_rally}" disabled style="opacity:0.6;cursor:not-allowed;">Ver fotos</button>`;
+      } else {
+        countdownHtml = `<div class="rally-countdown" id="countdown-${rally.id_rally}"></div>`;
+        botonHtml = `<button class="ver-fotos-btn" data-id="${rally.id_rally}">Ver fotos</button>`;
+      }
       const card = document.createElement('div');
       card.className = 'rally-card';
       card.innerHTML = `
-        <div class="rally-countdown" id="countdown-${rally.id_rally}"></div>
+        ${countdownHtml}
         <h3>${rally.nombre}</h3>
         <p><strong>Inicio:</strong> ${rally.fecha_inicio}</p>
         <p><strong>Fin:</strong> ${rally.fecha_fin}</p>
-        <button class="ver-fotos-btn" data-id="${rally.id_rally}">Ver fotos</button>
+        ${botonHtml}
       `;
       ralliesCards.appendChild(card);
-      // Inicia el contador de tiempo para cada rally
-      iniciarCountdown('countdown-' + rally.id_rally, rally.fecha_fin_votacion);
+      if (ahora >= fechaInicio) {
+        iniciarCountdown('countdown-' + rally.id_rally, rally.fecha_fin_votacion);
+      }
     });
   }
 
@@ -123,23 +132,177 @@ document.addEventListener('DOMContentLoaded', async function() {
   ralliesCards.addEventListener('click', async function(e) {
     if (e.target.classList.contains('ver-fotos-btn')) {
       idRallySeleccionado = e.target.getAttribute('data-id');
-      galeria.innerHTML = '';
-      rankingDiv.innerHTML = '';
-      grafico.clearRect(0, 0, 400, 200);
+      await cargarFotosDelRallySeleccionado();
+    }
+  });
 
-      // Carga las fotos admitidas del rally seleccionado
-      const res = await fetch(`http://localhost/Rally_Fotografico/Backend/galeria_fotos.php?id_rally=${idRallySeleccionado}`);
-      const data = await res.json();
-      if (!data.success) {
-        galeria.textContent = "No se pudieron cargar las fotos.";
+  // --- SOLO UNA VEZ: Manejador de clicks de la galería ---
+  galeria.addEventListener('click', async function(e) {
+    // Votar por una foto
+    if (e.target.classList.contains('votar-btn')) {
+      const id = e.target.getAttribute('data-id');
+      const res = await fetch('http://localhost/Rally_Fotografico/Backend/votar_foto.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id_fotografia: id })
+      });
+      const result = await res.json();
+      alert(result.message || (result.success ? '¡Voto registrado!' : 'No se pudo votar.'));
+      if (result.success) location.reload();
+    }
+    // Quitar voto (dislike)
+    if (e.target.classList.contains('dislike-btn')) {
+      const id = e.target.getAttribute('data-id');
+      const res = await fetch('http://localhost/Rally_Fotografico/Backend/quitar_voto.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id_fotografia: id })
+      });
+      const result = await res.json();
+      alert(result.message || (result.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
+      if (result.success) location.reload();
+    }
+    // Mostrar/ocultar formulario de comentario
+    if (e.target.classList.contains('comentario-btn') || e.target.closest('.comentario-btn')) {
+      const btn = e.target.closest('.comentario-btn');
+      const form = btn.nextElementSibling;
+      form.style.display = form.style.display === 'none' ? 'block' : 'none';
+    }
+    // Guardar comentario
+    if (e.target.classList.contains('guardar-comentario-btn')) {
+      const id = e.target.getAttribute('data-id');
+      const textarea = e.target.parentElement.querySelector('.comentario-text');
+      const comentario = textarea.value.trim();
+      if (!comentario) {
+        alert('El comentario no puede estar vacío.');
         return;
       }
+      const res = await fetch('http://localhost/Rally_Fotografico/Backend/guardar_comentario.php', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ id_fotografia: id, comentario })
+      });
+      const result = await res.json();
+      alert(result.message || (result.success ? 'Comentario guardado' : 'No se pudo guardar el comentario'));
+      if (result.success) {
+        textarea.value = '';
+        e.target.parentElement.style.display = 'none';
+      }
+    }
+    // Ver comentarios
+    if (e.target.classList.contains('ver-comentarios-btn') || e.target.closest('.ver-comentarios-btn')) {
+      const btn = e.target.closest('.ver-comentarios-btn');
+      const idFoto = btn.getAttribute('data-id');
+      const res = await fetch('http://localhost/Rally_Fotografico/Backend/obtener_comentarios.php?id_fotografia=' + idFoto);
+      const data = await res.json();
 
-      // Muestra cada foto y sus botones de votar, dislike y comentar
-      galeria.innerHTML = '';
-      data.fotos.forEach(foto => {
-        const div = document.createElement('div');
-        div.className = 'foto-galeria';
+      const overlay = document.createElement('div');
+      overlay.style.position = 'fixed';
+      overlay.style.top = 0;
+      overlay.style.left = 0;
+      overlay.style.width = '100vw';
+      overlay.style.height = '100vh';
+      overlay.style.background = 'rgba(0,0,0,0.5)';
+      overlay.style.zIndex = 9999;
+      overlay.style.display = 'flex';
+      overlay.style.justifyContent = 'center';
+      overlay.style.alignItems = 'center';
+
+      const modal = document.createElement('div');
+      modal.className = 'modal-comentarios';
+      modal.style.background = '#fff';
+      modal.style.borderRadius = '16px';
+      modal.style.boxShadow = '0 8px 32px rgba(60,60,120,0.16)';
+      modal.style.padding = '2em 2em 1em 2em';
+      modal.style.maxWidth = '500px';
+      modal.style.width = '90vw';
+      modal.style.maxHeight = '80vh';
+      modal.style.overflowY = 'auto';
+      modal.style.display = 'flex';
+      modal.style.flexDirection = 'column';
+      modal.style.alignItems = 'center';
+
+      const closeBtn = document.createElement('span');
+      closeBtn.innerHTML = '&times;';
+      closeBtn.style.fontSize = '2rem';
+      closeBtn.style.cursor = 'pointer';
+      closeBtn.style.alignSelf = 'flex-end';
+      closeBtn.style.marginBottom = '0.5em';
+      closeBtn.onclick = () => document.body.removeChild(overlay);
+      modal.appendChild(closeBtn);
+
+      const titulo = document.createElement('h2');
+      titulo.textContent = 'COMENTARIOS';
+      titulo.style.color = '#6f42c1';
+      modal.appendChild(titulo);
+
+      if (data.success && data.comentarios.length > 0) {
+        data.comentarios.forEach(com => {
+          const div = document.createElement('div');
+          div.style.background = '#ede7f6';
+          div.style.borderRadius = '8px';
+          div.style.margin = '0.5em 0';
+          div.style.padding = '1em';
+          div.style.width = '100%';
+          div.style.boxShadow = '0 2px 8px rgba(60,60,120,0.06)';
+          const fecha = com.fecha_comentario 
+            ? new Date(com.fecha_comentario).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' }) 
+            : '';
+          div.innerHTML = `<div style="font-size:1.1em;">${com.comentario}</div>
+            <div style="color:#6f42c1;font-size:0.95em;margin-top:0.5em;">${fecha}</div>`;
+          modal.appendChild(div);
+        });
+      } else {
+        const sinComentarios = document.createElement('div');
+        sinComentarios.textContent = 'No hay comentarios aún.';
+        sinComentarios.style.color = '#888';
+        modal.appendChild(sinComentarios);
+      }
+
+      overlay.appendChild(modal);
+      document.body.appendChild(overlay);
+
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          document.body.removeChild(overlay);
+        }
+      });
+    }
+  });
+  // --- FIN DEL MANEJADOR ÚNICO ---
+
+  // Función para cargar fotos del rally seleccionado
+  async function cargarFotosDelRallySeleccionado() {
+    if (!idRallySeleccionado) return;
+    const res = await fetch(`http://localhost/Rally_Fotografico/Backend/galeria_fotos.php?id_rally=${idRallySeleccionado}`);
+    const data = await res.json();
+    if (!data.success) {
+      galeria.textContent = "No se pudieron cargar las fotos.";
+      return;
+    }
+    galeria.innerHTML = '';
+    // Obtener la fecha de fin de votación del rally (se asume que viene en la primera foto)
+    const fechaFin = data.fotos.length > 0 ? data.fotos[0].fecha_fin_votacion : null;
+    const ahora = new Date();
+    const finVotacion = fechaFin ? new Date(fechaFin.replace(' ', 'T')) : null;
+    const rallyTerminado = finVotacion && ahora > finVotacion;
+
+    data.fotos.forEach(foto => {
+      const div = document.createElement('div');
+      div.className = 'foto-galeria';
+      // Si el rally terminó, solo mostrar votos y ver comentarios
+      if (rallyTerminado) {
+        div.innerHTML = `
+          <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
+          <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
+          <p>${foto.descripcion || ''}</p>
+          <span class="votos">Votos: ${foto.votos}</span>
+          <button class="ver-comentarios-btn" data-id="${foto.id_fotografia}" title="Ver comentarios">
+            <i class="fa-solid fa-comments"></i> Ver comentarios
+          </button>
+        `;
+      } else {
+        // Si el rally está activo, mostrar todos los botones
         div.innerHTML = `
           <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
           <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
@@ -158,238 +321,7 @@ document.addEventListener('DOMContentLoaded', async function() {
             </button>
           </div>
         `;
-        galeria.appendChild(div);
-      });
-
-      // Votación, dislike, comentarios y ver comentarios
-      galeria.addEventListener('click', async function(e) {
-        // Votar por una foto
-        if (e.target.classList.contains('votar-btn')) {
-          const id = e.target.getAttribute('data-id');
-          const res = await fetch('http://localhost/Rally_Fotografico/Backend/votar_foto.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ id_fotografia: id })
-          });
-          const result = await res.json();
-          alert(result.message || (result.success ? '¡Voto registrado!' : 'No se pudo votar.'));
-          if (result.success) location.reload();
-        }
-        // Quitar voto (dislike)
-        if (e.target.classList.contains('dislike-btn')) {
-          const id = e.target.getAttribute('data-id');
-          const res = await fetch('http://localhost/Rally_Fotografico/Backend/quitar_voto.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ id_fotografia: id })
-          });
-          const result = await res.json();
-          alert(result.message || (result.success ? 'Voto quitado' : 'No se pudo quitar el voto'));
-          if (result.success) location.reload();
-        }
-        // Mostrar/ocultar formulario de comentario
-        if (e.target.classList.contains('comentario-btn') || e.target.closest('.comentario-btn')) {
-          const btn = e.target.closest('.comentario-btn');
-          const form = btn.nextElementSibling;
-          form.style.display = form.style.display === 'none' ? 'block' : 'none';
-        }
-        // Guardar comentario
-        if (e.target.classList.contains('guardar-comentario-btn')) {
-          const id = e.target.getAttribute('data-id');
-          const textarea = e.target.parentElement.querySelector('.comentario-text');
-          const comentario = textarea.value.trim();
-          if (!comentario) {
-            alert('El comentario no puede estar vacío.');
-            return;
-          }
-          const res = await fetch('http://localhost/Rally_Fotografico/Backend/guardar_comentario.php', {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({ id_fotografia: id, comentario })
-          });
-          const result = await res.json();
-          alert(result.message || (result.success ? 'Comentario guardado' : 'No se pudo guardar el comentario'));
-          if (result.success) {
-            textarea.value = '';
-            e.target.parentElement.style.display = 'none';
-          }
-        }
-        // Ver comentarios
-        if (e.target.classList.contains('ver-comentarios-btn') || e.target.closest('.ver-comentarios-btn')) {
-          const btn = e.target.closest('.ver-comentarios-btn');
-          const idFoto = btn.getAttribute('data-id');
-          // Llama al backend para obtener los comentarios de esa foto
-          const res = await fetch('http://localhost/Rally_Fotografico/Backend/obtener_comentarios.php?id_fotografia=' + idFoto);
-          const data = await res.json();
-
-          // Crea el fondo oscurecido y la ventana modal para mostrar los comentarios
-          const overlay = document.createElement('div');
-          overlay.style.position = 'fixed';
-          overlay.style.top = 0;
-          overlay.style.left = 0;
-          overlay.style.width = '100vw';
-          overlay.style.height = '100vh';
-          overlay.style.background = 'rgba(0,0,0,0.5)';
-          overlay.style.zIndex = 9999;
-          overlay.style.display = 'flex';
-          overlay.style.justifyContent = 'center';
-          overlay.style.alignItems = 'center';
-
-          const modal = document.createElement('div');
-          modal.className = 'modal-comentarios';
-          modal.style.background = '#fff';
-          modal.style.borderRadius = '16px';
-          modal.style.boxShadow = '0 8px 32px rgba(60,60,120,0.16)';
-          modal.style.padding = '2em 2em 1em 2em';
-          modal.style.maxWidth = '500px';
-          modal.style.width = '90vw';
-          modal.style.maxHeight = '80vh';
-          modal.style.overflowY = 'auto';
-          modal.style.display = 'flex';
-          modal.style.flexDirection = 'column';
-          modal.style.alignItems = 'center';
-
-          // Botón de cerrar
-          const closeBtn = document.createElement('span');
-          closeBtn.innerHTML = '&times;';
-          closeBtn.style.fontSize = '2rem';
-          closeBtn.style.cursor = 'pointer';
-          closeBtn.style.alignSelf = 'flex-end';
-          closeBtn.style.marginBottom = '0.5em';
-          closeBtn.onclick = () => document.body.removeChild(overlay);
-          modal.appendChild(closeBtn);
-
-          // Título
-          const titulo = document.createElement('h2');
-          titulo.textContent = 'COMENTARIOS';
-          titulo.style.color = '#6f42c1';
-          modal.appendChild(titulo);
-
-          // Lista de comentarios
-          if (data.success && data.comentarios.length > 0) {
-            data.comentarios.forEach(com => {
-              const div = document.createElement('div');
-              div.style.background = '#ede7f6';
-              div.style.borderRadius = '8px';
-              div.style.margin = '0.5em 0';
-              div.style.padding = '1em';
-              div.style.width = '100%';
-              div.style.boxShadow = '0 2px 8px rgba(60,60,120,0.06)';
-              // Formatea la fecha y hora
-              const fecha = com.fecha_comentario 
-                ? new Date(com.fecha_comentario).toLocaleString('es-ES', { dateStyle: 'short', timeStyle: 'short' }) 
-                : '';
-              div.innerHTML = `<div style="font-size:1.1em;">${com.comentario}</div>
-                <div style="color:#6f42c1;font-size:0.95em;margin-top:0.5em;">${fecha}</div>`;
-              modal.appendChild(div);
-            });
-          } else {
-            const sinComentarios = document.createElement('div');
-            sinComentarios.textContent = 'No hay comentarios aún.';
-            sinComentarios.style.color = '#888';
-            modal.appendChild(sinComentarios);
-          }
-
-          overlay.appendChild(modal);
-          document.body.appendChild(overlay);
-
-          overlay.addEventListener('click', function(e) {
-            if (e.target === overlay) {
-              document.body.removeChild(overlay);
-            }
-          });
-        }
-      });
-
-      // Ranking de fotos (Top 5)
-      const ranking = [...data.fotos].sort((a, b) => b.votos - a.votos).slice(0, 5);
-      rankingDiv.innerHTML = `
-        <div class="top5-card">
-          <h2>Top 5 Fotos</h2>
-          <ol class="top5-list">
-            ${ranking.map((f, i) => `
-              <li>
-                <span class="top5-posicion">${i + 1}.</span>
-                <span class="top5-titulo">${f.titulo}</span>
-                <span class="top5-votos">${f.votos} votos</span>
-              </li>
-            `).join('')}
-          </ol>
-        </div>
-      `;
-
-      // Gráfico de votos con Chart.js
-      if (chartInstance) {
-        chartInstance.destroy();
       }
-      chartInstance = new Chart(grafico, {
-        type: 'doughnut',
-        data: {
-          labels: data.fotos.map(f => f.titulo),
-          datasets: [{
-            label: 'Votos',
-            data: data.fotos.map(f => f.votos),
-            backgroundColor: [
-              'rgba(54, 162, 235, 0.5)',
-              'rgba(255, 99, 132, 0.5)',
-              'rgba(255, 206, 86, 0.5)',
-              'rgba(75, 192, 192, 0.5)',
-              'rgba(153, 102, 255, 0.5)',
-              'rgba(255, 159, 64, 0.5)'
-            ]
-          }]
-        },
-        options: {
-          plugins: {
-            legend: {
-              labels: {
-                color: "#fff" // Color blanco para la leyenda
-              }
-            }
-          }
-        }
-      });
-    }
-  });
-
-  /**
-   * Carga las fotos del rally seleccionado, muestra botones de votar, dislike, comentar,
-   * ranking y gráfico de votos.
-   * @async
-   * @function cargarFotosDelRallySeleccionado
-   */
-  async function cargarFotosDelRallySeleccionado() {
-    if (!idRallySeleccionado) return;
-    // Simula el click en el botón de ver fotos del rally seleccionado
-    const res = await fetch(`http://localhost/Rally_Fotografico/Backend/galeria_fotos.php?id_rally=${idRallySeleccionado}`);
-    const data = await res.json();
-    if (!data.success) {
-      galeria.textContent = "No se pudieron cargar las fotos.";
-      return;
-    }
-    // Mostrar fotos
-    galeria.innerHTML = '';
-    data.fotos.forEach(foto => {
-      const div = document.createElement('div');
-      div.className = 'foto-galeria';
-      div.innerHTML = `
-        <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
-        <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
-        <p>${foto.descripcion || ''}</p>
-        <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
-        <button class="dislike-btn" data-id="${foto.id_fotografia}">Dislike</button>
-        <span class="votos">Votos: ${foto.votos}</span>
-        <button class="comentario-btn" data-id="${foto.id_fotografia}" title="Comentar">
-          <i class="fa-solid fa-cloud"></i> Comentar
-        </button>
-        <div class="comentario-form" style="display:none;">
-          <textarea class="comentario-text" rows="2" placeholder="Escribe tu comentario..."></textarea>
-          <button class="guardar-comentario-btn" data-id="${foto.id_fotografia}">Guardar</button>
-          <button class="ver-comentarios-btn" data-id="${foto.id_fotografia}" title="Ver comentarios">
-            <i class="fa-solid fa-comments"></i>
-          </button>
-        </div>
-      `;
       galeria.appendChild(div);
     });
 
@@ -435,7 +367,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         plugins: {
           legend: {
             labels: {
-              color: "#fff" // Color blanco para la leyenda
+              color: "#fff"
             }
           }
         }

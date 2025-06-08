@@ -156,6 +156,18 @@ button.sign:hover {
   color: #090;
 }
 
+body.dark-mode .rally-card.seleccionado {
+  border-color: #a78bfa !important;      /* Lila claro */
+  box-shadow: 0 0 0 2px #a78bfa55;
+  background: #2d223a !important;        /* Fondo oscuro-lila */
+  color: #fff;
+}
+body.dark-mode .rally-card.seleccionado strong,
+body.dark-mode .rally-card.seleccionado div,
+body.dark-mode .rally-card.seleccionado .estado {
+  color: #fff !important;
+}
+
 .sidebar-profile-pic-container {
   display: flex;
   justify-content: center;
@@ -169,4 +181,27 @@ button.sign:hover {
   border-radius: 50%;
   border: 2px solid #4f8cff;
   background: #f0f0f0;
+}
+
+body.dark-mode input[type="file"] {
+  background: #232136;
+  color: #fff;
+  border: 1px solid #a78bfa;
+  border-radius: 0.375rem;
+  padding: 0.5em;
+}
+
+body.dark-mode input[type="file"]::file-selector-button {
+  background: #a78bfa;
+  color: #232136;
+  border: none;
+  border-radius: 0.375rem;
+  padding: 0.5em 1.2em;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+body.dark-mode input[type="file"]::file-selector-button:hover {
+  background: #6f42c1;
+  color: #fff;
 }

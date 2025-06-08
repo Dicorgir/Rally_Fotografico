@@ -142,3 +142,7 @@ button.sign:hover {
     margin-left: 8px;
   }
 }
+
+body.dark-mode .title {
+  color: #fff !important;
+}

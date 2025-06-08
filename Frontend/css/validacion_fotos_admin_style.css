@@ -43,6 +43,10 @@ h2 {
   margin: 42px 0 32px 32px;
 }
 
+body.dark-mode .form-container h2 {
+  color: #fff !important;
+}
+
 #tabla-fotos {
   width: 95%;
   margin: 0 32px 32px 32px;

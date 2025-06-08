@@ -67,6 +67,29 @@ body {
     border-color: rgba(167, 139, 250);
   }
   
+/* Estilo para el select de género */
+.input-group select {
+  width: 100%;
+  border-radius: 0.375rem;
+  border: 1px solid rgba(55, 65, 81, 1);
+  outline: 0;
+  background-color: rgba(17, 24, 39, 1);
+  padding: 1rem 1.2rem;
+  color: rgba(243, 244, 246, 1);
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+
+.input-group select:focus {
+  border-color: rgba(167, 139, 250, 1);
+}
+
+.input-group select option {
+  background: #222;
+  color: #f3f4f6;
+}
+  
   .forgot {
     display: flex;
     justify-content: flex-end;
