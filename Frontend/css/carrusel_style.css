@@ -31,10 +31,10 @@
     box-sizing: border-box;
 }
 .carousel-slide img {
-    width: 100%; /* Mantener el ancho al 100% */
-    height: 700px; /* Asegurar que la altura se ajuste proporcionalmente */
-    object-fit: cover; /* Evitar que la imagen se deforme */
-    object-position: center; /* Centrar el recorte */
+    width: 100%; 
+    height: 700px; 
+    object-fit: cover; 
+    object-position: center; 
     display: block;
     filter: brightness(50%);
 
@@ -42,7 +42,7 @@
 /* Aquí se controlan las flechas */
 .carousel-buttons {
     position: absolute;
-    top: 40%; /* Cambiar este valor para subir o bajar las flechas */
+    top: 40%; 
     width: 100%;
     display: flex;
     justify-content: space-between;

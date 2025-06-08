@@ -14,7 +14,7 @@
     height: 100vh;
     color: #333;
   }
-  /* Sidebar styles */
+  /* Estilo Sidebar */
   .sidebar {
     width: 110px;
     background-color: #6c5ce7;
@@ -64,14 +64,14 @@
     color: white;
     opacity: 0.7;
     cursor: pointer;
-    position: relative; /* Necesario para posicionar el texto relativo a este contenedor */
+    position: relative; 
   }
   
   .nav-item:hover {
     opacity: 1;
     background-color: rgba(255, 255, 255, 0.2);
-    transform: translateX(-38px); /* Mueve el cuadrado morado a la izquierda */
-    transition: transform 0.3s ease; /* Añade una transición suave */
+    transform: translateX(-38px); 
+    transition: transform 0.3s ease; 
   }
   .nav-item.active {
     background-color: #4a3f98;
@@ -86,16 +86,15 @@
     flex: 1;
   }
   
-  /* Estilo base para ocultar el texto */
   .nav-text {
     font-size: 20px;
     opacity: 0;
     visibility: hidden;
     position: absolute;
-    left: 80px; /* Ajusta la posición horizontal fuera del cuadrado */
-    top: 50%; /* Centra verticalmente */
+    left: 80px; 
+    top: 50%; 
     transform: translateY(-50%);
-    background-color: #5549b2; /* Fondo morado */
+    background-color: #5549b2;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -103,19 +102,17 @@
     transition: opacity 0.3s ease, visibility 0.3s ease;
   }
   
-  /* Mostrar el texto al pasar el ratón */
+
   .nav-item:hover .nav-text {
     opacity: 1;
     visibility: visible;
   }
   
-  /* Sidebar expand on hover */
   .sidebar:hover {
-    width: 200px; /* Cambia el ancho según lo que necesites */
+    width: 200px; 
     transition: width 0.3s ease;
   }
   
-  /* Main content styles */
   .main-content {
     flex: 1;
     padding: 20px;
@@ -126,7 +123,7 @@
   }
   
   .sidebar:hover ~ .main-content {
-    margin-left: 200px; /* Ajusta el margen cuando la barra lateral se expande */
+    margin-left: 200px; 
   }
   
   .header {
@@ -190,7 +187,6 @@
     object-fit: cover;
   }
   
-  /* Dashboard grid layout */
   .dashboard-grid {
     display: grid;
     grid-template-columns: 2fr 1fr;
@@ -198,7 +194,6 @@
     margin-top: 10px;
   }
   
-  /* Overview card styles */
   .overview-card {
     background: linear-gradient(135deg, #6c5ce7, #6351df);
     border-radius: 30px;
@@ -343,7 +338,6 @@
     opacity: 0.7;
   }
   
-  /* Activity card styles */
   .activity-card {
     background: linear-gradient(135deg, #8e70e4, #7d5eed);
     border-radius: 30px;
@@ -426,7 +420,6 @@
     font-size: 20px;
   }
   
-  /* Challenge cards styles */
   .challenges-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -561,7 +554,6 @@
     font-weight: 600;
   }
   
-  /* Right sidebar styles */
   .right-sidebar {
     width: 320px;
     padding: 20px;
@@ -684,7 +676,6 @@
     margin-left: 15px;
   }
   
-  /* Map section styles */
   .map-section {
     margin-top: auto;
   }
@@ -767,7 +758,6 @@
     color: white;
   }
   
-  /* SVG icons for line chart */
   .chart-wave {
     position: absolute;
     width: 100%;
@@ -780,7 +770,7 @@
     top: 20px;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #4caf50; /* Verde para éxito */
+    background-color: #4caf50; 
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
@@ -798,7 +788,7 @@
   }
 
   .social-buttons {
-    position: static; /* o fixed si los quieres flotantes */
+    position: static;
     display: flex;
     flex-direction: row;
     gap: 24px;
@@ -814,7 +804,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2.5rem; /* Aumenta el tamaño de los iconos de font-awesome */
+    font-size: 2.5rem; 
     color: #f1f1f1;
     transition: background 0.2s, color 0.2s;
     text-decoration: none;

@@ -3,7 +3,7 @@ body{
 }
 .main-content {
   position: left;
-  left: 260px; /* ancho del sidebar */
+  left: 260px; 
   top: 0;
   right: 0;
   bottom: 0;

@@ -15,8 +15,8 @@ body {
   box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
   margin-right: 32px;
   margin-bottom: 32px;
-  margin-top: 20px; /* Bajado desde arriba */
-  overflow-y: visible; /* O elimina esta línea */
+  margin-top: 20px;
+  overflow-y: visible; 
 }
 
 .form-container {
@@ -38,7 +38,7 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: -1rem; /* Añade separación con el formulario */
+  margin-bottom: -1rem; 
 }
 
 .title {
@@ -54,7 +54,7 @@ body {
   font-weight: bold;
   text-align: center;
   letter-spacing: 1px;
-  margin: 0; /* Elimina el margin-bottom aquí */
+  margin: 0; 
 }
 
 .input-group label {
@@ -157,9 +157,9 @@ button.sign:hover {
 }
 
 body.dark-mode .rally-card.seleccionado {
-  border-color: #a78bfa !important;      /* Lila claro */
+  border-color: #a78bfa !important;      
   box-shadow: 0 0 0 2px #a78bfa55;
-  background: #2d223a !important;        /* Fondo oscuro-lila */
+  background: #2d223a !important;        
   color: #fff;
 }
 body.dark-mode .rally-card.seleccionado strong,

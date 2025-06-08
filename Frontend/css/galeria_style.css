@@ -4,10 +4,10 @@
   flex-wrap: wrap;
   gap: 2rem;
   margin: 2rem 0 2rem 0;
-  justify-content: center; /* Centra horizontalmente las cards */
+  justify-content: center; 
 }
 .rally-card {
-  background: #b4aac3; /* Morado claro */
+  background: #b4aac3; 
   border-radius: 16px;
   box-shadow: 0 4px 16px rgba(60,60,120,0.10);
   padding: 1.5rem 2rem;
@@ -17,8 +17,8 @@
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  align-items: center;      /* Centra horizontalmente el contenido */
-  text-align: center;       /* Centra el texto */
+  align-items: center;      
+  text-align: center;      
 }
 .rally-card:hover {
   transform: translateY(-6px) scale(1.03);
@@ -59,7 +59,7 @@
   margin: 1.2em;
   display: flex;
   flex-direction: column;
-  align-items: center;      /* Centra el contenido de cada card */
+  align-items: center;     
   min-width: 220px;
   max-width: 320px;
   transition: transform 0.15s, box-shadow 0.15s;
@@ -88,8 +88,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 1.5em;
-  justify-content: center;   /* Centra horizontalmente */
-  align-items: center;       /* Centra verticalmente las cards en la fila */
+  justify-content: center;  
+  align-items: center;    
   margin-top: 2em;
 }
 
@@ -123,7 +123,6 @@
   letter-spacing: 0.5px;
 }
 
-/* Asegúrate que el contenedor principal centre el título */
 .main-content {
   text-align: center;
 }
@@ -284,7 +283,7 @@
 }
 
 .votar-btn:hover {
-  background-color: #4caf50 !important; /* Verde */
+  background-color: #4caf50 !important; 
   color: #fff !important;
   border-color: #388e3c !important;
   transition: background 0.2s;

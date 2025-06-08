@@ -18,7 +18,7 @@ body {
   box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
   margin-right: 32px;
   margin-bottom: 32px;
-  margin-top: 80px; /* Bajado desde arriba */
+  margin-top: 80px;
   overflow-y: auto;
 }
 
@@ -135,8 +135,8 @@ body.dark-mode .form-container h2 {
   overflow: hidden;
   text-overflow: ellipsis;
   text-align: center;
-  margin-left: auto;   /* Centra horizontalmente */
-  margin-right: auto;  /* Centra horizontalmente */
+  margin-left: auto;   
+  margin-right: auto;  
 }
 
 .btn-nuevo-rally:hover {
@@ -161,11 +161,11 @@ body.dark-mode .form-container h2 {
 
 #mensaje-config {
   margin: 18px 32px 0 32px;
-  color: #8e44ad; /* Morado */
+  color: #8e44ad; 
   font-weight: 500;
   font-size: 1.1rem;
   font-weight: bold;
-  text-align: center; /* Centrado */
+  text-align: center; 
 }
 
 @media (max-width: 900px) {

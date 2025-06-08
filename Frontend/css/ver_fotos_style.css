@@ -15,8 +15,8 @@ body {
   box-shadow: 0 8px 32px rgba(60, 60, 120, 0.10);
   margin-right: 32px;
   margin-bottom: 32px;
-  margin-top: 60px; /* Bajado desde arriba */
-  overflow-y: visible; /* O elimina esta línea */
+  margin-top: 60px; 
+  overflow-y: visible; 
 }
 
 .fotos-container {
