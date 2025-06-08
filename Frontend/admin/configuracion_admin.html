@@ -202,6 +202,31 @@ document.addEventListener('DOMContentLoaded', async function() {
       const tr = e.target.closest('tr');
       const inputs = tr.querySelectorAll('input');
       const formData = new FormData();
+
+      let nombre = '', fecha_inicio = '', fecha_fin = '', max_fotos = '', fecha_inicio_votacion = '', fecha_fin_votacion = '';
+      inputs.forEach(input => {
+        switch (input.dataset.campo) {
+          case 'nombre': nombre = input.value.trim(); break;
+          case 'fecha_inicio': fecha_inicio = input.value; break;
+          case 'fecha_fin': fecha_fin = input.value; break;
+          case 'max_fotos_por_participante': max_fotos = input.value; break;
+          case 'fecha_inicio_votacion': fecha_inicio_votacion = input.value; break;
+          case 'fecha_fin_votacion': fecha_fin_votacion = input.value; break;
+        }
+      });
+
+      // Campos obligatorios
+      if (!nombre || !fecha_inicio || !fecha_fin || !fecha_inicio_votacion || !fecha_fin_votacion) {
+        document.getElementById('mensaje-config').textContent = 'Todos los campos son obligatorios';
+        return;
+      }
+      // Máximo de fotos debe ser un número positivo
+      if (!/^\d+$/.test(max_fotos) || parseInt(max_fotos) < 1) {
+        document.getElementById('mensaje-config').textContent = 'El máximo de fotos debe ser un número positivo';
+        return;
+      }
+
+      // Si todo está bien, continúa con el envío
       inputs.forEach(input => {
         formData.append(input.dataset.campo, input.value);
       });

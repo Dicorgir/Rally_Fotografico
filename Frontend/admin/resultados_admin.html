@@ -149,18 +149,23 @@ document.addEventListener('DOMContentLoaded', async function() {
   const tbody = document.querySelector('#tabla-ganadores tbody');
   tbody.innerHTML = '';
   ganadores.forEach(g => {
-    // Calcula el estado del rally (activo o finalizado)
     const hoy = new Date().toISOString().slice(0, 10);
     const estado = (g.fecha_fin >= hoy) ? 'Activo' : 'Finalizado';
 
-    // Muestra la fila con la foto ganadora, usuario y votos
+    // Si falta la foto o el usuario, muestra mensaje por defecto
+    const imagen = g.imagen_base64 ? 
+      `<img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;cursor:pointer;">` 
+      : '<span style="color:#888;">Sin foto</span>';
+    const usuario = g.nombre_usuario || '<span style="color:#888;">Usuario eliminado</span>';
+    const votos = g.total_votos !== null ? g.total_votos : '-';
+
     tbody.innerHTML += `
       <tr>
         <td>${g.nombre_rally}</td>
         <td>${estado}</td>
-        <td><img src="data:image/jpeg;base64,${g.imagen_base64}" alt="Foto ganadora" style="max-width:90px;max-height:70px;border-radius:8px;cursor:pointer;"></td>
-        <td>${g.nombre_usuario}</td>
-        <td>${g.total_votos}</td>
+        <td>${imagen}</td>
+        <td>${usuario}</td>
+        <td>${votos}</td>
       </tr>
     `;
   });

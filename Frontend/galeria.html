@@ -269,7 +269,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       });
     }
   });
-  // --- FIN DEL MANEJADOR ÚNICO ---
 
   // Función para cargar fotos del rally seleccionado
   async function cargarFotosDelRallySeleccionado() {
@@ -295,6 +294,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         div.innerHTML = `
           <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
           <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
+          <h4 class="foto-galeria-autor">Por: ${foto.nombre_usuario}</h4>
           <p>${foto.descripcion || ''}</p>
           <span class="votos">Votos: ${foto.votos}</span>
           <button class="ver-comentarios-btn" data-id="${foto.id_fotografia}" title="Ver comentarios">
@@ -306,6 +306,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         div.innerHTML = `
           <img src="data:image/jpeg;base64,${foto.imagen_base64}" alt="${foto.titulo}" class="foto-galeria-img"/>
           <h4 class="foto-galeria-titulo">${foto.titulo}</h4>
+          <h4 class="foto-galeria-autor">Por: ${foto.nombre_usuario}</h4>
           <p>${foto.descripcion || ''}</p>
           <button class="votar-btn" data-id="${foto.id_fotografia}">Votar</button>
           <button class="dislike-btn" data-id="${foto.id_fotografia}">Dislike</button>
@@ -395,8 +396,6 @@ document.addEventListener('DOMContentLoaded', async function() {
         // Elimina aviso si existe
         const aviso = countdownElem.nextElementSibling;
         if (aviso && aviso.classList.contains('aviso-rapido')) aviso.remove();
-        // Desactiva los botones de votación y comentarios
-        desactivarBotonesVotacion();
         // Muestra mensaje de rally terminado
         if (!countdownElem.nextElementSibling || !countdownElem.nextElementSibling.classList.contains('mensaje-terminado')) {
           const mensaje = document.createElement('div');
@@ -438,17 +437,6 @@ document.addEventListener('DOMContentLoaded', async function() {
       setTimeout(actualizar, 1000);
     }
     actualizar();
-  }
-
-  /**
-   * Desactiva los botones de votación y comentarios cuando termina el rally.
-   * @function desactivarBotonesVotacion
-   */
-  function desactivarBotonesVotacion() {
-    document.querySelectorAll('.votar-btn, .dislike-btn, .comentario-btn, .guardar-comentario-btn').forEach(btn => {
-      btn.disabled = true;
-      btn.classList.add('btn-desactivado');
-    });
   }
 
   // Modo oscuro

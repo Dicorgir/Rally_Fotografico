@@ -5,24 +5,45 @@ console.log("register.js cargado");
  * @event DOMContentLoaded
  */
 document.addEventListener('DOMContentLoaded', function() {
-  /**
-   * Maneja el envío del formulario de registro de usuario.
-   * Envía los datos al backend y muestra alertas según el resultado.
-   * @async
-   * @param {Event} e - El evento submit del formulario.
-   */
   document.querySelector('.form-container form')?.addEventListener('submit', async function(e) {
-    e.preventDefault(); // Evita el envío tradicional
+    e.preventDefault();
 
     // Obtiene los valores de los campos del formulario
-    const nombre_completo = document.getElementById('nombre_completo').value;
-    const email = document.getElementById('email').value;
-    const telefono = document.getElementById('telefono').value;
-    const fecha_nacimiento = document.getElementById('fecha_nacimiento').value;
-    const pais = document.getElementById('pais').value;
-    const genero = document.getElementById('genero').value;
+    const nombre_completo = document.getElementById('nombre_completo').value.trim();
+    const email = document.getElementById('email').value.trim();
+    const telefono = document.getElementById('telefono').value.trim();
+    const fecha_nacimiento = document.getElementById('fecha_nacimiento').value.trim();
+    const pais = document.getElementById('pais').value.trim();
+    const genero = document.getElementById('genero').value.trim();
     const password = document.getElementById('password').value;
     const password_confirmation = document.getElementById('confirm-password').value;
+
+    // Validaciones frontend
+    if (!nombre_completo || !email || !password || !password_confirmation) {
+      alert('Todos los campos obligatorios deben completarse');
+      return;
+    }
+    // Email válido
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('El correo no es válido');
+      return;
+    }
+    // País máximo 50 caracteres
+    if (pais && pais.length > 50) {
+      alert('El país no puede tener más de 50 caracteres');
+      return;
+    }
+    // Validación de contraseña fuerte
+    const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+    if (!passwordRegex.test(password)) {
+      alert('La contraseña debe tener al menos 8 caracteres, incluir mayúsculas, minúsculas, un número y un carácter especial.');
+      return;
+    }
+    if (password !== password_confirmation) {
+      alert('Las contraseñas no coinciden.');
+      return;
+    }
 
     try {
       // Envía los datos al backend usando fetch

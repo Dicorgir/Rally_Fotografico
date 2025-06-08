@@ -32,13 +32,14 @@ if (!$id_rally) {
  * @var mysqli_stmt $stmt
  */
 $stmt = $mysqli->prepare("
-    SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.total_votos
+    SELECT f.id_fotografia, f.titulo, f.descripcion, f.imagen_base64, f.total_votos, u.nombre_completo
     FROM fotografias f
+    JOIN usuarios u ON f.id_usuario = u.id_usuario
     WHERE f.id_rally = ? AND f.estado = 'admitida'
 ");
 $stmt->bind_param("i", $id_rally); // Asocia el id del rally como parámetro a la consulta
 $stmt->execute(); // Ejecuta la consulta
-$stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $total_votos); // Asocia los resultados a variables
+$stmt->bind_result($id_fotografia, $titulo, $descripcion, $imagen_base64, $total_votos, $nombre_usuario); // Asocia los resultados a variables
 
 /**
  * Inicializa un array para almacenar las fotos admitidas.
@@ -52,7 +53,8 @@ while ($stmt->fetch()) {
         'titulo' => $titulo,
         'descripcion' => $descripcion,
         'imagen_base64' => $imagen_base64,
-        'votos' => $total_votos
+        'votos' => $total_votos,
+        'nombre_usuario' => $nombre_usuario
     ];
 }
 $stmt->close(); // Cierra la consulta preparada
