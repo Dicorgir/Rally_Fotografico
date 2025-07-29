@@ -1,7 +1,7 @@
 # Rally Fotográfico
 
 <div align="center">
-  <img width="250" height="450" alt="rally_fotografico_imagen" src="https://github.com/user-attachments/assets/5ec402e6-338a-4166-a3cb-d94f924ffd0b" />
+  <img width="250" height="420" alt="rally_fotografico_imagen" src="https://github.com/user-attachments/assets/5ec402e6-338a-4166-a3cb-d94f924ffd0b" />
 </div>
 
 
