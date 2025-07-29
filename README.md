@@ -1,8 +1,9 @@
 # Rally Fotográfico
 
 <div align="center">
-  <img width="650" height="475" alt="rally_fotografico_imagen" src="https://github.com/user-attachments/assets/4633d807-d423-4525-8c09-8e7023989ba4" />
+  <img width="250" height="450" alt="rally_fotografico_imagen" src="https://github.com/user-attachments/assets/5ec402e6-338a-4166-a3cb-d94f924ffd0b" />
 </div>
+
 
 Plataforma web para la gestión y participación en rallies fotográficos, desarrollada como Trabajo de Fin de Grado (TFG). Permite la organización de concursos, subida de fotografías, votaciones, comentarios y administración avanzada.
 
